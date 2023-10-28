@@ -11,11 +11,10 @@ end
 function Player:update(dt)
     self:MovePlayer(dt)
     self:CheckWindowCollisions()
-
 end
 
 function Player:draw()
-    love.graphics.setColor(1, 0, 0, 1)
+    love.graphics.setColor(1, 0, 1, 1)
     love.graphics.circle("fill", self.x, self.y, self.radius)
 end
 

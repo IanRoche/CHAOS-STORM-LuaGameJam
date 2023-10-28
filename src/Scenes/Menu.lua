@@ -2,53 +2,90 @@ local Object = Object or require "lib.classic"
 local Scene = Object:extend()
 
 function Scene:new()
-    self.playButton = {
-        x = love.graphics.getWidth() / 2 - 100,
-        y = love.graphics.getHeight() / 2 - 30,
-        width = 200,
-        height = 60,
-        text = "Jugar"
-    }
+    self.buttons = {}
+    self:createButtons()
+end
 
-    self.quitButton = {
-        x = love.graphics.getWidth() / 2 - 100,
-        y = love.graphics.getHeight() / 2 + 30,
-        width = 200,
-        height = 60,
-        text = "Salir"
-    }
+function Scene:draw()
+    self:drawButton(self.buttons.play)
+    self:drawButton(self.buttons.quit)
 end
 
 function Scene:update(dt)
+    if self:checkButtonClick(self.buttons.play) then
+        self:playButtonClicked()
+    elseif self:checkButtonClick(self.buttons.quit) then
+        self:quitButtonClicked()
+    end
+end
+
+function Scene:createButtons()
+    local buttonWidth = 200
+    local buttonHeight = 60
+    local buttonSpacing = 20
+
+    local centerY = love.graphics.getHeight() / 2
+
+    self.buttons.play = self:createButton(
+        (love.graphics.getWidth() - buttonWidth) / 2,
+        centerY - buttonHeight - buttonSpacing,
+        buttonWidth,
+        buttonHeight,
+        "JUGAR"
+    )
+
+    self.buttons.quit = self:createButton(
+        (love.graphics.getWidth() - buttonWidth) / 2,
+        centerY + buttonSpacing,
+        buttonWidth,
+        buttonHeight,
+        "SALIR"
+    )
+end
+
+function Scene:createButton(x, y, width, height, text)
+    return {
+        x = x,
+        y = y,
+        width = width,
+        height = height,
+        text = text
+    }
+end
+
+function Scene:checkButtonClick(button)
     local mouseX, mouseY = love.mouse.getPosition()
-    local buttonClicked = nil
 
-    if love.mouse.isDown(1) then
-        -- Verificar si se hizo clic en el botón "Jugar"
-        if mouseX >= self.playButton.x and mouseX <= self.playButton.x + self.playButton.width and
-           mouseY >= self.playButton.y and mouseY <= self.playButton.y + self.playButton.height then
-            buttonClicked = "play"
-        end
-
-        -- Verificar si se hizo clic en el botón "Salir"
-        if mouseX >= self.quitButton.x and mouseX <= self.quitButton.x + self.quitButton.width and
-           mouseY >= self.quitButton.y and mouseY <= self.quitButton.y + self.quitButton.height then
-            buttonClicked = "quit"
-        end
-    end
-
-    if buttonClicked == "play" then
-        ChangeScene("Game")
-    elseif buttonClicked == "quit" then
-        love.event.quit()
-    end
+    return love.mouse.isDown(1) and
+           mouseX >= button.x and mouseX <= button.x + button.width and
+           mouseY >= button.y and mouseY <= button.y + button.height
 end
-function Scene:draw()
+
+
+function Scene:playButtonClicked()
+    ChangeScene("Game")
+end
+
+function Scene:quitButtonClicked()
+    love.event.quit()
+end
+
+function Scene:drawButton(button)
+    -- Dibujar el fondo gris del botón
+    love.graphics.setColor(0.5, 0.5, 0.5)
+    love.graphics.rectangle("fill", button.x, button.y, button.width, button.height)
+
+    -- Restaurar el color blanco para el texto
     love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle("line", self.playButton.x, self.playButton.y, self.playButton.width, self.playButton.height)
-    love.graphics.rectangle("line", self.quitButton.x, self.quitButton.y, self.quitButton.width, self.quitButton.height)
 
-    love.graphics.print(self.playButton.text, self.playButton.x + 20, self.playButton.y + 10)
-    love.graphics.print(self.quitButton.text, self.quitButton.x + 20, self.quitButton.y + 10)
+    -- Dibujar el borde del botón
+    love.graphics.rectangle("line", button.x, button.y, button.width, button.height)
+
+    -- Centrar el texto dentro del botón
+    local textX = button.x + (button.width - love.graphics.getFont():getWidth(button.text)) / 2
+    local textY = button.y + (button.height - love.graphics.getFont():getHeight()) / 2
+
+    love.graphics.print(button.text, textX, textY)
 end
+
 return Scene
