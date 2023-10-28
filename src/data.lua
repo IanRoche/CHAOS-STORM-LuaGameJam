@@ -10,8 +10,10 @@ CenterRadius = 80
 OriginX, OriginY = 0,0
 MapCenterX, MapCenterY= Width/2, Height/2
 
--- PADDLE
--- SCORE
+--PLAYER
+PlayerStartPosX, PlayerStartPosY =MapCenterX,MapCenterY
+PlayerSpeed=400
+PlayerRadius=20
 -- MENU
 IsPlaying = false
 ButtonList = {}
