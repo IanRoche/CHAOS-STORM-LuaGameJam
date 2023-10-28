@@ -48,13 +48,25 @@ function Scene:applyDifficultyLevel(level)
     -- Aplica las reglas específicas de cada nivel/dificultad
     if level == 1 then
         -- Reglas del nivel 1
+        --ideas: spwanee un tipo de enemigo
+        --la barrra mas rapida (modificar vel de la barra)
         print("nivel 1")
     elseif level == 2 then
         -- Reglas del nivel 2
+        --barra mas rapida
+        --enemigos:
+            --enemigo que rebota en las wall (paderes)
+            --ballas que llegas de "arriba" de la pantalla (literalmente una luvia)
+            --halakbahr (nivel1)
+            
+        --
         print("nivel 2")
 
     elseif level == 3 then
         -- Reglas del nivel 3
+            --lluvia en el eje x (x)
+            --patro
+            --halahckbar (nivel2)
     -- ... y así sucesivamente
         print("nivel 3")
 
@@ -64,6 +76,7 @@ end
 function Scene:draw()
     m_Player:draw()
     m_Score:draw() 
+    --futuramente un draw enemy
 end
 
 
