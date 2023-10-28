@@ -1,13 +1,12 @@
-local Data = Data or require "src.data"
+local Data = Data or require ("src/data")
 local Scene
 local scene
-local data
 
 function love.load(arg)
   if arg[#arg] == "-debug" then require("mobdebug").start() end -- Enable the debugging with ZeroBrane Studio
   if arg[#arg] == "vsc_debug" then require("lldebugger").start() end -- Enable the debugging with vscode
-  Reset()
   ChangeScene("Menu")
+  Data:load()
 
 end
 
