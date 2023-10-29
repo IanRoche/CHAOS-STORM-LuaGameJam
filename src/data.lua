@@ -12,12 +12,12 @@ MapCenterX, MapCenterY= Width/2, Height/2
 --Miscelanius
 DestroyableObjects={}
 --PLAYER
-PlayerStartPosX, PlayerStartPosY =MapCenterX,MapCenterY+MapCenterY/2
+PlayerStartPosX, PlayerStartPosY =MapCenterX-MapCenterX/2,MapCenterY+MapCenterY/2
 PlayerSpeed=400
 PlayerRadius=20
 --BAR
 BarWidth, BarHeight=20,1000
-BarStartRotation =1
+BarStartRotation =math.pi/2
 BarRotSpeed=1
 BarColor={0.0,1.0,1.0,1.0}
 BarStartPosX, BarStartPosY =MapCenterX-BarWidth/2,MapCenterY-BarHeight/2

@@ -14,12 +14,13 @@ function Score:update(dt)
     -- Verifica si ha transcurrido al menos 1 segundo
     if self.timeElapsed >= 1 then
         self:increaseScore(self.pointsPerSecond)  -- Aumenta la puntuación
-        self.timeElapsed = self.timeElapsed - 1  -- Reinicia el tiempo transcurrido
+        self.timeElapsed = self.timeElapsed - 1 
+        print(_Score) -- Reinicia el tiempo transcurrido
     end
 end
 
 function Score:increaseScore(points)
-    _Score = self.score + points
+    _Score = _Score + points
 end
 
 function Score:draw()
@@ -28,7 +29,7 @@ function Score:draw()
 
     -- Dibuja la puntuación en la esquina superior izquierda
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print("Puntuación: " .. self.score, 10, 10)
+    love.graphics.print("Puntuación: " .. _Score, 10, 10)
 end
 
 return Score

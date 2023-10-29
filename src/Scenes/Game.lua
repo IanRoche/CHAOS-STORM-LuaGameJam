@@ -4,25 +4,33 @@ local Scene = Object:extend()
 local Player =Player or require "src.Player"
 local Score = require "src.Score"  
 local Bar = require "src.Bar"  -- Importa el script de la barra
-
+local CirclesRow=CirclesRow or  require "src.CirclesRow"
 
 local m_Player
 local m_Score
-local m_Bar
+--local m_Bar
 local currentDifficultyLevel = 1  -- Nivel de dificultad actual
-
+local m_CirclesRow
 
 function Scene:new()
-    m_Bar = Bar(BarStartPosX, BarStartPosY, BarWidth, BarHeight, BarRotSpeed, BarStartRotation)  -- Crea una instancia de la barra
+    if #Collider.colliders>1 then
+        
+        self:clearAllColliders()
+    end
+    print("Game")
+    --m_Bar = Bar(BarStartPosX, BarStartPosY, BarWidth, BarHeight, BarRotSpeed, BarStartRotation)  -- Crea una instancia de la barra
     m_Player = Player(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed,true)
     m_Score = Score() 
-    print("Game")
+    _Score=0
+    m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,1,40,math.pi)
 end
 
 function Scene:update(dt)
+   -- m_Bar:update(dt,DestroyableObjects)
     m_Player:update(dt)
     m_Score:update(dt)
-    m_Bar:update(dt,DestroyableObjects)
+    Collider.update()
+    m_CirclesRow:update(dt)
     -- Verifica la puntuación actual y actualiza la dificultad si es necesario
     self:CheckNewLevel()
 
@@ -35,10 +43,14 @@ end
 function Scene:draw()
     m_Player:draw()
     m_Score:draw() 
-    m_Bar:draw()
+    --m_Bar:draw()
+    m_CirclesRow:draw()
     --futuramente un draw enemy
 end
-
+function Scene:clearAllColliders()
+    Collider.clear()
+    print ("Game eliminando colliders")
+end
 function Scene:getNewDifficultyLevel()
     -- Lógica para determinar el nuevo nivel de dificultad en función de la puntuación
     if m_Score.score >= 30 then

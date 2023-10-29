@@ -1,6 +1,9 @@
 local Data = Data or require ("src/data")
+Collider = require "lib.ColliderMaster.collider"
 local Scene
 local scene
+
+
 
 function love.load(arg)
   if arg[#arg] == "-debug" then require("mobdebug").start() end -- Enable the debugging with ZeroBrane Studio
@@ -16,6 +19,7 @@ end
 
 function love.draw()
   scene:draw()
+  Collider:draw()
 end
 
 function ChangeScene(nextScene)

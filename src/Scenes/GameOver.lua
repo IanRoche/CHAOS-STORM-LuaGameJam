@@ -1,10 +1,14 @@
 local Object = Object or require "lib.classic"
 local Scene = Object:extend()
-local Data = require "src.data"  -- Asegúrate de ajustar la ruta a tu módulo Data
+local Score = require "src.Score"  
+
+local m_Score
 
 function Scene:new()
+    m_Score=Score()
     print("GameOver")
-    self.finalScore = _Score  -- Variable para almacenar la puntuación final
+    self.finalScore = m_Score.score  
+    -- Variable para almacenar la puntuación final
 end
 
 
@@ -28,6 +32,7 @@ function Scene:draw()
     -- Dibuja la puntuación debajo de "GAME OVER"
     love.graphics.setFont(love.graphics.newFont(MenuFontSize))
     local scoreText = "Puntuación: " .. self.finalScore
+
     local scoreWidth = love.graphics.getFont():getWidth(scoreText)
     love.graphics.print(scoreText, (screenWidth - scoreWidth) / 2, screenHeight / 2)
 
