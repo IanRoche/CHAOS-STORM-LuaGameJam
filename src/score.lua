@@ -2,7 +2,7 @@ local Object = Object or require "lib.classic"
 local Score = Object:extend()
 
 function Score:new()
-    self.score = 0  -- Inicializa la puntuación a cero
+    self.score = _Score  -- Inicializa la puntuación a cero
     self.font = love.graphics.newFont(24)  -- Fuente para la puntuación
     self.timeElapsed = 0  -- Lleva un seguimiento del tiempo transcurrido
     self.pointsPerSecond = 1  -- Puntos por segundo
@@ -19,7 +19,7 @@ function Score:update(dt)
 end
 
 function Score:increaseScore(points)
-    self.score = self.score + points
+    _Score = self.score + points
 end
 
 function Score:draw()

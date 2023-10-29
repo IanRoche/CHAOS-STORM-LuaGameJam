@@ -1,11 +1,19 @@
 local Object = Object or require "lib.classic"
+local ICanBeDestroyedInterface = require "src.ICabBeDestroyed"
 local Player = Object:extend()
 
-function Player:new(x, y, radius, speed)
+Player:implement(ICanBeDestroyedInterface)
+
+function Player:new(x, y, radius, speed,isDestroyable)
     self.x = x
     self.y = y
     self.radius = radius
     self.speed = speed
+    self.isDestroyable=isDestroyable
+    if self.isDestroyable then
+        table.insert(DestroyableObjects, self)
+
+    end
 end
 
 function Player:update(dt)
@@ -68,5 +76,31 @@ function Player:CheckWindowCollisions()
     self.x = newX
     self.y = newY
 end
+-- Implementar el método destroy para la clase Player
+function Player:destroy()
+    -- Implementa la destrucción del jugador aquí
+    self.isDestroyed = true
+    -- Elimina el objeto de la lista DestroyableObjects si es destruible
+    for i, obj in ipairs(DestroyableObjects) do
+        if obj == self then
+            table.remove(DestroyableObjects, i)
+            break
+        end
+    end
+    ChangeScene("GameOver")
+end
 
+function Player:checkCollisionWithBar(bar)
+    -- Verifica la colisión con la barra y destruye el objeto si colisiona
+    local playerX, playerY = self.x, self.y
+    local barX, barY = bar.x, bar.y
+    local barWidth, barHeight = bar.width, bar.height
+
+    if playerX + self.radius > barX - barWidth / 2 and
+       playerX - self.radius < barX + barWidth / 2 and
+       playerY + self.radius > barY - barHeight / 2 and
+       playerY - self.radius < barY + barHeight / 2 then
+        self:destroy()
+    end
+end
 return Player
