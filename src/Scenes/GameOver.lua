@@ -13,8 +13,8 @@ end
 
 
 function Scene:update(dt)
-    if love.keyboard.isDown(ExitKey) then
-        ChangeScene("Menu")
+    if love.keyboard.isDown(ExitKey) then        
+        love.event.quit('restart')
     end
 end
 

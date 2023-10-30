@@ -27,13 +27,13 @@ end
 
 function Scene:update(dt)
    -- m_Bar:update(dt,DestroyableObjects)
-    m_Player:update(dt)
-    m_Score:update(dt)
-    Collider.update()
-    m_CirclesRow:update(dt)
-    -- Verifica la puntuación actual y actualiza la dificultad si es necesario
-    self:CheckNewLevel()
-
+   m_Score:update(dt)
+   m_CirclesRow:update(dt)
+   -- Verifica la puntuación actual y actualiza la dificultad si es necesario
+   self:CheckNewLevel()
+   
+   Collider.update()
+   m_Player:update(dt)
     if love.keyboard.isDown(ExitKey) then
         ChangeScene("GameOver")
     end

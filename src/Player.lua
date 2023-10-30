@@ -39,7 +39,10 @@ end
 function Player:update(dt)
     self:MovePlayer(dt)
     self:CheckWindowCollisions()
-    self:updateCollider()
+    if #Collider.colliders>1 or #Collider.circleIDs>1 then
+        self:updateCollider()
+        
+    end
 
     
 end
