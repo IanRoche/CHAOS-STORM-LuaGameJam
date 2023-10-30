@@ -1,11 +1,15 @@
-local Object = Object or require "lib.classic"
-local Enemy = Object:extend()
-local Player = Object:extend()
-local enemyList = Object:extend()
+local Object = Object or require "lib/classic"
+local Player = Player or require "src/Player"
+local Actor = Actor or require "src/Actor"
+local Spawner = require "src/Enemies/Spawner"
 
+local Enemy = Object:extend()
+
+enemyList = {}
 
 function Enemy:new()
-
+    local s = Spawner()
+    table.insert(enemyList,s)
     self.speed = 8
   end
   
@@ -20,10 +24,10 @@ function Enemy:new()
          local pPos = v.position
          self.forward = pPos- self.position
          self.forward:normalize()
-         local dist = v.position - self.position
-         if dist:len() < 16 then--16 pq es el tamaño de la textura
-           vida = vida-1 --baja una vida
-           punts = punts -5 --bajan puntos
+         local distance = v.position - self.position
+         if distance < 16 then--16 pq es el tamaño de la textura
+            Player:destroy()
+            print("destroyed by enemy")
            local e=nil
            for k,v in ipairs(enemyList) do
              if v == self then
@@ -35,7 +39,6 @@ function Enemy:new()
    
        end
      end
-  ---------------------------------------------------
   
   end
   
@@ -49,3 +52,5 @@ function Enemy:new()
     local rr = self.rot
     love.graphics.draw(self.image,xx,yy,rr,sx,sy,ox,oy,0,0)
   end
+
+  return Enemy
