@@ -1,8 +1,6 @@
 local Object = Object or require "lib.classic"
 local ICanBeDestroyedInterface = require "src.ICabBeDestroyed"
 local Player = Object:extend()
-local Bar=require "src.Bar"
-Collider = require "lib.ColliderMaster.collider"
 
 local Transform= require "lib.ColliderMaster.transform"
 
@@ -118,6 +116,7 @@ function Player:destroy()
             break
         end
     end
+
     print("Destroy")
     ChangeScene("GameOver")
 end

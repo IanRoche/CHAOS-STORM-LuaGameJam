@@ -15,7 +15,7 @@ local m_CirclesRow
 function Scene:new()
     if #Collider.colliders>1 then
         
-        self:clearAllColliders()
+        Collider:clearAllColliders()
     end
     print("Game")
     --m_Bar = Bar(BarStartPosX, BarStartPosY, BarWidth, BarHeight, BarRotSpeed, BarStartRotation)  -- Crea una instancia de la barra

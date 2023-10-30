@@ -23,7 +23,7 @@ function love.draw()
 end
 
 function ChangeScene(nextScene)
-
+Collider:clearAllColliders()
   Scene = require("src/Scenes/"..nextScene)
   scene = Scene()
 end
