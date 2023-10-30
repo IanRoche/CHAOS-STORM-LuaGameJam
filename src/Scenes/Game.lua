@@ -1,11 +1,11 @@
 local Object = Object or require "lib.classic"
 local Scene = Object:extend()
-local Enemy=require "src.Enemies.Enemy"
+local Enemies=require "src.Enemies.Enemies"
 local Player =Player or require "src.Player"
 local Score = require "src.Score"  
 local CirclesRow=CirclesRow or  require "src.CirclesRow"
 
-local m_Enemy = Enemy
+local m_Enemies = Enemies
 local m_Player
 local m_Score
 local currentDifficultyLevel = 1  -- Nivel de dificultad actual
@@ -22,14 +22,14 @@ function Scene:new()
     m_Score = Score() 
     _Score=0
     m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,1,40,math.pi)
-    m_Enemy:new()
+    m_Enemies:new()
 end
 
 function Scene:update(dt)
    -- m_Bar:update(dt,DestroyableObjects)
    m_Score:update(dt)
    m_CirclesRow:update(dt)
-   m_Enemy:update(dt)
+   m_Enemies:update(dt)
 
    -- Verifica la puntuación actual y actualiza la dificultad si es necesario
    self:CheckNewLevel()
@@ -46,7 +46,7 @@ function Scene:draw()
     m_Player:draw()
     m_Score:draw() 
     m_CirclesRow:draw()
-    m_Enemy:draw()
+    m_Enemies:draw()
     --futuramente un draw enemy
 end
 function Scene:clearAllColliders()
