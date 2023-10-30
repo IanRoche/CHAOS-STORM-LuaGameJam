@@ -1,14 +1,13 @@
 local Object = Object or require "lib.classic"
 local Scene = Object:extend()
-
+local Enemy=require "src.Enemies.Enemy"
 local Player =Player or require "src.Player"
 local Score = require "src.Score"  
-local Bar = require "src.Bar"  -- Importa el script de la barra
 local CirclesRow=CirclesRow or  require "src.CirclesRow"
 
+local m_Enemy = Enemy
 local m_Player
 local m_Score
---local m_Bar
 local currentDifficultyLevel = 1  -- Nivel de dificultad actual
 local m_CirclesRow
 
@@ -23,12 +22,15 @@ function Scene:new()
     m_Score = Score() 
     _Score=0
     m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,1,40,math.pi)
+    m_Enemy:new()
 end
 
 function Scene:update(dt)
    -- m_Bar:update(dt,DestroyableObjects)
    m_Score:update(dt)
    m_CirclesRow:update(dt)
+   m_Enemy:update(dt)
+
    -- Verifica la puntuación actual y actualiza la dificultad si es necesario
    self:CheckNewLevel()
    
@@ -43,8 +45,8 @@ end
 function Scene:draw()
     m_Player:draw()
     m_Score:draw() 
-    --m_Bar:draw()
     m_CirclesRow:draw()
+    m_Enemy:draw()
     --futuramente un draw enemy
 end
 function Scene:clearAllColliders()
@@ -58,7 +60,8 @@ function Scene:getNewDifficultyLevel()
     elseif m_Score.score >= 20 then
         return 3  -- Cambia al nivel 2 cuando se alcanzan 20 puntos
     elseif m_Score.score >= 10 then
-        return 2  -- Cambia al nivel 1 cuando se alcanzan 10 puntos
+        return 2  
+        -- Cambia al nivel 1 cuando se alcanzan 10 puntos
     else
         return 1  -- Nivel 1 por defecto si no se alcanza ninguna puntuación relevante
     end
