@@ -78,7 +78,7 @@ function Scene:applyDifficultyLevel(level)
         --ideas: spwanee un tipo de enemigo
         --la barrra mas rapida (modificar vel de la barra)  
         print("nivel 1++")
-        m_Enemies:toggleEnemy("Allahakbar",false)
+        m_Enemies:toggleEnemy("Allahakbar",true)
         m_Enemies:toggleEnemy("Enemy",false)
 
     elseif level == 2 then
@@ -100,6 +100,7 @@ function Scene:applyDifficultyLevel(level)
 
         print("nivel 3")
         m_Enemies:toggleEnemy("Allahakbar",false)
+        m_Enemies:toggleEnemy("Enemy",false)
 
     elseif level==4  then
         print("nivel 4")

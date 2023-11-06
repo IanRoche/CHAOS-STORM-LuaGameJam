@@ -22,7 +22,9 @@ function Spawner:update(dt)
   self.time = self.time + dt
   self.enemySpawnTimer = self.enemySpawnTimer + dt
   
-self:updateAllahakbarTimer(dt)
+  self.AllahAkbarTimetime = self.AllahAkbarTime + dt
+  self.AllahAkbarSpawnTimer = self.AllahAkbarSpawnTimer + dt
+--self:updateAllahakbarTimer(dt)
 
   if enemyVisibility.Allahakbar == true then
     if self.AllahAkbarTimetime > self.AllahAkbarSpawnTime  then
@@ -48,12 +50,10 @@ self:updateAllahakbarTimer(dt)
   end
 end
 
-function Spawner:updateAllahakbarTimer(dt)
+
+-- function Spawner:updateAllahakbarTimer(dt)
   
-  self.AllahAkbarTimetime = self.AllahAkbarTime + dt
-  self.AllahAkbarSpawnTimer = self.AllahAkbarSpawnTimer + dt
-  
-end
+-- end
 
 
 function Spawner:draw()
