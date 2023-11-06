@@ -71,12 +71,23 @@ end
 
 function Enemy_AllahAkbar:explode()
     self.exploded = true
-
+    
     -- Crea fracciones pequeñas
     for i = 1, smalCircleAmount do
         local smallCircle = SmallCircle(self.x, self.y, self.radius)
         table.insert(self.smallCircles, smallCircle)
     end
+
+    
+end
+
+function Enemy_AllahAkbar:checkCollisionWithPlayer(player)
+    if not self.exploded then
+        local distance = math.sqrt((player.x - self.x) ^ 2 + (player.y - self.y) ^ 2)
+        local minDistance = player.radius + self.radius
+        return distance <= minDistance
+    end
+    return false
 end
 
 return Enemy_AllahAkbar

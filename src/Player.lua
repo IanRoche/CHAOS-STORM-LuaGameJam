@@ -118,11 +118,11 @@ function Player:CheckWindowCollisions()
 end
 
 function Player:checkCollisionWithEnemy(enemy)--Esto hace que el player muera si entra en contacto con allahAkbar PERO hay un problema,
-                                            --el colider de allahAkbar sigue ahí, y si el player lo toca muere (aun que el allahAkbar ya no se vea en pl)
-    local distance = math.sqrt((self.x - enemy.x) ^ 2 + (self.y - enemy.y) ^ 2)
-    local minDistance = self.radius + enemy.radius
-    return distance <= minDistance
-    
+    for _, enemy in ipairs(EnemyList) do
+        if enemy:checkCollisionWithPlayer(self) then
+            self:destroy()  -- El jugador choca con un "Allahakbar", se activa el "Game Over"
+        end
+    end
 end
 
 -- Implementar el método destroy para la clase Player
