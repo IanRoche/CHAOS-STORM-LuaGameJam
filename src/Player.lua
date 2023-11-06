@@ -43,6 +43,7 @@ function Player:update(dt)
         self:updateCollider()
         
     end
+    self:UpdatePlayerPosition(self.x, self.y)
 
     
 end
@@ -122,6 +123,19 @@ function Player:destroy()
 
     print("Destroy")
     ChangeScene("GameOver")
+end
+
+function Player:getPosition()
+    return self.x, self.y
+end
+
+function Player:UpdatePlayerPosition(x, y)
+    PlayerPosition.x = x
+    PlayerPosition.y = y
+end
+
+function GetPlayerPosition()
+    return PlayerPosition.x, PlayerPosition.y
 end
 
 return Player

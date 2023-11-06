@@ -31,5 +31,10 @@ function Score:draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.print("Puntuación: " .. _Score, 10, 10)
 end
+function Score:GetScore()
+    
+    return _Score
+
+end
 
 return Score
