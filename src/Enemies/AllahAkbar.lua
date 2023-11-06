@@ -54,6 +54,7 @@ function Enemy_AllahAkbar:update(dt)
             smallCircle:update(dt)
         end
     end
+    
 end
 
 function Enemy_AllahAkbar:draw()
