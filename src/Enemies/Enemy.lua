@@ -8,6 +8,7 @@ local Enemy = Object:extend()
 enemyList = {}
 
 function Enemy:new()
+<<<<<<< Updated upstream
     local s = Spawner()
     table.insert(enemyList,s)
     self.speed = 8
@@ -40,17 +41,32 @@ function Enemy:new()
        end
      end
   
+=======
+
+    self.x = -1  -- Posición inicial x fuera de la pantalla
+    self.y = love.math.random(0,love.graphics.getHeight())  -- Posición y aleatoria
+    self.speed = 250  -- Velocidad de movimiento
+    self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
+    self.exploded = false  -- Bandera para rastrear si ha explotado
+    self.radius = 20  -- Radio del enemigo
+    
+    print("new basic enemy")
+
+    table.insert(EnemyList, self)
+  end
+  
+  function Enemy:update(dt)
+    local playerX, playerY = GetPlayerPosition()  -- Obtiene la posición del jugador
+    -- Mueve hacia el jugador
+    local angle = math.atan2(playerY - self.y, playerX - self.x)
+    self.x = self.x + self.speed * math.cos(angle) * dt
+    self.y = self.y + self.speed * math.sin(angle) * dt
+>>>>>>> Stashed changes
   end
   
   function Enemy:draw()
-    local xx = self.position.x
-    local ox = self.origin.x
-    local yy = self.position.y
-    local oy = self.origin.y
-    local sx = self.scale.x
-    local sy = self.scale.y
-    local rr = self.rot
-    love.graphics.draw(self.image,xx,yy,rr,sx,sy,ox,oy,0,0)
+    love.graphics.setColor(0, 1, 0)  -- Color verde
+    love.graphics.circle("fill", self.x, self.y, self.radius)
   end
 
   return Enemy
