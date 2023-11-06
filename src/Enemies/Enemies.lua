@@ -15,10 +15,10 @@ EnemyList={}
 }
 
 function Enemies:new()
-    --print("Enemies")
+    
     Allahakbar:new()
-    Spawner:new()
     Enemy:new()
+    Spawner:new()
 end
 
 function Enemies:update(dt)

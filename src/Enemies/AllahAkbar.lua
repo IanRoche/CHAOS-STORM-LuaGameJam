@@ -11,14 +11,12 @@ local smalCircleAmount=10
 function Enemy_AllahAkbar:new()
     self.x = -1  -- Posición inicial x fuera de la pantalla
     self.y = love.math.random(0,love.graphics.getHeight())  -- Posición y aleatoria
-    self.speed = 150  -- Velocidad de movimiento
+    self.speed = 100  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.exploded = false  -- Bandera para rastrear si ha explotado
     
     self.radius = 20  -- Radio del enemigo
     self.smallCircles = {}  -- Tabla para las fracciones pequeñas
-    
-    
     print("new Allahakbar")
 
     table.insert(EnemyList, self)
@@ -35,7 +33,7 @@ function Enemy_AllahAkbar:update(dt)
         -- Calcula la distancia entre el enemigo y el jugador
         local distance = math.sqrt((playerX - self.x) ^ 2 + (playerY - self.y) ^ 2)
 
-        if distance <= 200 then
+        if distance <= 400 then
             self.timeAlive = self.timeAlive + dt
 
             if self.timeAlive >= 1 then

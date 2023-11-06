@@ -10,6 +10,9 @@ function Spawner:new()
   self.time = 0
   self.enemySpawnInterval = 1  -- Intervalo en segundos entre cada aparición de Allahakbar
   self.enemySpawnTimer = 0
+
+  self.allahakbarTimer=2
+  self.allahakbarinterval=0
 end
 
 function Spawner:update(dt)

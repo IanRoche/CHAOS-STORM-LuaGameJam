@@ -79,7 +79,7 @@ function Scene:applyDifficultyLevel(level)
         --la barrra mas rapida (modificar vel de la barra)  
         print("nivel 1++")
         m_Enemies:toggleEnemy("Allahakbar",false)
-        m_Enemies:toggleEnemy("Enemy",true)
+        m_Enemies:toggleEnemy("Enemy",false)
 
     elseif level == 2 then
         -- Reglas del nivel 2
