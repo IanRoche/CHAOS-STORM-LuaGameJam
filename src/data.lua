@@ -15,6 +15,7 @@ DestroyableObjects={}
 PlayerStartPosX, PlayerStartPosY =MapCenterX-MapCenterX/2,MapCenterY+MapCenterY/2
 PlayerSpeed=400
 PlayerRadius=20
+PlayerPosition={x=PlayerStartPosX, y=PlayerStartPosY}
 --BAR
 BarWidth, BarHeight=20,1000
 BarStartRotation =math.pi/2
@@ -44,6 +45,7 @@ end
 
 -- SCORE
 _Score=0
+CurrentDifficultyLevel =1
 
 
 return Data

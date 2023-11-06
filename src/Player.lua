@@ -8,6 +8,8 @@ Player:implement(ICanBeDestroyedInterface)
 
 local m_PlayerTrigger
 
+
+
 function Player:new(x, y, radius, speed, isDestroyable)
     if x and y and radius then
         self.x = x
@@ -43,7 +45,13 @@ function Player:update(dt)
         self:updateCollider()
         
     end
+    self:UpdatePlayerPosition(self.x, self.y)
 
+    for _, enemy in ipairs(EnemyList) do
+        if self:checkCollisionWithEnemy(enemy) then
+            self:destroy()  -- El jugador choca con una "bolita," se activa el "Game Over"
+        end
+    end    
     
 end
 
@@ -108,6 +116,15 @@ function Player:CheckWindowCollisions()
     self.x = l_NewX
     self.y = l_NewY
 end
+
+function Player:checkCollisionWithEnemy(enemy)--Esto hace que el player muera si entra en contacto con allahAkbar PERO hay un problema,
+    for _, enemy in ipairs(EnemyList) do
+        if enemy:checkCollisionWithPlayer(self) then
+            self:destroy()  -- El jugador choca con un "Allahakbar", se activa el "Game Over"
+        end
+    end
+end
+
 -- Implementar el método destroy para la clase Player
 function Player:destroy()
     -- Implementa la destrucción del jugador aquí
@@ -122,6 +139,19 @@ function Player:destroy()
 
     print("Destroy")
     ChangeScene("GameOver")
+end
+
+function Player:getPosition()
+    return self.x, self.y
+end
+
+function Player:UpdatePlayerPosition(x, y)
+    PlayerPosition.x = x
+    PlayerPosition.y = y
+end
+
+function GetPlayerPosition()
+    return PlayerPosition.x, PlayerPosition.y
 end
 
 return Player

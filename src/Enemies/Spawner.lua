@@ -1,25 +1,30 @@
-local Actor = Actor or require "src/Actor"
-local Enemy = Enemy or require "src/Enemies/Enemy"
-local Spawner = Actor:extend()
+local Object = Object or require "lib.classic"
+local Allahakbar = Allahakbar or require "src.Enemies.AllahAkbar"
 
-function Spawner:new(x,y,speed,fx,fy)
-  Spawner.super.new(self,"src/Textures/ganivet.png",x,y,speed,fx,fy)
-  self.spawnTime = 5
-  self.time=0
+local Spawner = Object:extend()
+
+function Spawner:new(x, y, speed, fx, fy)
+  self.spawnTime = 1
+  self.time = 0
+  self.enemySpawnInterval = 1  -- Intervalo en segundos entre cada aparición de Allahakbar
+  self.enemySpawnTimer = 0
 end
 
 function Spawner:update(dt)
-  Spawner.super.update(self,dt)
-  ---------------------------------------
   self.time = self.time + dt
-  if self.time >self.spawnTime then
-    local e = Enemy()
-    self.time = 0
-    table.insert(enemyList,e)
-    --self.spawnTime = self.spawnTime - punts*dt*dt
-    print(self.spawnTime)
+  self.enemySpawnTimer = self.enemySpawnTimer + dt
+
+  if enemyVisibility.Allahakbar == true then
+    if self.time > self.spawnTime then
+      if self.enemySpawnTimer >= self.enemySpawnInterval then
+        local e = Allahakbar()
+        table.insert(EnemyList, e)
+        print("new allahakbar")
+        self.enemySpawnTimer = 0  -- Reiniciar el temporizador de aparición
+      end
+      self.time = 0
+    end
   end
- ------------------------------------------------ SPAWN ENEMIGOS
 end
 
 function Spawner:draw()
