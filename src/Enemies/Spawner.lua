@@ -1,30 +1,30 @@
 local Object = Object or require "lib.classic"
-local Enemy = Enemy or require "src/Enemies/Enemy"
-local Enemy_AllahAkbar = require "src.Enemies.AllahAkbar"
-local Spawner =Object:extend()
+local Allahakbar = Allahakbar or require "src.Enemies.AllahAkbar"
 
+local Spawner = Object:extend()
 
-function Spawner:new(x,y,speed,fx,fy)
+function Spawner:new(x, y, speed, fx, fy)
   self.spawnTime = 1
-  self.time=0
+  self.time = 0
+  self.enemySpawnInterval = 1  -- Intervalo en segundos entre cada aparición de Allahakbar
+  self.enemySpawnTimer = 0
 end
 
 function Spawner:update(dt)
-  ---------------------------------------
   self.time = self.time + dt
-  if enemyVisibility.AllahAkbar==true then
-  if self.time >self.spawnTime then
-    print (enemyVisibility.Allahakbar)
-      
-      local e = Enemy_AllahAkbar()
-      table.insert(EnemyList,e)
-      print ("new allahakbar")
-    end
-    --self.spawnTime = self.spawnTime - punts*dt*dt
-    self.time = 0
+  self.enemySpawnTimer = self.enemySpawnTimer + dt
 
+  if enemyVisibility.Allahakbar == true then
+    if self.time > self.spawnTime then
+      if self.enemySpawnTimer >= self.enemySpawnInterval then
+        local e = Allahakbar()
+        table.insert(EnemyList, e)
+        print("new allahakbar")
+        self.enemySpawnTimer = 0  -- Reiniciar el temporizador de aparición
+      end
+      self.time = 0
+    end
   end
- ------------------------------------------------ SPAWN ENEMIGOS
 end
 
 function Spawner:draw()

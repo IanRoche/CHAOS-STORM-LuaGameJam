@@ -4,6 +4,8 @@ local Player=require "src.Player"
 local SmallCircle=require "src.Enemies.SmallCircle"
 
 
+
+
 local smalCircleAmount=10
 
 function Enemy_AllahAkbar:new()
