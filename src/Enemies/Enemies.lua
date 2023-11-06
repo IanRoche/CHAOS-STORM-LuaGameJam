@@ -11,14 +11,14 @@ EnemyList={}
 -- Tabla para llevar un seguimiento de qué enemigos deben aparecer
  enemyVisibility = {
     Allahakbar = false,  -- Por defecto, aparece
-    --Enemy = false,      -- Por defecto, aparece
+    Enemy = false,      -- Por defecto, aparece
 }
 
 function Enemies:new()
     --print("Enemies")
     Allahakbar:new()
     Spawner:new()
-    --Enemy:new()
+    Enemy:new()
 end
 
 function Enemies:update(dt)
@@ -31,6 +31,9 @@ function Enemies:update(dt)
    
     if enemyVisibility.Allahakbar then
         Allahakbar:update(dt)
+    end
+    if enemyVisibility.Enemy then
+        Enemy:update(dt)
     end
 end
 
@@ -45,7 +48,7 @@ function Enemies:draw()
         Allahakbar:draw()
     end
     if enemyVisibility.Enemy then
-       -- Enemy:draw()
+        Enemy:draw()
     end
 end
 
