@@ -10,18 +10,23 @@ function Spawner:new()
   self.time = 0
   self.enemySpawnInterval = 1  -- Intervalo en segundos entre cada aparición de Allahakbar
   self.enemySpawnTimer = 0
+  
+  self.AllahAkbarSpawnTime = 1
+  self.AllahAkbarTime = 0
+  self.AllahAkbarSpawnInterval = 1  -- Intervalo en segundos entre cada aparición de Allahakbar
+  self.AllahAkbarSpawnTimer = 0
 
-  self.allahakbarTimer=2
-  self.allahakbarinterval=0
 end
 
 function Spawner:update(dt)
   self.time = self.time + dt
   self.enemySpawnTimer = self.enemySpawnTimer + dt
+  
+self:updateAllahakbarTimer(dt)
 
   if enemyVisibility.Allahakbar == true then
-    if self.time > self.spawnTime then
-      if self.enemySpawnTimer >= self.enemySpawnInterval then
+    if self.AllahAkbarTimetime > self.AllahAkbarSpawnTime  then
+      if self.AllahAkbarSpawnTimer>= self.enemySpawnInterval then
         local e = Allahakbar()
         table.insert(EnemyList, e)
         print("new allahakbar")
@@ -42,6 +47,14 @@ function Spawner:update(dt)
     end
   end
 end
+
+function Spawner:updateAllahakbarTimer(dt)
+  
+  self.AllahAkbarTimetime = self.AllahAkbarTime + dt
+  self.AllahAkbarSpawnTimer = self.AllahAkbarSpawnTimer + dt
+  
+end
+
 
 function Spawner:draw()
 end
