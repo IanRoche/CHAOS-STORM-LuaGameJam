@@ -12,14 +12,16 @@ end
 function Spawner:update(dt)
   ---------------------------------------
   self.time = self.time + dt
+  if enemyVisibility.AllahAkbar==true then
   if self.time >self.spawnTime then
-    local e = Enemy_AllahAkbar()
-    self.time = 0
-    if enemyVisibility.AllahAkbar==true then
+    print (enemyVisibility.Allahakbar)
       
+      local e = Enemy_AllahAkbar()
       table.insert(EnemyList,e)
+      print ("new allahakbar")
     end
     --self.spawnTime = self.spawnTime - punts*dt*dt
+    self.time = 0
 
   end
  ------------------------------------------------ SPAWN ENEMIGOS
