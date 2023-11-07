@@ -26,6 +26,7 @@ function Spawner:update(dt)
     self.AllahAkbarTime = self.AllahAkbarTime + dt
     self.AllahAkbarSpawnTimer = self.AllahAkbarSpawnTimer + dt
 
+    --ALLAHAKBAR
     if enemyVisibility.Allahakbar == true then
         if self.AllahAkbarTime > self.AllahAkbarSpawnTime  then
             if self.AllahAkbarSpawnTimer >= self.AllahAkbarSpawnInterval then
@@ -37,6 +38,8 @@ function Spawner:update(dt)
             self.time = 0
         end
     end
+
+    --ENEMY
     if enemyVisibility.Enemy == true then
         if self.time > self.spawnTime then
             if self.enemySpawnTimer >= self.enemySpawnInterval then

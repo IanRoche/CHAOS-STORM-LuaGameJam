@@ -55,7 +55,7 @@ function Scene:draw()
 end
 function Scene:clearAllColliders()
     Collider.clear()
-    print ("Game eliminando colliders")
+    --print ("Game eliminando colliders")
 end
 
 

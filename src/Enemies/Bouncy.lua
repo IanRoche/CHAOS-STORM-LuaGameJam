@@ -1,5 +1,4 @@
 local Object = Object or require "lib.classic"
-local Player=require "src.Player"
 
 -- Define la clase "Bouncy"
 local Bouncy = Object:extend()
@@ -9,6 +8,7 @@ function Bouncy:new(playerX, playerY)
 
     self.x = math.random(love.graphics.getWidth())  -- Posición X aleatoria dentro de la pantalla
     self.y = -20  -- Posición inicial justo arriba de la pantalla
+    self.radius=10
     --print(playerX, playerY)
     -- Calcula el ángulo hacia la posición actual del jugador
     local angleToPlayer = math.atan2(playerY - (-20), playerX - self.x)
@@ -21,6 +21,7 @@ function Bouncy:new(playerX, playerY)
 
     table.insert(EnemyList, self)
 end
+
 function Bouncy:update(dt, playerX, playerY, playerRadius)
     local dx = math.cos(self.angle) * self.speed * dt
     local dy = math.sin(self.angle) * self.speed * dt
@@ -28,26 +29,24 @@ function Bouncy:update(dt, playerX, playerY, playerRadius)
     self.x = self.x + dx
     self.y = self.y + dy
 
-    -- Comprueba las colisiones con el jugador
-   
 
     -- Comprueba las colisiones con las paredes
     if self.x < 0 or self.x > love.graphics.getWidth() then
         self.angle = math.pi - self.angle  -- Invierte el ángulo en caso de colisión con los bordes laterales
         self.wallHits = self.wallHits + 1
-        print("Wall hit count: " .. self.wallHits)
+       -- print("Wall hit count: " .. self.wallHits)
     end
 
     if self.y < 0 then
         self.y = 0
         self.angle = -self.angle  -- Invierte el ángulo en caso de colisión con la parte superior de la pantalla
         self.wallHits = self.wallHits + 1
-        print("Wall hit count: " .. self.wallHits)
+       -- print("Wall hit count: " .. self.wallHits)
     elseif self.y > love.graphics.getHeight() then
         self.y = love.graphics.getHeight()
         self.angle = -self.angle  -- Invierte el ángulo en caso de colisión con la parte inferior de la pantalla
         self.wallHits = self.wallHits + 1
-        print("Wall hit count: " .. self.wallHits)
+        --print("Wall hit count: " .. self.wallHits)
     end
 
     -- Si ha tocado las paredes 3 veces, destruye el enemigo
@@ -68,10 +67,9 @@ end
 -- Método para dibujar el enemigo
 function Bouncy:draw()
     love.graphics.setColor(0, 0, 1)  -- Establece el color a azul (RGB: 0, 0, 1)
-    love.graphics.circle("fill", self.x, self.y, 10)
+    love.graphics.circle("fill", self.x, self.y,self.radius)
     love.graphics.setColor(1, 1, 1)  -- Restaura el color predeterminado (blanco)
 end
-
 
 -- Método para destruir el enemigo
 function Bouncy:destroy()

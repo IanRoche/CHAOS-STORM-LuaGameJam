@@ -137,7 +137,7 @@ function Player:destroy()
         end
     end
 
-    print("Destroy")
+    --print("Destroy")
     ChangeScene("GameOver")
 end
 
