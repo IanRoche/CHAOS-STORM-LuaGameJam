@@ -49,7 +49,7 @@ function Bouncy:update(dt, playerX, playerY, playerRadius)
         --print("Wall hit count: " .. self.wallHits)
     end
 
-    --Si ha tocado las paredes 3 veces, destruye el enemigo
+    ---Si ha tocado las paredes 3 veces, destruye el enemigo
     if self.wallHits >= 3 then
         self:destroy()
     end
