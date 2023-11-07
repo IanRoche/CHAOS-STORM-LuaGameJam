@@ -19,7 +19,7 @@ end
 
 function love.draw()
   scene:draw()
-  Collider:draw()
+  --Collider:draw()
 end
 
 function ChangeScene(nextScene)

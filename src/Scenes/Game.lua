@@ -62,11 +62,11 @@ end
 function Scene:getNewDifficultyLevel()
     -- Lógica para determinar el nuevo nivel de dificultad en función de la puntuación
     local newDifficultyLevel
-    if _Score >= 20 then
+    if _Score >= 23 then
         newDifficultyLevel = 5
-    elseif _Score >= 15 then
+    elseif _Score >= 19 then
         newDifficultyLevel = 4
-    elseif _Score >= 10 then
+    elseif _Score >= 12 then
         newDifficultyLevel = 3
     elseif _Score >=5 then
         newDifficultyLevel = 2
@@ -83,9 +83,10 @@ function Scene:applyDifficultyLevel(level)
         --ideas: spwanee un tipo de enemigo
         --la barrra mas rapida (modificar vel de la barra)  
         print("tutorial")
-        m_Enemies:toggleEnemy("Enemy",false)
         m_Enemies:toggleEnemy("Allahakbar",false)
+        m_Enemies:toggleEnemy("Enemy",false)
         m_Enemies:toggleEnemy("Bouncy",true)
+
         m_Spawner.subject:notifyObservers(2)
 
         
@@ -97,8 +98,8 @@ function Scene:applyDifficultyLevel(level)
         --ballas que llegas de "arriba" de la pantalla (literalmente una luvia)
         --halakbahr (nivel1)
         --)
-        m_Enemies:toggleEnemy("Enemy",false)
-        m_Enemies:toggleEnemy("Allahakbar",true)
+        m_Enemies:toggleEnemy("Allahakbar",false)
+        m_Enemies:toggleEnemy("Enemy",true)
         m_Enemies:toggleEnemy("Bouncy",true)
 
         m_Spawner.subject:notifyObservers(0.2)
@@ -112,12 +113,15 @@ function Scene:applyDifficultyLevel(level)
         -- ... y así sucesivamente
 
         print("nivel 2")
-        m_Enemies:toggleEnemy("Enemy",true)
         m_Enemies:toggleEnemy("Allahakbar",true)
+        m_Enemies:toggleEnemy("Enemy",true)
 
     elseif level==4  then
         print("nivel 3")
     elseif level==5 then
+        m_Enemies:toggleEnemy("Allahakbar",true)
+        m_Enemies:toggleEnemy("Enemy",true)
+        m_Enemies:toggleEnemy("Bouncy",true)
         print("nivel 4")
 
     end

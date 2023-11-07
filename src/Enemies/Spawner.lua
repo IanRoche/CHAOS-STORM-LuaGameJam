@@ -43,7 +43,7 @@ function Spawner:update(dt)
             if self.AllahAkbarSpawnTimer >= self.AllahAkbarSpawnInterval then
                 local e = Allahakbar()
                 table.insert(EnemyList, e)
-                print("in if - AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
+                --print("in if - AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
                 self.AllahAkbarSpawnTimer = 0  -- Reiniciar el temporizador de aparición
             end
             self.AllahAkbarTime = 0
@@ -56,7 +56,7 @@ function Spawner:update(dt)
             if self.EnemySpawnTimer >= self.EnemySpawnInterval then
                 local eb = Enemy()
                 table.insert(EnemyList, eb)
-                print("BASIC ENEMY")
+                --print("BASIC ENEMY")
                 self.EnemySpawnTimer = 0  -- Reiniciar el temporizador de aparición
             end
             self.EnemyTime = 0
@@ -77,15 +77,16 @@ function Spawner:update(dt)
     end
 end
 
+
 function Spawner:updateValue(newInterval)
     self.AllahAkbarSpawnInterval = newInterval
-    print("Updated AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
+    --print("Updated AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
 
     self.EnemySpawnInterval = newInterval
-    print("Updated EnemySpawnInterval: " .. self.EnemySpawnInterval)
+    --print("Updated EnemySpawnInterval: " .. self.EnemySpawnInterval)
 
     self.BouncySpawnInterval = newInterval
-    print("Updated BouncySpawnInterval: " .. self.BouncySpawnInterval)
+    --print("Updated BouncySpawnInterval: " .. self.BouncySpawnInterval)
     
     
 end
