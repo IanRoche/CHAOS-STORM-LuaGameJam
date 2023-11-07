@@ -29,8 +29,11 @@ function Enemy:update(dt)
     end
 
     if self:checkCollisionWithEnemy() then
-        self:destroy()  -- Destruye el enemigo si colisiona consigo mismo
+        self:destroy()  -- Enemy se destruye al tocar otro enemigo de la lista EnemyList
+
     end
+
+    
 end
 
 function Enemy:draw()
@@ -65,6 +68,7 @@ function Enemy:checkCollisionWithEnemy()
 
     return false
 end
+
 
 
 function Enemy:destroy()
