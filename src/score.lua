@@ -19,7 +19,7 @@ function Score:update(dt)
     if self.timeElapsed >= 1 then
         self:increaseScore(self.pointsPerSecond)  -- Aumenta la puntuación
         self.timeElapsed = self.timeElapsed - 1 
-        print(_Score) -- Reinicia el tiempo transcurrido
+        --print(_Score) -- Reinicia el tiempo transcurrido
     end
     if  _Score >5 and tutorialTime==true then
         tutorialTime=false

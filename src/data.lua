@@ -32,7 +32,6 @@ MenuFontSize = 30
 ExitKey = "escape"
 -- GAME OVER
 GameOverColor = {1,0,0,1}
-WinColor = {0, 1, 0, 1}
 LoseColor = {1, 0, 0, 1}
 GameOverText = ""
 GameOverFontSize = 70
@@ -47,5 +46,12 @@ end
 _Score=0
 CurrentDifficultyLevel =1
 
+--SPAWNER
+AllahakbarSpawnInterval = 3  -- Intervalo en segundos entre la aparición de Allahakbar
+EnemySpawnInterval = 3 
+
+--ENEMIES
+----ALLAHAKBAR
+AllahAkbarVelocity =100
 
 return Data

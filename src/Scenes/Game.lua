@@ -4,24 +4,27 @@ local Enemies=require "src.Enemies.Enemies"
 local Player =Player or require "src.Player"
 local Score = require "src.score"  
 local CirclesRow=CirclesRow or  require "src.CirclesRow"
+local Spawner=require "src.Enemies.Spawner"
 
 local m_Enemies
 local m_Player
 local m_Score
 local currentDifficultyLevel = 0  -- Nivel de dificultad actual
 local m_CirclesRow
+local m_Spawner
 
 function Scene:new()
     print("Game")
+    m_Player = Player(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed,true)
     if #Collider.colliders>1 then
         
         Collider:clearAllColliders()
     end
     --m_Bar = Bar(BarStartPosX, BarStartPosY, BarWidth, BarHeight, BarRotSpeed, BarStartRotation)  -- Crea una instancia de la barra
-    m_Player = Player(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed,true)
     m_Score = Score() 
     m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,1,40,math.pi)
     m_Enemies=Enemies()
+    m_Spawner = Spawner()
 end
 
 function Scene:update(dt)
@@ -59,14 +62,16 @@ end
 function Scene:getNewDifficultyLevel()
     -- Lógica para determinar el nuevo nivel de dificultad en función de la puntuación
     local newDifficultyLevel
-    if _Score >= 15 then
+    if _Score >= 20 then
+        newDifficultyLevel = 5
+    elseif _Score >= 15 then
         newDifficultyLevel = 4
     elseif _Score >= 10 then
         newDifficultyLevel = 3
-    elseif _Score >= 5 then
+    elseif _Score >=5 then
         newDifficultyLevel = 2
-    else
-        newDifficultyLevel = 1
+    else    
+        newDifficultyLevel = 1 ----------------------------------------------------------------
     end
     return newDifficultyLevel
 end
@@ -77,10 +82,13 @@ function Scene:applyDifficultyLevel(level)
         -- Reglas del nivel 1
         --ideas: spwanee un tipo de enemigo
         --la barrra mas rapida (modificar vel de la barra)  
-        print("nivel 1++")
-        m_Enemies:toggleEnemy("Allahakbar",true)
+        print("tutorial")
         m_Enemies:toggleEnemy("Enemy",false)
+        m_Enemies:toggleEnemy("Allahakbar",false)
+        m_Enemies:toggleEnemy("Bouncy",true)
+        m_Spawner.subject:notifyObservers(2)
 
+        
     elseif level == 2 then
         -- Reglas del nivel 2
         --barra mas rapida
@@ -88,9 +96,14 @@ function Scene:applyDifficultyLevel(level)
         --enemigo que rebota en las wall (paderes)
         --ballas que llegas de "arriba" de la pantalla (literalmente una luvia)
         --halakbahr (nivel1)
-        --
+        --)
+        m_Enemies:toggleEnemy("Enemy",false)
         m_Enemies:toggleEnemy("Allahakbar",true)
-        print("nivel 2")
+        m_Enemies:toggleEnemy("Bouncy",true)
+
+        m_Spawner.subject:notifyObservers(0.2)
+        AllahAkbarVelocity=100
+        print("nivel 1")
     elseif level == 3 then
         -- Reglas del nivel 3
         --lluvia en el eje x (x)
@@ -98,13 +111,14 @@ function Scene:applyDifficultyLevel(level)
         --halahckbar (nivel2)
         -- ... y así sucesivamente
 
-        print("nivel 3")
-        m_Enemies:toggleEnemy("Allahakbar",false)
-        m_Enemies:toggleEnemy("Enemy",false)
+        print("nivel 2")
+        m_Enemies:toggleEnemy("Enemy",true)
+        m_Enemies:toggleEnemy("Allahakbar",true)
 
     elseif level==4  then
+        print("nivel 3")
+    elseif level==5 then
         print("nivel 4")
-    else        
 
     end
 end

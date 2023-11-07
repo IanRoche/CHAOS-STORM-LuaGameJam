@@ -5,7 +5,7 @@ local Player=require "src.Player"
 function Enemy:new()
     self.x = -1  -- Posición inicial x fuera de la pantalla
     self.y = love.math.random(0,love.graphics.getHeight())  -- Posición y aleatoria
-    self.speed = 150  -- Velocidad de movimiento
+    self.speed = 100  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.exploded = false  -- Bandera para rastrear si ha explotado
     
