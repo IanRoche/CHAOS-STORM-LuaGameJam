@@ -1,10 +1,10 @@
 local Object = Object or require "lib.classic"
-
--- Define la clase "Bouncy"
 local Bouncy = Object:extend()
 
 -- Constructor
 function Bouncy:new(playerX, playerY)
+
+    local playerX, playerY = GetPlayerPosition()
 
     self.x = math.random(love.graphics.getWidth())  -- Posición X aleatoria dentro de la pantalla
     self.y = -20  -- Posición inicial justo arriba de la pantalla
@@ -13,7 +13,6 @@ function Bouncy:new(playerX, playerY)
     -- Calcula el ángulo hacia la posición actual del jugador
     local angleToPlayer = math.atan2(playerY - (-20), playerX - self.x)
     self.exploded = false  -- Bandera para rastrear si ha explotado
-
     self.angle = angleToPlayer  -- Ángulo hacia la posición del jugador
     self.speed = 200  -- Velocidad de movimiento
     self.wallHits = 0  -- Contador de colisiones con las paredes
@@ -23,6 +22,7 @@ function Bouncy:new(playerX, playerY)
 end
 
 function Bouncy:update(dt, playerX, playerY, playerRadius)
+
     local dx = math.cos(self.angle) * self.speed * dt
     local dy = math.sin(self.angle) * self.speed * dt
 
@@ -49,7 +49,7 @@ function Bouncy:update(dt, playerX, playerY, playerRadius)
         --print("Wall hit count: " .. self.wallHits)
     end
 
-    -- Si ha tocado las paredes 3 veces, destruye el enemigo
+    --Si ha tocado las paredes 3 veces, destruye el enemigo
     if self.wallHits >= 3 then
         self:destroy()
     end

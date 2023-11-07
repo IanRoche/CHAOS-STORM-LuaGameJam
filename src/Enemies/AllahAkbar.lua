@@ -27,7 +27,7 @@ end
 
 function Enemy_AllahAkbar:update(dt)
     
-    local playerX, playerY = GetPlayerPosition()  -- Obtiene la posición del jugador (ajusta esto según tu código)
+    local playerX, playerY = GetPlayerPosition()
     if not self.exploded then
 
         -- Calcula la distancia entre el enemigo y el jugador
