@@ -9,21 +9,36 @@ local SmallCircle=require "src.Enemies.SmallCircle"
 local smalCircleAmount=6
 
 function Enemy_AllahAkbar:new()
-    self.x = -1  -- Posición inicial x fuera de la pantalla
-    self.y = love.math.random(0,love.graphics.getHeight())  -- Posición y aleatoria
+    local playerX, playerY = GetPlayerPosition()
+    
+    self.radius = 20  -- Radio del enemigo
     self.speed = AllahAkbarVelocity  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.exploded = false  -- Bandera para rastrear si ha explotado
-    
-    self.radius = 20  -- Radio del enemigo
     self.smallCircles = {}  -- Tabla para las fracciones pequeñas
-    --print("new Allahakbar")
+    
+    local side = math.random(1, 4)  -- Genera un número aleatorio para determinar el lado de aparición
 
+    if side == 1 then
+        -- Aparecer arriba de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = -self.radius
+    elseif side == 2 then
+        -- Aparecer abajo de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = love.graphics.getHeight() + self.radius
+    elseif side == 3 then
+        -- Aparecer a la izquierda de la pantalla
+        self.x = -self.radius
+        self.y = math.random(0, love.graphics.getHeight())
+    else
+        -- Aparecer a la derecha de la pantalla
+        self.x = love.graphics.getWidth() + self.radius
+        self.y = math.random(0, love.graphics.getHeight())
+    end
     table.insert(EnemyList, self)
-
-
-
 end
+
 
 function Enemy_AllahAkbar:update(dt)
     

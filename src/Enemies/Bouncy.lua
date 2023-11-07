@@ -3,32 +3,48 @@ local Bouncy = Object:extend()
 
 -- Variables de clase para la velocidad compartida y el número máximo de rebotes
 Bouncy.speed = 100  -- Velocidad compartida
-Bouncy.maxWallHits = 5  -- Número máximo de rebotes compartido
+Bouncy.maxWallHits = 4  -- Número máximo de rebotes compartido
 
 local allBouncysList ={}
 -- Constructor
 function Bouncy:new()
-
     local playerX, playerY = GetPlayerPosition()
 
-    self.x = math.random(0,love.graphics.getWidth())  -- Posición X aleatoria dentro de la pantalla
-    self.y = -20  -- Posición inicial justo arriba de la pantalla
+    local side = math.random(1, 4)  -- Genera un número aleatorio para determinar el lado de aparición
+
+    if side == 1 then
+        -- Aparecer arriba de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = -20
+        self.angle = math.random(0, math.pi)  -- Ángulo aleatorio apuntando hacia abajo
+    elseif side == 2 then
+        -- Aparecer abajo de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = love.graphics.getHeight() + 20
+        self.angle = math.random(0, math.pi)  -- Ángulo aleatorio apuntando hacia arriba
+    elseif side == 3 then
+        -- Aparecer a la izquierda de la pantalla
+        self.x = -20
+        self.y = math.random(0, love.graphics.getHeight())
+        self.angle = math.random(-math.pi / 2, math.pi / 2)  -- Ángulo aleatorio apuntando hacia la derecha
+    else
+        -- Aparecer a la derecha de la pantalla
+        self.x = love.graphics.getWidth() + 20
+        self.y = math.random(0, love.graphics.getHeight())
+        self.angle = math.random(-math.pi / 2, math.pi / 2)  -- Ángulo aleatorio apuntando hacia la izquierda
+    end
+
     self.radius = 10
-    --print(playerX, playerY)
-    -- Calcula el ángulo hacia la posición actual del jugador
-    local angleToPlayer = math.atan2(playerY - (-20), playerX - self.x)
-    self.exploded = false  -- Bandera para rastrear si ha explotado
-    self.angle = angleToPlayer  -- Ángulo hacia la posición del jugador
-    self.speed = Bouncy.speed  -- Utiliza la velocidad compartida
-    self.wallHits = 0  -- Contador de colisiones con las paredes
-    self.maxWallHits = Bouncy.maxWallHits  -- Utiliza el número máximo de rebotes compartido
-    self.aliveColor={0,0,1}
-    self.deadColor={1,0,1,0}
-    self.color=self.aliveColor
-    
+    self.exploded = false
+    self.speed = Bouncy.speed
+    self.wallHits = 0
+    self.maxWallHits = Bouncy.maxWallHits
+    self.aliveColor = {0, 0, 1}
+    self.deadColor = {1, 0, 1, 1}
+    self.color = self.aliveColor
+
     table.insert(EnemyList, self)
-    table.insert(allBouncysList, self) 
-    
+    table.insert(allBouncysList, self)
 end
 
 function Bouncy:update(dt)

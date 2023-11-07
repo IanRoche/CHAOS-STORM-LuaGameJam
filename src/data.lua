@@ -35,6 +35,7 @@ GameOverColor = {1,0,0,1}
 LoseColor = {1, 0, 0, 1}
 GameOverText = ""
 GameOverFontSize = 70
+GameoverEscFontSize = 20
 
 -- COLORS
 BallColor = {1.0, 1.0, 1.0, 1.0}

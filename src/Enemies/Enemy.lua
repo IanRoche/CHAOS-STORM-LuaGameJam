@@ -3,16 +3,36 @@ local Enemy = Object:extend()
 local Player=require "src.Player"
 
 function Enemy:new()
-    self.x = -1  -- Posición inicial x fuera de la pantalla
+    local playerX, playerY = GetPlayerPosition()
+
+    
     self.radius = 20  -- Radio del enemigo
-    self.y = love.math.random(0, love.graphics.getHeight() - self.radius * 2)  -- Posición y aleatoria
     self.speed = 100  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.dead = false  -- Bandera para rastrear si ha explotado
     
-    table.insert(EnemyList, self)
+    local side = math.random(1, 4)  -- Genera un número aleatorio para determinar el lado de aparición
 
+    if side == 1 then
+        -- Aparecer arriba de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = -self.radius
+    elseif side == 2 then
+        -- Aparecer abajo de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = love.graphics.getHeight() + self.radius
+    elseif side == 3 then
+        -- Aparecer a la izquierda de la pantalla
+        self.x = -self.radius
+        self.y = math.random(0, love.graphics.getHeight())
+    else
+        -- Aparecer a la derecha de la pantalla
+        self.x = love.graphics.getWidth() + self.radius
+        self.y = math.random(0, love.graphics.getHeight())
+    end
+    table.insert(EnemyList, self)
 end
+
 
 function Enemy:update(dt)
     

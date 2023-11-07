@@ -32,9 +32,14 @@ function Scene:draw()
     -- Dibuja la puntuación debajo de "GAME OVER"
     love.graphics.setFont(love.graphics.newFont(MenuFontSize))
     local scoreText = "Puntuación: " .. self.finalScore
-
     local scoreWidth = love.graphics.getFont():getWidth(scoreText)
     love.graphics.print(scoreText, (screenWidth - scoreWidth) / 2, screenHeight / 2)
+
+    -- Dibuja "Press ESC to restart" debajo de la puntuación
+    love.graphics.setFont(love.graphics.newFont(GameoverEscFontSize))
+    local restartText = "Press ESC to restart"
+    local restartWidth = love.graphics.getFont():getWidth(restartText)
+    love.graphics.print(restartText, (screenWidth - restartWidth) / 2, screenHeight / 3*2 + GameoverEscFontSize)
 
     love.graphics.setColor(1, 1, 1)
 end
