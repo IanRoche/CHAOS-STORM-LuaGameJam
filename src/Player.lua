@@ -117,14 +117,24 @@ function Player:CheckWindowCollisions()
     self.y = l_NewY
 end
 
-function Player:checkCollisionWithEnemy(enemy)--Esto hace que el player muera si entra en contacto con allahAkbar PERO hay un problema,
-    for _, enemy in ipairs(EnemyList) do
-        if enemy:checkCollisionWithPlayer(self) then
-            self:destroy()  -- El jugador choca con un "Allahakbar", se activa el "Game Over"
+function Player:checkCollisionWithEnemy(enemy)
+    for _, e in ipairs(EnemyList) do
+        if e:checkCollisionWithPlayer(self) then
+            if not IsInPowerUpsList(e) then
+                self:destroy()  -- El jugador choca con un enemigo que no está en PowerUpsList, se activa el "Game Over"
+            end
         end
     end
 end
 
+function IsInPowerUpsList(enemy)
+    for _, powerUp in ipairs(PowerUpsList) do
+        if enemy == powerUp then
+            return true
+        end
+    end
+    return false
+end
 -- Implementar el método destroy para la clase Player
 function Player:destroy()
     -- Implementa la destrucción del jugador aquí

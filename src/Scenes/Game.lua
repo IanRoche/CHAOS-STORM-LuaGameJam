@@ -92,16 +92,16 @@ function Scene:applyDifficultyLevel(level)
         -- Reglas del nivel 1
         --ideas: spwanee un tipo de enemigo
         --la barrra mas rapida (modificar vel de la barra)  
-        print("tutorial")
         -- m_Enemies:toggleEnemy("Allahakbar",false)
         -- m_Enemies:toggleEnemy("Enemy",false)
         -- m_Enemies:toggleEnemy("Bouncy",true)
-
         -- m_Spawner.subject:notifyObservers(2)
-        m_Enemies:toggleEntity("Allahakbar",true,false)
-        m_Enemies:toggleEntity("Enemy",true,false)
-        m_Enemies:toggleEntity("Bouncy",true,false)
-        m_Enemies:toggleEntity("PowerUpSpeed",false,true)
+        m_Enemies:toggleEntity("Enemy",false,false)
+        m_Enemies:toggleEntity("Allahakbar",false,false)
+        m_Enemies:toggleEntity("Bouncy",false,false)
+        m_Enemies:toggleEntity("PowerUpSpeed",true,true)
+        
+        print("tutorial")
         
     elseif level == 2 then
         -- Reglas del nivel 2
@@ -116,15 +116,15 @@ function Scene:applyDifficultyLevel(level)
         -- m_Enemies:toggleEnemy("Bouncy",true)
 
         -- m_Spawner.subject:notifyObservers(0.2)
-
-        m_Enemies:toggleEntity("Allahakbar",true,true)
-        m_Enemies:toggleEntity("Enemy",true,false)
-        m_Enemies:toggleEntity("Bouncy",true,false)
-        m_Enemies:toggleEntity("PowerUpSpeed",false,false)
-
+        m_Enemies:toggleEntity("Enemy",true,true)
+        m_Enemies:toggleEntity("Allahakbar",false,false)
+        m_Enemies:toggleEntity("Bouncy",false,false)
+        m_Enemies:toggleEntity("PowerUpSpeed",false,true)
 
         AllahAkbarVelocity=100
+
         print("nivel 1")
+
     elseif level == 3 then
         -- Reglas del nivel 3
         --lluvia en el eje x (x)
@@ -132,16 +132,30 @@ function Scene:applyDifficultyLevel(level)
         --halahckbar (nivel2)
         -- ... y así sucesivamente
 
+        m_Enemies:toggleEntity("Enemy",true,false)
+        m_Enemies:toggleEntity("Allahakbar",true,false)
+        m_Enemies:toggleEntity("Bouncy",true,false)
+        m_Enemies:toggleEntity("PowerUpSpeed",true,true)
+
         print("nivel 2")
-        m_Enemies:toggleEnemy("Allahakbar",true)
-        m_Enemies:toggleEnemy("Enemy",true)
 
     elseif level==4  then
+        
+        m_Enemies:toggleEntity("Enemy",true,true)
+        m_Enemies:toggleEntity("Allahakbar",true,true)
+        m_Enemies:toggleEntity("Bouncy",true,false)
+        m_Enemies:toggleEntity("PowerUpSpeed",false,true)
+        
+        AllahAkbarVelocity=200
+
         print("nivel 3")
     elseif level==5 then
-        m_Enemies:toggleEnemy("Allahakbar",true)
-        m_Enemies:toggleEnemy("Enemy",true)
-        m_Enemies:toggleEnemy("Bouncy",true)
+        
+        m_Enemies:toggleEntity("Enemy",true,true)
+        m_Enemies:toggleEntity("Allahakbar",true,true)
+        m_Enemies:toggleEntity("Bouncy",true,true)
+        m_Enemies:toggleEntity("PowerUpSpeed",false,true)
+        
         print("nivel 4")
 
     end

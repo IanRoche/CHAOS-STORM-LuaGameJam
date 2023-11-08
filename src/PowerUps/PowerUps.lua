@@ -1,6 +1,5 @@
 local Object = Object or require "lib.classic"
 local PowerUps = Object:extend()
-local PowerUpSpeed = require "src.PowerUps.PowerUpSpeed"
 local SpawnerPowerUps = require "src.PowerUps.SpawnerPowerUps"
 
 PowerUpsList = {}
