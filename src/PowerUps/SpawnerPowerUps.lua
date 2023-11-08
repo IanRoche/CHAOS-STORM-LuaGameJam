@@ -1,41 +1,24 @@
 local Object = Object or require "lib.classic"
-local Subject = require "src.Subject"  -- Ajusta la ruta de acceso al archivo Subject
-local PowerUpSpeed = PowerUpSpeed or require "src.PowerUps.PowerUpSpeed"
-
 local SpawnerPowerUps = Object:extend()
+local PowerUpSpeed = require "src.PowerUps.PowerUpSpeed"
 
 function SpawnerPowerUps:new()
-    self.SpeedPowerUpSpawnTime = 2
-    self.SpeedPowerUpTime = 0
-    self.SpeedPowerUpSpawnTimer = 0
-
-    self.subject = Subject:new()
-    self.subject:addObserver(self)
+    self.spawnTime = 2  -- Tiempo entre generaciones de power-ups
+    self.spawnTimer = 0  -- Temporizador para controlar la generación de power-ups
 end
 
 function SpawnerPowerUps:update(dt)
-    
-    --self.SpeedPowerUpTime = self.SpeedPowerUpTime + dt
-    --self.SpeedPowerUpSpawnTimer = self.SpeedPowerUpSpawnTimer + dt
+    self.spawnTimer = self.spawnTimer + dt
 
-    -- POWER UP SPEED
-    if powerUpsVisibility.PowerUpSpeed == true then
-        if self.SpeedPowerUpTime > self.SpeedPowerUpSpawnTime then
-            if self.SpeedPowerUpSpawnTimer >= self.SpeedPowerUpSpawnInterval then
-                local ps = PowerUpSpeed()
-                table.insert(PowerUpsList, ps)
-                print("POWER UP")
-                self.SpeedPowerUpSpawnTimer = 0  -- Reiniciar el temporizador de aparición
-            end
-            self.SpeedPowerUpTime = 0
-        end
+    if self.spawnTimer >= self.spawnTime then
+        self:spawnPowerUp()
+        self.spawnTimer = 0  -- Reiniciar el temporizador de generación
     end
-
 end
 
-
-
-function SpawnerPowerUps:draw()
+function SpawnerPowerUps:spawnPowerUp()
+    local powerUp = PowerUpSpeed()
+    table.insert(PowerUpsList, powerUp)
 end
 
 return SpawnerPowerUps
