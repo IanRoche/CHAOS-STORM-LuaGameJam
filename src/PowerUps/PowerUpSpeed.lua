@@ -8,7 +8,6 @@ function PowerUpSpeed:new()
     self.x = math.random(0, love.graphics.getWidth() - self.width)
     self.y = math.random(0, love.graphics.getHeight() - self.height)
     table.insert(PowerUpsList, self)
-    table.insert(EnemyList, self)
 end
 
 function PowerUpSpeed:update(dt)
@@ -47,7 +46,6 @@ function PowerUpSpeed:destroy()
     for i, powerUp in ipairs(PowerUpsList) do
         if powerUp == self then
             table.remove(PowerUpsList, i)
-            table.remove(EnemyList, i)
             break
         end
     end
