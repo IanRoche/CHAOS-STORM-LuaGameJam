@@ -38,6 +38,7 @@ end
 
 function Scene:update(dt)
    -- m_Bar:update(dt,DestroyableObjects)
+   m_Enemies:update(dt)
    m_Score:update(dt)
    m_CirclesRow:update(dt)
    m_Player:update(dt)
@@ -50,7 +51,6 @@ function Scene:update(dt)
     ChangeScene("GameOver")
    end
    self:UpdateLevel(dt)
-   m_Enemies:update(dt)
 
    m_PowerUps:update(dt)
 end

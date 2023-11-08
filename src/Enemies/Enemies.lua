@@ -29,7 +29,10 @@ end
 
 function Enemies:update(dt)
     Spawner:update(dt)
-
+    
+    if enemyVisibility.Enemy then
+        Enemy:update(dt)
+    end
     local updatedAllahakbar = false  -- Bandera para controlar si se ha actualizado "Allahakbar"
 
     for _, enemy in ipairs(EnemyList) do
@@ -44,9 +47,6 @@ function Enemies:update(dt)
         Allahakbar:update(dt)
     end
 
-    if enemyVisibility.Enemy then
-        Enemy:update(dt)
-    end
 
     
 

@@ -7,7 +7,7 @@ function Enemy:new()
     self.radius = 20  -- Radio del enemigo
     self.speed = 100  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
-    self.exploded = false  -- Bandera para rastrear si ha explotado
+    self.dead = false  -- Bandera para rastrear si ha explotado
     
     local side = math.random(1, 4)  -- Genera un número aleatorio para determinar el lado de aparición
 
@@ -34,7 +34,10 @@ function Enemy:new()
 end
 
 function Enemy:update(dt)
-    if not self.exploded then
+    if not self.dead then
+        if self:checkCollisionWithEnemy() then
+            self:destroy()  -- Enemy se destruye al tocar otro enemigo de la lista EnemyList
+        end
         local playerX, playerY = GetPlayerPosition()  -- Obtiene la posición actual del jugador (ajusta esto según tu código)
         -- Calcula el ángulo hacia el jugador
         local angle = math.atan2(playerY - self.y, playerX - self.x)
@@ -47,9 +50,6 @@ function Enemy:update(dt)
         self.y = self.y + velY * dt
     end
 
-    if self:checkCollisionWithEnemy() then
-        self:destroy()  -- Enemy se destruye al tocar otro enemigo de la lista EnemyList
-    end
 end
 
 function Enemy:draw()
@@ -60,7 +60,7 @@ end
 
 
 function Enemy:checkCollisionWithPlayer(player)
-    if not self.exploded then
+    if not self.dead then
         local distance = math.sqrt((player.x - self.x) ^ 2 + (player.y - self.y) ^ 2)
         local minDistance = player.radius + self.radius
         if   distance <= minDistance then
@@ -73,10 +73,10 @@ end
 
 
 function Enemy:checkCollisionWithEnemy()
-    if not self.exploded then
+    if not self.dead then
         for _, otherEnemy in ipairs(EnemyList) do
             if otherEnemy ~= self and not otherEnemy.exploded then
-                print("Warning: Enemy")
+                --print("Warning: Enemy")
                 local distance = math.sqrt((otherEnemy.x - self.x) ^ 2 + (otherEnemy.y - self.y) ^ 2)
                 local minDistance = otherEnemy.radius + self.radius
                 if distance <= minDistance then
@@ -88,8 +88,6 @@ function Enemy:checkCollisionWithEnemy()
 
     return false
 end
-
-
 
 function Enemy:destroy()
     for i, enemy in ipairs(EnemyList) do
