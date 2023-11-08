@@ -47,10 +47,11 @@ end
 _Score=0
 CurrentDifficultyLevel =1
 
---SPAWNER
+--SPAWNER ENEMIES
 AllahakbarSpawnInterval = 3  -- Intervalo en segundos entre la aparición de Allahakbar
 EnemySpawnInterval = 1 
 BouncySpawnInterval = 1
+
 
 --ENEMIES
 ----ALLAHAKBAR

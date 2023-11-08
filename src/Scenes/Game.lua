@@ -5,6 +5,8 @@ local Player =Player or require "src.Player"
 local Score = require "src.score"  
 local CirclesRow=CirclesRow or  require "src.CirclesRow"
 local Spawner=require "src.Enemies.Spawner"
+local PowerUps = require "src.PowerUps.PowerUps"
+local SpawnerPowerUps = require "src.PowerUps.SpawnerPowerUps"
 
 local m_Enemies
 local m_Player
@@ -12,6 +14,8 @@ local m_Score
 local currentDifficultyLevel = 0  -- Nivel de dificultad actual
 local m_CirclesRow
 local m_Spawner
+local m_PowerUps
+local m_SpawnerPowerUps
 
 function Scene:new()
     print("Game")
@@ -25,6 +29,8 @@ function Scene:new()
     m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,1,40,math.pi)
     m_Enemies=Enemies()
     m_Spawner = Spawner()
+    m_PowerUps = PowerUps()
+    m_SpawnerPowerUps = SpawnerPowerUps()
 end
 
 function Scene:update(dt)
@@ -43,6 +49,8 @@ function Scene:update(dt)
    end
    self:UpdateLevel(dt)
    m_Enemies:update(dt)
+
+   m_PowerUps:update(dt)
 end
 
 
@@ -51,6 +59,8 @@ function Scene:draw()
     m_Score:draw() 
     m_CirclesRow:draw()
     m_Enemies:draw()
+    m_PowerUps:draw()
+
     --futuramente un draw enemy
 end
 function Scene:clearAllColliders()
