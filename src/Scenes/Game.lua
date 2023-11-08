@@ -7,6 +7,7 @@ local CirclesRow=CirclesRow or  require "src.CirclesRow"
 local Spawner=require "src.Enemies.Spawner"
 local PowerUps = require "src.PowerUps.PowerUps"
 local SpawnerPowerUps = require "src.PowerUps.SpawnerPowerUps"
+local Background = require "src.Background"
 
 local m_Enemies
 local m_Player
@@ -31,15 +32,16 @@ function Scene:new()
     m_Spawner = Spawner()
     m_PowerUps = PowerUps()
     m_SpawnerPowerUps = SpawnerPowerUps()
+    m_Background = Background()
+    m_Background.scrollSpeed = 50 
 end
 
 function Scene:update(dt)
    -- m_Bar:update(dt,DestroyableObjects)
    m_Score:update(dt)
-   
    m_CirclesRow:update(dt)
    m_Player:update(dt)
-   
+   m_Background:update(dt)
    -- Verifica la puntuación actual y actualiza la dificultad si es necesario
    self:CheckNewLevel()
    
@@ -55,6 +57,7 @@ end
 
 
 function Scene:draw()
+    m_Background:draw()
     m_Player:draw()
     m_Score:draw() 
     m_CirclesRow:draw()
