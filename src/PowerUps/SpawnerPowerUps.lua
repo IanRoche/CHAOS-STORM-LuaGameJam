@@ -11,7 +11,9 @@ function SpawnerPowerUps:update(dt)
     self.spawnTimer = self.spawnTimer + dt
 
     if self.spawnTimer >= self.spawnTime then
-        self:spawnPowerUp()
+        if PowerUpsVisibility.PowerUpSpeed then  -- Verifica la visibilidad del tipo de power-up
+            self:spawnPowerUp()
+        end
         self.spawnTimer = 0  -- Reiniciar el temporizador de generación
     end
 end

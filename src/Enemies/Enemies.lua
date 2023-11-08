@@ -97,6 +97,29 @@ function Enemies:toggleEnemy(enemyName, value)
     print(enemyName, value)
 end
 
+function Enemies:toggleEntity(entityName, isEnemy, value)
+    local visibilityTable = isEnemy and enemyVisibility or PowerUpsVisibility
+    local entityList = isEnemy and EnemyList or PowerUpsList
+
+    if visibilityTable[entityName] ~= nil then
+        visibilityTable[entityName] = value
+
+        -- Si se establece el valor en falso, destruir todos los enemigos o power-ups de ese tipo
+        if not value then
+            DestroyEntity(entityName, entityList)
+        end
+    end
+    print(entityName, value)
+end
+
+function DestroyEntity(entityType, entityList)
+    for i, entity in ipairs(entityList) do
+        if entity.type == entityType then
+            table.remove(entityList, i)
+        end
+    end
+end
+
 function DestroyEnemy(enemyType)
     for i, enemy in ipairs(EnemyList) do
         if enemy.type == enemyType then
