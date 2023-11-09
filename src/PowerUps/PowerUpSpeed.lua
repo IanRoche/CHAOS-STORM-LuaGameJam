@@ -34,7 +34,7 @@ end
 function PowerUpSpeed:checkCollisionWithPlayer(player)
     local distance = math.sqrt((self.x - player.x) ^ 2 + (self.y - player.y) ^ 2)
     local minDistance = (math.max(self.width, self.height) + player.radius) / 2
-    
+    print ("me e choquiado ")
     if   distance <= minDistance then
         self.exploded=true
         
