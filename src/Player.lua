@@ -8,8 +8,6 @@ Player:implement(ICanBeDestroyedInterface)
 
 local m_PlayerTrigger
 
-
-
 function Player:new(x, y, radius, speed, isDestroyable)
     if x and y and radius then
         self.x = x
@@ -26,10 +24,12 @@ function Player:new(x, y, radius, speed, isDestroyable)
 
         -- Define la función onTriggerEnter para el objeto m_PlayerTrigger
         m_PlayerTrigger.onTriggerEnter = function(other)
-            if other.tag == 'Circle' then
+            if other.tag == 'Circle' and other.isPowerUp then
+                other:applyEffect(self)
+                other:destroy()
+            elseif other.tag == 'Circle' then
                 Player:destroy()
                 print("destroyed by bar")
-
             end
         end
     else
@@ -37,23 +37,39 @@ function Player:new(x, y, radius, speed, isDestroyable)
     end
 end
 
-
 function Player:update(dt)
     self:MovePlayer(dt)
     self:CheckWindowCollisions()
-    if #Collider.colliders>1 or #Collider.circleIDs>1 then
+    if #Collider.colliders > 1 or #Collider.circleIDs > 1 then
         self:updateCollider()
-        
     end
     self:UpdatePlayerPosition(self.x, self.y)
 
+    -- Verificar colisiones con power-ups
+    for _, powerUp in ipairs(PowerUpsList) do
+        if self:checkCollisionWithPowerUp(powerUp) then
+            powerUp:applyEffect(self)
+            powerUp:destroy()
+        end
+    end
+
+    -- Verificar colisiones con enemigos
     for _, enemy in ipairs(EnemyList) do
         if self:checkCollisionWithEnemy(enemy) then
-            self:destroy()  -- El jugador choca con una "bolita," se activa el "Game Over"
+            if not IsInPowerUpsList(enemy) then
+                self:destroy()  -- El jugador choca con un enemigo que no está en PowerUpsList, se activa el "Game Over"
+            end
         end
-    end    
-    
+    end
 end
+
+function Player:checkCollisionWithPowerUp(powerUp)
+    local distance = math.sqrt((self.x - powerUp.x) ^ 2 + (self.y - powerUp.y) ^ 2)
+    local minDistance = (math.max(self.radius, powerUp.width) + powerUp.height) / 2
+    return distance <= minDistance
+end
+
+
 
 function Player:draw()
     love.graphics.setColor(1, 0, 1, 1)
@@ -61,9 +77,9 @@ function Player:draw()
 end
 
 function Player:updateCollider()
-     m_PlayerTrigger.x = self.x
-     m_PlayerTrigger.y = self.y
-     m_PlayerTrigger.angle =math.pi/2
+    m_PlayerTrigger.x = self.x
+    m_PlayerTrigger.y = self.y
+    m_PlayerTrigger.angle = math.pi / 2
 end
 
 function Player:MovePlayer(dt)
@@ -135,6 +151,7 @@ function IsInPowerUpsList(enemy)
     end
     return false
 end
+
 -- Implementar el método destroy para la clase Player
 function Player:destroy()
     -- Implementa la destrucción del jugador aquí
