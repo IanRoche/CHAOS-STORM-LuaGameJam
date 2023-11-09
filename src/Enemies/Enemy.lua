@@ -4,7 +4,9 @@ local Player=require "src.Player"
 
 function Enemy:new()
 
-    self.radius = 20  -- Radio del enemigo
+    self.image = love.graphics.newImage("src/Textures/green_fireball.png")
+    self.radius = 25  -- Radio del enemigo
+    self.escala = self.radius * 2  / self.image:getWidth()
     self.speed = 100  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.dead = false  -- Bandera para rastrear si ha explotado
@@ -54,7 +56,9 @@ end
 
 function Enemy:draw()
   love.graphics.setColor(0, 1, 0)  -- Color rojo
-  love.graphics.circle("fill", self.x, self.y, self.radius)
+  --love.graphics.circle("fill", self.x, self.y, self.radius)
+  love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
+  self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
 end
 
 

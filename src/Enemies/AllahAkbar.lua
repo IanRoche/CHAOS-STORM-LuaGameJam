@@ -12,6 +12,10 @@ function Enemy_AllahAkbar:new()
     local playerX, playerY = GetPlayerPosition()
     
     self.radius = 20  -- Radio del enemigo
+
+    self.image = love.graphics.newImage("src/Textures/bomb.png")
+    self.escala = self.radius * 2  / self.image:getWidth()
+
     self.speed = AllahAkbarVelocity  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.exploded = false  -- Bandera para rastrear si ha explotado
@@ -73,8 +77,10 @@ end
 function Enemy_AllahAkbar:draw()
     if not self.exploded then
         -- Dibuja el enemigo
-        love.graphics.setColor(1, 0, 0)  -- Color rojo
-        love.graphics.circle("fill", self.x, self.y, self.radius)
+        --love.graphics.setColor(1, 0, 0)  -- Color rojo
+        love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
+        self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
+        --love.graphics.circle("fill", self.x, self.y, self.radius)
     else
         -- Dibuja las fracciones pequeñas
         for i, smallCircle in ipairs(self.smallCircles) do
