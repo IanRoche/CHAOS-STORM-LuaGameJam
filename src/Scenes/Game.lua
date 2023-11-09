@@ -2,6 +2,7 @@ local Object = Object or require "lib.classic"
 local Scene = Object:extend()
 local Enemies=require "src.Enemies.Enemies"
 local Player =Player or require "src.Player"
+local Player2 =Player2 or require "src.Player2"
 local Score = require "src.score"  
 local CirclesRow=CirclesRow or  require "src.CirclesRow"
 local Spawner=require "src.Enemies.Spawner"
@@ -11,6 +12,7 @@ local Background = require "src.Background"
 
 local m_Enemies
 local m_Player
+local m_Player2
 local m_Score
 local currentDifficultyLevel = 0  -- Nivel de dificultad actual
 local m_CirclesRow
@@ -21,6 +23,7 @@ local m_SpawnerPowerUps
 function Scene:new()
     print("Game")
     m_Player = Player(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed,true)
+    m_Player2 = Player2(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed,true)
     if #Collider.colliders>1 then
         
         Collider:clearAllColliders()
@@ -42,6 +45,7 @@ function Scene:update(dt)
    m_Score:update(dt)
    m_CirclesRow:update(dt)
    m_Player:update(dt)
+   m_Player2:update(dt)
    m_Background:update(dt)
    -- Verifica la puntuación actual y actualiza la dificultad si es necesario
    self:CheckNewLevel()
@@ -59,6 +63,7 @@ end
 function Scene:draw()
     m_Background:draw()
     m_Player:draw()
+    m_Player2:draw()
     m_Score:draw() 
     m_CirclesRow:draw()
     m_Enemies:draw()
