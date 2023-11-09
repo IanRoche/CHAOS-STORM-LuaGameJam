@@ -9,7 +9,6 @@ local SmallCircle=require "src.Enemies.SmallCircle"
 local smalCircleAmount=6
 
 function Enemy_AllahAkbar:new()
-    local playerX, playerY = GetPlayerPosition()
     
     self.radius = 20  -- Radio del enemigo
 
@@ -63,8 +62,8 @@ function Enemy_AllahAkbar:update(dt)
         end
         -- Mueve hacia el jugador
         local angle = math.atan2(playerY - self.y, playerX - self.x)
-        self.x = self.x + self.speed * math.cos(angle) * dt
-        self.y = self.y + self.speed * math.sin(angle) * dt
+        self.x = self.x + AllahAkbarVelocity * math.cos(angle) * dt
+        self.y = self.y + AllahAkbarVelocity * math.sin(angle) * dt
     else
         -- Actualiza las fracciones pequeñas
         for i, smallCircle in ipairs(self.smallCircles) do
