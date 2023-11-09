@@ -145,7 +145,7 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("Allahakbar",true,false)
         m_Enemies:toggleEntity("Bouncy",true,false)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
-        CirclesRowRotationSpeed=7
+        CirclesRowRotationSpeed=2
         print("nivel 2")
 
     elseif level==4  then
@@ -156,7 +156,7 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
         
         AllahAkbarVelocity=200
-        CirclesRowRotationSpeed=5
+        CirclesRowRotationSpeed=2.5
         print("nivel 3")
     elseif level==5 then
         

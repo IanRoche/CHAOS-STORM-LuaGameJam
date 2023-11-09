@@ -4,6 +4,7 @@ local CircleRow = Object:extend()
 
 local m_Circles = {}  -- Almacena los colliders para los círculos
 local m_RotationIncrement = math.pi / 180  -- Incremento de rotación en radianes
+local angle = 0--angulo de rotación del sprite de cada círculo
 
 function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpacing, startRotation)
     self.x = x
@@ -12,6 +13,12 @@ function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpa
     self.circleCount = circleCount
     self.rotationSpeed = rotationSpeed
     self.circleSpacing = circleSpacing
+    self.image = love.graphics.newImage("src/Textures/shuriken.png")
+    self.escala = self.circleRadius * 4  / self.image:getWidth()
+    
+    
+
+
 
     -- Verifica si ya existen círculos creados
     if #m_Circles == 0 then
@@ -46,21 +53,25 @@ end
 
 function CircleRow:update(dt)
     self:rotateCircles(dt)
+    angle = angle +2 *math.pi *dt -- rotación individual de cada cículo
+    
 end
 
 function CircleRow:draw()
     love.graphics.setColor(BarColor)  -- Color de los círculos
 
     for i, data in ipairs(m_Circles) do
-        love.graphics.circle("fill", data.circle.x, data.circle.y, data.circle.radius)
+        love.graphics.draw(self.image, data.circle.x, data.circle.y, angle, self.escala, 
+        self.escala, self.image:getWidth() / 2, self.image:getHeight() / 2)--el sprite rota desde su centro
     end
 
     love.graphics.setColor(1, 1, 1)  -- Restablece el color
+    
 end
 
 function CircleRow:rotateCircles(dt)
     for i, data in ipairs(m_Circles) do
-        data.angle = data.angle + CirclesRowRotationSpeed * dt
+        data.angle = data.angle + self.rotationSpeed * dt--rotación general
         local radiusIncrement = self.circleSpacing * i
         data.circle.x = self.x + radiusIncrement * math.cos(data.angle)
         data.circle.y = self.y + radiusIncrement * math.sin(data.angle)
