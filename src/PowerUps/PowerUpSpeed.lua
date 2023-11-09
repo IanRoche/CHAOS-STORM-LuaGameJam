@@ -12,7 +12,7 @@ end
 
 function PowerUpSpeed:update(dt)
     if  self.exploded then
-        self:applyEffect()
+        --self:applyEffect()
         self:destroy()
     end
 end
@@ -20,10 +20,9 @@ end
 function PowerUpSpeed:applyEffect()
     -- Aquí puedes implementar la lógica para aplicar el efecto del power-up al jugador
     -- Por ejemplo, aumentar temporalmente la velocidad del jugador.
-if self.exploded then
-    print("PowerUpSpeed")
-    
-end
+    AllahAkbarVelocity = 0
+    print("Apply effect--------------")
+
 end
 
 function PowerUpSpeed:draw()

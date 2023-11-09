@@ -25,7 +25,7 @@ function Player:new(x, y, radius, speed, isDestroyable)
         -- Define la función onTriggerEnter para el objeto m_PlayerTrigger
         m_PlayerTrigger.onTriggerEnter = function(other)
             if other.tag == 'Circle' and other.isPowerUp then
-                other:applyEffect(self)
+                --other:applyEffect(self)
                 other:destroy()
             elseif other.tag == 'Circle' then
                 Player:destroy()
@@ -65,7 +65,7 @@ end
 
 function Player:checkCollisionWithPowerUp(powerUp)
     local distance = math.sqrt((self.x - powerUp.x) ^ 2 + (self.y - powerUp.y) ^ 2)
-    local minDistance = (math.max(self.radius, powerUp.width) + powerUp.height) / 2
+    local minDistance = (math.max(self.radius, powerUp.width+3) + powerUp.height+3) / 2
     return distance <= minDistance
 end
 
@@ -108,8 +108,8 @@ function Player:MovePlayer(dt)
         l_SpeedY = l_SpeedY / length
     end
 
-    self.x = self.x + l_SpeedX * self.speed * dt
-    self.y = self.y + l_SpeedY * self.speed * dt
+    self.x = self.x + l_SpeedX * PlayerSpeed * dt
+    self.y = self.y + l_SpeedY * PlayerSpeed * dt
 end
 
 function Player:CheckWindowCollisions()
