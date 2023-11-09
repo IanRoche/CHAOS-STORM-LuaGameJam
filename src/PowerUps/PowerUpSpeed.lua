@@ -27,9 +27,14 @@ end
 end
 
 function PowerUpSpeed:draw()
+    local originalColor = {love.graphics.getColor()}
+
     love.graphics.setColor(1, 1, 0)
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+
+    love.graphics.setColor(originalColor)--es que si no ponia esto, el background cambiaba de color, igual del color que tenga la pocion....
 end
+
 
 function PowerUpSpeed:checkCollisionWithPlayer(player)
     local distance = math.sqrt((self.x - player.x) ^ 2 + (self.y - player.y) ^ 2)
