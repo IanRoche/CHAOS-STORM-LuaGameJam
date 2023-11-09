@@ -53,7 +53,7 @@ function Player2:update(dt)
 end
 
 function Player2:draw()
-    love.graphics.setColor(1, 0, 1, 1)
+    love.graphics.setColor(1, 0,1, 0.5)
     love.graphics.circle("fill", self.x, self.y, self.radius)
 end
 

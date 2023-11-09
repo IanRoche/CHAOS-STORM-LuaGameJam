@@ -57,4 +57,7 @@ BouncySpawnInterval = 1
 ----ALLAHAKBAR
 AllahAkbarVelocity =100
 
+
+--BACKGROUND
+BackGroundColor={0.1,0.1,0.1}
 return Data

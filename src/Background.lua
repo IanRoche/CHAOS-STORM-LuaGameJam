@@ -15,8 +15,8 @@ function Background:update(dt)
     end
 end
 
-function Background:draw()--TOCAD LO QUE QUERAIS (el background que mas os guste!!!)
-    love.graphics.setBackgroundColor(0.1, 0.1, 0.1)--Color actual Gris oscuro   -- Gris medio (0.5, 0.5, 0.5)
+function Background:draw()--TOCAD LOQUE QUERAIS (el background que mas os guste!!!)
+    love.graphics.setBackgroundColor(BackGroundColor)--Color actual Gris oscuro   -- Gris medio (0.5, 0.5, 0.5)
     love.graphics.draw(self.bgImage, 0, self.y)
     love.graphics.draw(self.bgImage, 0, self.y - self.bgImage:getHeight())
 end
