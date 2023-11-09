@@ -60,7 +60,7 @@ end
 
 function CircleRow:rotateCircles(dt)
     for i, data in ipairs(m_Circles) do
-        data.angle = data.angle + self.rotationSpeed * dt
+        data.angle = data.angle + CirclesRowRotationSpeed * dt
         local radiusIncrement = self.circleSpacing * i
         data.circle.x = self.x + radiusIncrement * math.cos(data.angle)
         data.circle.y = self.y + radiusIncrement * math.sin(data.angle)

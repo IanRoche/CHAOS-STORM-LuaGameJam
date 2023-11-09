@@ -20,7 +20,7 @@ end
 function PowerUpSpeed:applyEffect()
     -- Aquí puedes implementar la lógica para aplicar el efecto del power-up al jugador
     -- Por ejemplo, aumentar temporalmente la velocidad del jugador.
-    AllahAkbarVelocity = 0
+    CirclesRowRotationSpeed =CirclesRowRotationSpeed-0.15
     print("Apply effect--------------")
 
 end

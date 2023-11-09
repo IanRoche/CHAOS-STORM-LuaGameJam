@@ -3,7 +3,7 @@ local SpawnerPowerUps = Object:extend()
 local PowerUpSpeed = require "src.PowerUps.PowerUpSpeed"
 
 function SpawnerPowerUps:new()
-    self.spawnTime = 5  -- Tiempo entre generaciones de power-ups
+    self.spawnTime = 3.5  -- Tiempo entre generaciones de power-ups
     self.spawnTimer = 0  -- Temporizador para controlar la generación de power-ups
 end
 

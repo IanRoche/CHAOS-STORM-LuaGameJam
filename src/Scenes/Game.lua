@@ -30,7 +30,7 @@ function Scene:new()
     end
     --m_Bar = Bar(BarStartPosX, BarStartPosY, BarWidth, BarHeight, BarRotSpeed, BarStartRotation)  -- Crea una instancia de la barra
     m_Score = Score() 
-    m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,1,40,math.pi)
+    m_CirclesRow=CirclesRow(MapCenterX,MapCenterY,10,15,CirclesRowRotationSpeed,40,math.pi)
     m_Enemies=Enemies()
     m_Spawner = Spawner()
     m_PowerUps = PowerUps()
@@ -107,7 +107,7 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("Enemy",false,false)
         m_Enemies:toggleEntity("Allahakbar",true,true)
         m_Enemies:toggleEntity("Bouncy",false,false)
-        m_Enemies:toggleEntity("PowerUpSpeed",true,true)
+        m_Enemies:toggleEntity("PowerUpSpeed",false,true)
         
         print("tutorial")
         
@@ -131,7 +131,7 @@ function Scene:applyDifficultyLevel(level)
 
         BackGroundColor={0.5,0.2,0.5}
         AllahAkbarVelocity=100
-
+        CirclesRowRotationSpeed=1.2
         print("nivel 1")
 
     elseif level == 3 then
@@ -144,8 +144,8 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("Enemy",true,false)
         m_Enemies:toggleEntity("Allahakbar",true,false)
         m_Enemies:toggleEntity("Bouncy",true,false)
-        m_Enemies:toggleEntity("PowerUpSpeed",true,true)
-
+        m_Enemies:toggleEntity("PowerUpSpeed",false,true)
+        CirclesRowRotationSpeed=7
         print("nivel 2")
 
     elseif level==4  then
@@ -156,7 +156,7 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
         
         AllahAkbarVelocity=200
-
+        CirclesRowRotationSpeed=5
         print("nivel 3")
     elseif level==5 then
         

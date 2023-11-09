@@ -65,7 +65,7 @@ end
 
 function Player:checkCollisionWithPowerUp(powerUp)
     local distance = math.sqrt((self.x - powerUp.x) ^ 2 + (self.y - powerUp.y) ^ 2)
-    local minDistance = (math.max(self.radius, powerUp.width+3) + powerUp.height+3) / 2
+    local minDistance = (math.max(self.radius, powerUp.width+6) + powerUp.height+6) / 2
     return distance <= minDistance
 end
 

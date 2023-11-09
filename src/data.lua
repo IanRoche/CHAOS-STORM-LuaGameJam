@@ -60,4 +60,7 @@ AllahAkbarVelocity =100
 
 --BACKGROUND
 BackGroundColor={0.1,0.1,0.1}
+
+--CIRCLE ROW
+CirclesRowRotationSpeed=1
 return Data
