@@ -55,7 +55,7 @@ function Enemy:update(dt)
 end
 
 function Enemy:draw()
-  love.graphics.setColor(0, 1, 0)  -- Color rojo
+  --love.graphics.setColor(0, 1, 0)  -- Color rojo (esto sin comentar estaba cambiando el color del background a verde fosforito)
   --love.graphics.circle("fill", self.x, self.y, self.radius)
   love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
   self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
