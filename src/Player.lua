@@ -10,10 +10,12 @@ local m_PlayerTrigger
 
 function Player:new(x, y, radius, speed, isDestroyable)
     if x and y and radius then
+        self.image = love.graphics.newImage("src/Textures/player1.png")
         self.x = x
         self.y = y
         self.radius = radius
         self.speed = speed
+        self.escale = 1
         self.isDestroyable = isDestroyable
         if self.isDestroyable then
             table.insert(DestroyableObjects, self)
@@ -73,7 +75,8 @@ end
 
 function Player:draw()
     love.graphics.setColor(1, 0, 1, 1)
-    love.graphics.circle("fill", self.x, self.y, self.radius)
+    --love.graphics.circle("fill", self.x, self.y, self.radius)
+    love.graphics.draw(self.image,self.x,self.y,0,self.escale,self.escale)
 end
 
 function Player:updateCollider()
