@@ -40,7 +40,7 @@ function Bouncy:new()
     self.wallHits = 0
     self.maxWallHits = Bouncy.maxWallHits
     self.aliveColor = {0, 0, 1}
-    self.deadColor = {1, 0, 1, 1}
+    self.deadColor = {1, 0, 1, 0}
     self.color = self.aliveColor
 
     table.insert(EnemyList, self)
@@ -98,6 +98,7 @@ end
 function Bouncy:draw()
     love.graphics.setColor(self.color)  -- Establece el color a azul (RGB: 0, 0, 1)
     love.graphics.circle("fill", self.x, self.y, self.radius)
+    love.graphics.reset(love.graphics.setColor(self.color))
 end
 
 -- Método para destruir el enemigo

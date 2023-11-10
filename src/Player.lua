@@ -76,7 +76,7 @@ end
 function Player:draw()
     love.graphics.setColor(1, 0, 1, 1)
     --love.graphics.circle("fill", self.x, self.y, self.radius)
-    love.graphics.draw(self.image,self.x,self.y,0,self.escale,self.escale)
+    love.graphics.draw(self.image,self.x-self.image.getWidth(self.image)/2,self.y-self.image.getHeight(self.image)/2,0,self.escale,self.escale)
 end
 
 function Player:updateCollider()
@@ -168,6 +168,7 @@ function Player:destroy()
     end
 
     --print("Destroy")
+
     ChangeScene("GameOver")
 end
 

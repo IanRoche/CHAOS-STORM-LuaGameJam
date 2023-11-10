@@ -16,6 +16,9 @@ function Scene:update(dt)
     if love.keyboard.isDown(ExitKey) then        
         love.event.quit('restart')
     end
+    for i, rgb in ipairs(BackGroundColor) do
+        BackGroundColor[i]=BackGroundColor[i]-0.001
+    end
 end
 
 function Scene:draw()

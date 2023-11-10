@@ -82,9 +82,9 @@ function Scene:getNewDifficultyLevel()
     local newDifficultyLevel
     if _Score >= 23 then
         newDifficultyLevel = 5
-    elseif _Score >= 19 then
+    elseif _Score >= 15 then
         newDifficultyLevel = 4
-    elseif _Score >= 12 then
+    elseif _Score >=10 then
         newDifficultyLevel = 3
     elseif _Score >=5 then
         newDifficultyLevel = 2
@@ -106,7 +106,7 @@ function Scene:applyDifficultyLevel(level)
         -- m_Spawner.subject:notifyObservers(2)
         m_Enemies:toggleEntity("EnemyFollow",false,false)
         m_Enemies:toggleEntity("Allahakbar",true,true)
-        m_Enemies:toggleEntity("Bouncy",false,false)
+        m_Enemies:toggleEntity("Bouncy",true,true)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
         
         print("tutorial")
@@ -128,10 +128,9 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("Allahakbar",true,true)
         m_Enemies:toggleEntity("Bouncy",false,false)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
-
-        BackGroundColor={0.5,0.2,0.5}
+        self:ChangeCirclesRowValues(1,50,100,5,0.7)
+        ChangeBackgroundColor(0.5,0.2,0.5,1)
         AllahAkbarVelocity=100
-        CirclesRowRotationSpeed=1.2
         print("nivel 1")
 
     elseif level == 3 then
@@ -145,7 +144,8 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("Allahakbar",true,false)
         m_Enemies:toggleEntity("Bouncy",true,false)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
-        CirclesRowRotationSpeed=2
+        ChangeBackgroundColor(0,0.4,0.3,1)
+        
         print("nivel 2")
 
     elseif level==4  then
@@ -156,7 +156,6 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
         
         AllahAkbarVelocity=200
-        CirclesRowRotationSpeed=2.5
         print("nivel 3")
     elseif level==5 then
         
@@ -190,13 +189,32 @@ function Scene:CheckNewLevel()
 end
 
 function Scene:UpdateLevel1(dt)
+    for i, rgb in ipairs(BackGroundColor) do
+        BackGroundColor[i]=BackGroundColor[i]+0.001
+    end
 --print ("level 1")
 end
 function Scene:UpdateLevel2(dt)
 --print ("level 2")
 end
 function Scene:UpdateLevel3(dt)
+
 --print ("level 3")
 end
 
+function Scene:ChangeCirclesRowValues(rotationSpeed,minCircleSpacing,maxCircleSpacing,changeFrequency,changeSpeed)
+CirclesRowRotationSpeed=rotationSpeed
+CirclesRowMinCirclesSpacing=minCircleSpacing
+CirclesRowMaxCircleSpacing=maxCircleSpacing
+CirclesRowChangeFrequency=changeFrequency
+CirclesRowChangeSpeed=changeSpeed
+
+end
+
+function ChangeBackgroundColor(r,g,b,a)
+    BackGroundColor[1]=r
+    BackGroundColor[2]=g
+    BackGroundColor[3]=b
+    BackGroundColor[4]=a
+end
 return Scene

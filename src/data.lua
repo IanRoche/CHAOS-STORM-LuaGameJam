@@ -63,4 +63,11 @@ BackGroundColor={0.1,0.1,0.1}
 
 --CIRCLE ROW
 CirclesRowRotationSpeed=1
+CirclesRowMinCirclesSpacing=50
+CirclesRowMaxCircleSpacing=100
+CirclesRowChangeFrequency=1.2
+CirclesRowChangeSpeed=0.7
+
+
+
 return Data

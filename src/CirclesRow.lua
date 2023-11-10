@@ -24,6 +24,7 @@ function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpa
     if #m_Circles == 0 then
         self:createCircles(startRotation)
     else
+        
         self:updateCircles()
     end
 end
@@ -52,6 +53,7 @@ function CircleRow:updateCircles()
 end
 
 function CircleRow:update(dt)
+    self:modifyVariableBasedOnSine(dt, CirclesRowMinCirclesSpacing, CirclesRowMaxCircleSpacing,CirclesRowChangeFrequency,CirclesRowChangeSpeed)  -- Ejemplo con amplitud 10 y frecuencia 2
     self:rotateCircles(dt)
     angle = angle +2 *math.pi *dt -- rotación individual de cada cículo
     
@@ -84,5 +86,17 @@ function CircleRow:clearColliders()
     end
     m_Circles = {}
 end
+
+function CircleRow:modifyVariableBasedOnSine(dt, minCircleSpacing, maxCircleSpacing, changeFrequency, changeSpeed)
+    local time = love.timer.getTime()
+    local sineValue = math.sin(changeFrequency * time * changeSpeed)
+
+    -- Normalizamos el valor del seno al rango [0, 1] y luego lo escalamos al rango [minCircleSpacing, maxCircleSpacing]
+    self.circleSpacing = minCircleSpacing + (1 + sineValue) * 0.5 * (maxCircleSpacing - minCircleSpacing)
+
+    -- Aseguramos que 'circleSpacing' esté en el rango [minCircleSpacing, maxCircleSpacing]
+    self.circleSpacing = math.min(maxCircleSpacing, math.max(minCircleSpacing, self.circleSpacing))
+end
+
 
 return CircleRow
