@@ -12,9 +12,6 @@ function Scene:draw()
 end
 
 function Scene:update(dt)
-    self:updateButtonHoverState(self.buttons.play)
-    self:updateButtonHoverState(self.buttons.quit)
-
     if self:checkButtonClick(self.buttons.play) then
         self:playButtonClicked()
     elseif self:checkButtonClick(self.buttons.quit) then
@@ -52,8 +49,7 @@ function Scene:createButton(x, y, width, height, text)
         y = y,
         width = width,
         height = height,
-        text = text,
-        isHovered = false
+        text = text
     }
 end
 
@@ -65,13 +61,6 @@ function Scene:checkButtonClick(button)
            mouseY >= button.y and mouseY <= button.y + button.height
 end
 
-function Scene:updateButtonHoverState(button)
-    local mouseX, mouseY = love.mouse.getPosition()
-
-    button.isHovered = mouseX >= button.x and mouseX <= button.x + button.width and
-    mouseY >= button.y and mouseY <= button.y + button.height
-
-end
 
 function Scene:playButtonClicked()
     ChangeScene("Game")
@@ -82,13 +71,8 @@ function Scene:quitButtonClicked()
 end
 
 function Scene:drawButton(button)
-    local baseColor = {0.5, 0.5, 0.5}
-    local hoverColor = {0.3, 0.3, 0.3}
-
-    --Para determinar el color del boton segun si el ratón está encima
-    local buttonColor = button.isHovered and hoverColor or baseColor
     -- Dibujar el fondo gris del botón
-    love.graphics.setColor(buttonColor)
+    love.graphics.setColor(0.5, 0.5, 0.5)
     love.graphics.rectangle("fill", button.x, button.y, button.width, button.height)
 
     -- Restaurar el color blanco para el texto
