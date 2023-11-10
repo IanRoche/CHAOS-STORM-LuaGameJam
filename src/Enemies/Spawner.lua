@@ -1,7 +1,7 @@
 local Object = Object or require "lib.classic"
 local Subject = require "src.Subject"  -- Ajusta la ruta de acceso al archivo Subject
 local Allahakbar = Allahakbar or require "src.Enemies.AllahAkbar"
-local Enemy = Enemy or require "src.Enemies.Enemy"
+local EnemyFollow = EnemyFollow or require "src.Enemies.EnemyFollow"
 local Bouncy = Bouncy or require "src.Enemies.Bouncy"
 
 local Spawner = Object:extend()
@@ -51,11 +51,11 @@ function Spawner:update(dt)
     end
 
     --ENEMY
-    if enemyVisibility.Enemy == true then
+    if enemyVisibility.EnemyFollow == true then
         if self.EnemyTime > self.EnemySpawnTime then
             if self.EnemySpawnTimer >= self.EnemySpawnInterval then
-                local eb = Enemy()
-                table.insert(EnemyList, eb)
+                local ef = EnemyFollow()
+                table.insert(EnemyList, ef)
                 --print("BASIC ENEMY")
                 self.EnemySpawnTimer = 0  -- Reiniciar el temporizador de aparición
             end

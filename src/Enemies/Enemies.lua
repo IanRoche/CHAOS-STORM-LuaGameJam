@@ -1,7 +1,7 @@
 local Object = Object or require "lib.classic"
 local ICanBeDestroyedInterface = require "src.ICabBeDestroyed"
 local Allahakbar = require "src.Enemies.AllahAkbar"
-local Enemy = require "src.Enemies.Enemy"
+local EnemyFollow = require "src.Enemies.EnemyFollow"
 local Bouncy = require "src.Enemies.Bouncy"
 
 local Enemies = Object:extend()
@@ -13,14 +13,14 @@ EnemyList={}
 -- Tabla para llevar un seguimiento de qué enemigos deben aparecer
  enemyVisibility = {
     Allahakbar = false,  -- Por defecto, aparece
-    Enemy = false, 
+    EnemyFollow = false, 
     Bouncy=false,     -- Por defecto, aparece
 }
 
 function Enemies:new()
     
     Allahakbar:new()
-    Enemy:new()
+    EnemyFollow:new()
     Spawner:new()
 
 
@@ -30,8 +30,8 @@ end
 function Enemies:update(dt)
     Spawner:update(dt)
     
-    if enemyVisibility.Enemy then
-        Enemy:update(dt)
+    if enemyVisibility.EnemyBasic then
+        EnemyFollow:update(dt)
     end
     local updatedAllahakbar = false  -- Bandera para controlar si se ha actualizado "Allahakbar"
 
@@ -75,7 +75,7 @@ function Enemies:draw()
         Allahakbar:draw()
     end
     if enemyVisibility.Enemy then
-        Enemy:draw()
+        EnemyFollow:draw()
     end
 
 

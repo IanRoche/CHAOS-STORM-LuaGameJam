@@ -1,8 +1,8 @@
 local Object = Object or require "lib.classic"
-local Enemy = Object:extend()
+local EnemyFollow = Object:extend()
 local Player=require "src.Player"
 
-function Enemy:new()
+function EnemyFollow:new()
 
     self.image = love.graphics.newImage("src/Textures/green_fireball.png")
     self.radius = 25  -- Radio del enemigo
@@ -35,9 +35,9 @@ function Enemy:new()
     table.insert(EnemyList, self)
 end
 
-function Enemy:update(dt)
+function EnemyFollow:update(dt)
     if not self.dead then
-        if self:checkCollisionWithEnemy() then
+        if self:checkCollisionWithEnemies() then
             self:destroy()  -- Enemy se destruye al tocar otro enemigo de la lista EnemyList
         end
         local playerX, playerY = GetPlayerPosition()  -- Obtiene la posición actual del jugador (ajusta esto según tu código)
@@ -54,7 +54,7 @@ function Enemy:update(dt)
 
 end
 
-function Enemy:draw()
+function EnemyFollow:draw()
   --love.graphics.setColor(0, 1, 0)  -- Color rojo (esto sin comentar estaba cambiando el color del background a verde fosforito)
   --love.graphics.circle("fill", self.x, self.y, self.radius)
   love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
@@ -63,12 +63,12 @@ end
 
 
 
-function Enemy:checkCollisionWithPlayer(player)
+function EnemyFollow:checkCollisionWithPlayer(player)
     if not self.dead then
         local distance = math.sqrt((player.x - self.x) ^ 2 + (player.y - self.y) ^ 2)
         local minDistance = player.radius + self.radius
         if   distance <= minDistance then
-            self.exploded = true
+            self.dead = true
         end
         return distance <= minDistance
     end
@@ -76,10 +76,10 @@ function Enemy:checkCollisionWithPlayer(player)
 end
 
 
-function Enemy:checkCollisionWithEnemy()
+function EnemyFollow:checkCollisionWithEnemies()
     if not self.dead then
         for _, otherEnemy in ipairs(EnemyList) do
-            if otherEnemy ~= self and not otherEnemy.exploded then
+            if otherEnemy ~= self then
                 --print("Warning: Enemy")
                 local distance = math.sqrt((otherEnemy.x - self.x) ^ 2 + (otherEnemy.y - self.y) ^ 2)
                 local minDistance = otherEnemy.radius + self.radius
@@ -93,7 +93,7 @@ function Enemy:checkCollisionWithEnemy()
     return false
 end
 
-function Enemy:destroy()
+function EnemyFollow:destroy()
     for i, enemy in ipairs(EnemyList) do
         if enemy == self then
             table.remove(EnemyList, i)
@@ -102,4 +102,4 @@ function Enemy:destroy()
     end
 end
 
-return Enemy
+return EnemyFollow
