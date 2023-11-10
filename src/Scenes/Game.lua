@@ -68,6 +68,7 @@ function Scene:draw()
     m_CirclesRow:draw()
     m_Enemies:draw()
     m_PowerUps:draw()
+    love.graphics.setBackgroundColor(BackGroundColor)
 
     --futuramente un draw enemy
 end
@@ -106,7 +107,7 @@ function Scene:applyDifficultyLevel(level)
         -- m_Spawner.subject:notifyObservers(2)
         m_Enemies:toggleEntity("EnemyFollow",false,false)
         m_Enemies:toggleEntity("Allahakbar",true,true)
-        m_Enemies:toggleEntity("Bouncy",true,true)
+        m_Enemies:toggleEntity("Bouncy",true,true)--si pones el primer bool en FALSE (el segundo tmb ) el color del background se invierte
         m_Enemies:toggleEntity("PowerUpSpeed",false,true)
         
         print("tutorial")

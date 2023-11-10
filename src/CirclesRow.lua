@@ -67,7 +67,7 @@ function CircleRow:draw()
         self.escala, self.image:getWidth() / 2, self.image:getHeight() / 2)--el sprite rota desde su centro
     end
 
-    love.graphics.setColor(1, 1, 1)  -- Restablece el color
+    --love.graphics.setColor(1, 1, 1)  -- Restablece el color
     
 end
 
