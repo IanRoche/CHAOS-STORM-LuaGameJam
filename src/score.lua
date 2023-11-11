@@ -4,12 +4,16 @@ local tutorialTime
 local screenWidth = love.graphics.getWidth()
 local screenHeight = love.graphics.getHeight()
 
+local SCORE_FONT_SIZE = 60
+
 function Score:new()
     self.score = _Score
     self.font = love.graphics.newFont(24)
     self.timeElapsed = 0
     self.pointsPerSecond = 1
     tutorialTime = true
+    self.m_scoreFont = love.graphics.newFont("src/Fonts/Fun Games.ttf", SCORE_FONT_SIZE)
+
 end
 
 function Score:update(dt)
@@ -38,7 +42,7 @@ function Score:increaseScore(points)
 end
 
 function Score:draw()
-    love.graphics.setFont(self.font)
+    love.graphics.setFont(self.m_scoreFont)
 
     if tutorialTime then
         local text = "Tutorial"
@@ -49,7 +53,7 @@ function Score:draw()
         love.graphics.setColor(1, 0.5, 0)
         love.graphics.print(text, x, y, 0, 1.5, 2)
     else
-        local scoreText = "Puntuación: " .. _Score
+        local scoreText = "Puntuation: " .. _Score
         self:drawCentered(scoreText)
     end
 end

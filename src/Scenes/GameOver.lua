@@ -29,7 +29,7 @@ function Scene:drawElements()
     love.graphics.setColor(GameOverColor)
     self:drawText("GAME OVER", self.m_gameOverFont, -GameOverFontSize)
     self:drawText("Puntuación: " .. _Score, self.m_menuFont, 0)
-    self:drawText("¡Si superas el TUTORIAL, votanos!", self.m_menuFont, love.graphics.getHeight() / 5)
+    self:drawText("¡Si superas el TUTORIAL, vótanos! :)", self.m_menuFont, love.graphics.getHeight() / 5)
     self:drawText("Press ESC to restart", self.m_gameoverEscFont, love.graphics.getHeight() / 3 * 2 + GameoverEscFontSize)
     love.graphics.setColor(1, 1, 1)
 end
