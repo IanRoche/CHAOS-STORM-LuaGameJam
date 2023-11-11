@@ -16,7 +16,7 @@ local m_PowerUps
 local m_Background
 
 function Scene:new()
-    print("Game")
+    love.mouse.setVisible(false)  -- Oculta el cursor del mouse al iniciar el juego
     m_Player = Player(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed, true)
     if #Collider.colliders > 1 then
         Collider:clearAllColliders()

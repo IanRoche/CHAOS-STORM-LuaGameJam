@@ -42,18 +42,14 @@ end
 function Scene:drawTitle()
     local title = "C H A O S   S T O R M"
     local titleX = (love.graphics.getWidth() - self.menuFont:getWidth(title)) / 2
+    local titleY = 200
 
     love.graphics.setFont(self.menuFont)
-
-    for _, button in pairs(self.buttons) do
-        if button.isSelected then
-            love.graphics.setColor(0.3, 0.3, 0.3)
-            love.graphics.rectangle("fill", button.x, button.y, button.width, button.height)
-        end
-    end
-
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.print(title, titleX, TITLE_Y)
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.print(title, titleX + 5, titleY + 5)
+    love.graphics.print(title, titleX - 5, titleY - 5)
+    love.graphics.setColor(1, 0.1, 0.2)
+    love.graphics.print(title, titleX, titleY)
     love.graphics.setFont(love.graphics.newFont())
 end
 
@@ -85,13 +81,9 @@ end
 
 function Scene:updateButtonStates()
     for _, button in pairs(self.buttons) do
-        self:updateButtonHoverState(button)
+        local mouseX, mouseY = love.mouse.getPosition()
+        button.isHovered = mouseX >= button.x and mouseX <= button.x + button.width and mouseY >= button.y and mouseY <= button.y + button.height
     end
-end
-
-function Scene:updateButtonHoverState(button)
-    local mouseX, mouseY = love.mouse.getPosition()
-    button.isHovered = mouseX >= button.x and mouseX <= button.x + button.width and mouseY >= button.y and mouseY <= button.y + button.height
 end
 
 function Scene:checkButtonActions()
@@ -109,18 +101,10 @@ end
 
 function Scene:handleButtonClick(button)
     if button.text == "PLAY" then
-        self:playButtonClicked()
+        ChangeScene("Game")
     elseif button.text == "EXIT" then
-        self:quitButtonClicked()
+        love.event.quit()
     end
-end
-
-function Scene:playButtonClicked()
-    ChangeScene("Game")
-end
-
-function Scene:quitButtonClicked()
-    love.event.quit()
 end
 
 function Scene:drawButtons()

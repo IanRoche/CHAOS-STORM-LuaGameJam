@@ -8,20 +8,29 @@ function SpawnerPowerUps:new()
 end
 
 function SpawnerPowerUps:update(dt)
-    self.spawnTimer = self.spawnTimer + dt
+    self:updateSpawnTimer(dt)
 
-    if self.spawnTimer >= self.spawnTime then
-        if PowerUpsVisibility.PowerUpSpeed then  -- Verifica la visibilidad del tipo de power-up
-            self:spawnPowerUp()
-        end
-        self.spawnTimer = 0  -- Reiniciar el temporizador de generación
+    if self:shouldSpawnPowerUp() then
+        self:spawnPowerUp()
+        self:resetSpawnTimer()
     end
+end
+
+function SpawnerPowerUps:updateSpawnTimer(dt)
+    self.spawnTimer = self.spawnTimer + dt
+end
+
+function SpawnerPowerUps:shouldSpawnPowerUp()
+    return self.spawnTimer >= self.spawnTime and PowerUpsVisibility.PowerUpSpeed
 end
 
 function SpawnerPowerUps:spawnPowerUp()
     local powerUp = PowerUpSpeed()
-    print ("Poweruplist: "..#PowerUpsList)
     table.insert(PowerUpsList, powerUp)
+end
+
+function SpawnerPowerUps:resetSpawnTimer()
+    self.spawnTimer = 0
 end
 
 return SpawnerPowerUps
