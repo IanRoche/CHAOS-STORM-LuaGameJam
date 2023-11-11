@@ -14,8 +14,6 @@ local currentDifficultyLevel = 0
 local m_CirclesRow
 local m_PowerUps
 local m_Background
-local m_TriangleVertices
-
 
 function Scene:new()
     print("Game")
