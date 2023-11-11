@@ -19,6 +19,7 @@ local m_CirclesRow
 local m_Spawner
 local m_PowerUps
 local m_SpawnerPowerUps
+local m_Background
 
 function Scene:new()
     print("Game")
@@ -36,7 +37,7 @@ function Scene:new()
     m_PowerUps = PowerUps()
     m_SpawnerPowerUps = SpawnerPowerUps()
     m_Background = Background()
-    m_Background.scrollSpeed = 50 
+    m_Background.scrollSpeed = 50
 end
 
 function Scene:update(dt)
@@ -61,14 +62,15 @@ end
 
 
 function Scene:draw()
+    
+    love.graphics.setBackgroundColor(BackGroundColor)
     m_Background:draw()
     m_Player:draw()
-    --m_Player2:draw()
     m_Score:draw() 
     m_CirclesRow:draw()
     m_Enemies:draw()
     m_PowerUps:draw()
-    love.graphics.setBackgroundColor(BackGroundColor)
+    
 
     --futuramente un draw enemy
 end
