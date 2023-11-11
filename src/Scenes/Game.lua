@@ -92,15 +92,21 @@ function Scene:CheckToggleEntity(shouldToggle, entityName, ...)
     end
 end
 
+function Scene:ChangeSpawnIntervals(_AllahAkbar, _EnemyFollow, _Bouncy)
+    AllahAkbarSpawnInterval = _AllahAkbar  -- Intervalo en segundos entre la aparición de Allahakbar
+    EnemySpawnInterval = _EnemyFollow
+    BouncySpawnInterval = _Bouncy
+end
+
 function Scene:applyDifficultyLevel(level)
     if level == 1 then
         --Enemigos activos
         self:ToggleEntities(true, true, true, true)
 
         --Modificaciones Spawn Enemigos
-        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
-        EnemySpawnInterval = 1
-        BouncySpawnInterval = 1
+
+        self:ChangeSpawnIntervals(2,1,1)
+        
         --Modificaciones Enemigos
         AllahAkbarVelocity = 100
         EnemyFollowVelocity = 100 
