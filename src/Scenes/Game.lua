@@ -142,23 +142,22 @@ function Scene:updateLevel1(dt)
 end
 
 function Scene:updateLevel2(dt)
-    -- Level 2 update logic
-     -- Patrón de cambio de color del fondo en tonos morados
-     local purpleDark = {0.2, 0, 0.2, 1}  -- Morado oscuro
-     local purpleLight = {0.7, 0, 0.7, 1}  -- Morado claro
- 
-     -- Velocidad de cambio de color (ajusta según tus preferencias)
-     local colorChangeSpeed = 1
- 
-     -- Cálculo de valores RGB en función del tiempo
-     local time = love.timer.getTime()
-     local r = 0.5 + 0.5 * math.sin(colorChangeSpeed * time)
-     local g = 0
-     local b = 0.5 + 0.5 * math.cos(colorChangeSpeed * time)
-     local a = 1
- 
-     -- Cambia el color de fondo
-     ChangeBackgroundColor(r, g, b, a)
+    -- Patrón de cambio de color del fondo en tonos púrpuras
+    local purpleDark = {0.4, 0, 0.4, 1}  -- Púrpura oscuro
+    local purpleLight = {0.6, 0, 0.6, 1}  -- Púrpura claro
+
+    -- Velocidad de cambio de color (ajusta según tus preferencias)
+    local colorChangeSpeed = 1
+
+    -- Cálculo de valores RGB en función del tiempo
+    local time = love.timer.getTime()
+    local r = (purpleDark[1] + purpleLight[1]) / 2 + 0.2 * math.sin(colorChangeSpeed * time)
+    local g = (purpleDark[2] + purpleLight[2]) / 2
+    local b = (purpleDark[3] + purpleLight[3]) / 2 + 0.2 * math.cos(colorChangeSpeed * time)
+    local a = (purpleDark[4] + purpleLight[4]) / 2
+
+    -- Cambia el color de fondo
+    ChangeBackgroundColor(r, g, b, a)
 
 end
 
