@@ -95,7 +95,7 @@ end
 function Scene:applyDifficultyLevel(level)
     if level == 1 then
         --Enemigos activos
-        self:ToggleEntities(true, true, true, false)
+        self:ToggleEntities(true, true, true, true)
 
         --Modificaciones Spawn Enemigos
         AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar

@@ -11,7 +11,7 @@ function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpa
     self.y = y
     self.circleRadius = circleRadius
     self.circleCount = circleCount
-    self.rotationSpeed = rotationSpeed
+    self.rotationSpeed = CirclesRowRotationSpeed
     self.circleSpacing = circleSpacing
     self.image = love.graphics.newImage("src/Textures/shuriken.png")
     self.escala = self.circleRadius * 4  / self.image:getWidth()
@@ -73,7 +73,7 @@ end
 
 function CircleRow:rotateCircles(dt)
     for i, data in ipairs(m_Circles) do
-        data.angle = data.angle + self.rotationSpeed * dt--rotación general
+        data.angle = data.angle + CirclesRowRotationSpeed * dt--rotación general
         local radiusIncrement = self.circleSpacing * i
         data.circle.x = self.x + radiusIncrement * math.cos(data.angle)
         data.circle.y = self.y + radiusIncrement * math.sin(data.angle)
