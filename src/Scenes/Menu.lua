@@ -4,9 +4,32 @@ local Scene = Object:extend()
 function Scene:new()
     self.buttons = {}
     self:createButtons()
+    self.menuFont = love.graphics.newFont("src/Fonts/Storm Gust.ttf", 100)
+
+    self.backgroundImage = love.graphics.newImage("src/Textures/otroFondo.png")
+
 end
 
 function Scene:draw()
+    -- Fondo
+    love.graphics.draw(self.backgroundImage, 0, 0, 0, love.graphics.getWidth() / self.backgroundImage:getWidth(), love.graphics.getHeight() / self.backgroundImage:getHeight())
+
+    -- Dibujar el título con sombra (color oscuro)
+    love.graphics.setFont(self.menuFont)
+    local title = "C H A O S   S T O R M"
+    local titleX = (love.graphics.getWidth() - love.graphics.getFont():getWidth(title)) / 2
+    local titleY = 200
+    love.graphics.setColor(0, 0,0)
+    love.graphics.print(title, titleX + 5, titleY + 5)  -- la sombra
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.print(title, titleX - 5, titleY - 5)  -- la sombra
+    love.graphics.setColor(1, 0.1, 0.2) 
+
+    -- Dibujar el título (color blanco)
+    love.graphics.print(title, titleX, titleY)
+    love.graphics.setFont(love.graphics.newFont())
+
+    -- Dibujar los botones
     self:drawButton(self.buttons.play)
     self:drawButton(self.buttons.quit)
 end
@@ -27,14 +50,14 @@ function Scene:createButtons()
     local buttonHeight = 60
     local buttonSpacing = 20
 
-    local centerY = love.graphics.getHeight() / 2
+    local centerY = love.graphics.getHeight() / 1.75
 
     self.buttons.play = self:createButton(
         (love.graphics.getWidth() - buttonWidth) / 2,
         centerY - buttonHeight - buttonSpacing,
         buttonWidth,
         buttonHeight,
-        "JUGAR"
+        "PLAY"
     )
 
     self.buttons.quit = self:createButton(
@@ -42,7 +65,7 @@ function Scene:createButtons()
         centerY + buttonSpacing,
         buttonWidth,
         buttonHeight,
-        "SALIR"
+        "EXIT"
     )
 end
 
@@ -92,7 +115,7 @@ function Scene:drawButton(button)
     love.graphics.rectangle("fill", button.x, button.y, button.width, button.height)
 
     -- Restaurar el color blanco para el texto
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(0, 0, 0)
 
     -- Dibujar el borde del botón
     love.graphics.rectangle("line", button.x, button.y, button.width, button.height)
@@ -102,6 +125,7 @@ function Scene:drawButton(button)
     local textY = button.y + (button.height - love.graphics.getFont():getHeight()) / 2
 
     love.graphics.print(button.text, textX, textY)
+    love.graphics.setColor(1, 1, 1)
 end
 
 return Scene
