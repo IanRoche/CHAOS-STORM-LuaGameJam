@@ -3,41 +3,44 @@ local ICanBeDestroyedInterface = require "src.ICabBeDestroyed"
 local Allahakbar = require "src.Enemies.AllahAkbar"
 local EnemyFollow = require "src.Enemies.EnemyFollow"
 local Bouncy = require "src.Enemies.Bouncy"
-
-local Enemies = Object:extend()
 local Spawner = require "src.Enemies.Spawner"
 
-
-EnemyList={}
+local Enemies = Object:extend()
+EnemyList = {}
 
 -- Tabla para llevar un seguimiento de qué enemigos deben aparecer
- enemyVisibility = {
+enemyVisibility = {
     Allahakbar = false,  -- Por defecto, aparece
     EnemyFollow = false, 
-    Bouncy=false,     -- Por defecto, aparece
+    Bouncy = false,     -- Por defecto, aparece
 }
 
 function Enemies:new()
-    
     Allahakbar:new()
     EnemyFollow:new()
     Spawner:new()
 
-
-    self.bouncyEnemy=nil
+    self.bouncyEnemy = nil
 end
 
 function Enemies:update(dt)
     Spawner:update(dt)
-    
-    if enemyVisibility.EnemyBasic then
-        EnemyFollow:update(dt)
-    end
-    local updatedAllahakbar = false  -- Bandera para controlar si se ha actualizado "Allahakbar"
+    self:updateEnemies(dt)
+    self:updateBouncyEnemy(dt)
+end
+
+function Enemies:draw()
+    self:drawEnemies()
+    self:drawAllahakbar()
+    self:drawBouncyEnemy()
+end
+
+function Enemies:updateEnemies(dt)
+    local updatedAllahakbar = false
 
     for _, enemy in ipairs(EnemyList) do
         enemy:update(dt)
-        
+
         if enemy.type == "Allahakbar" then
             updatedAllahakbar = true
         end
@@ -46,39 +49,35 @@ function Enemies:update(dt)
     if enemyVisibility.Allahakbar and not updatedAllahakbar then
         Allahakbar:update(dt)
     end
-
-
-    
-
-
-    --BOUNCY
-     -- Crear un "Bouncy" si es necesario
-     if enemyVisibility.Bouncy and self.bouncyEnemy == nil then
-        --print("new".. GetPlayerPosition())
-        self.bouncyEnemy = Bouncy(GetPlayerPosition())  -- Ejemplo de posición inicial
-    end
-
-    -- Actualizar el "Bouncy" si existe
-    if self.bouncyEnemy then
-        self.bouncyEnemy:update(dt,GetPlayerPosition())
-    end
 end
 
-function Enemies:draw()
-
+function Enemies:drawEnemies()
     for _, enemy in ipairs(EnemyList) do
         enemy:draw()
     end
 
-
-    if enemyVisibility.Allahakbar then
-        Allahakbar:draw()
-    end
     if enemyVisibility.Enemy then
         EnemyFollow:draw()
     end
+end
 
+function Enemies:drawAllahakbar()
+    if enemyVisibility.Allahakbar then
+        Allahakbar:draw()
+    end
+end
 
+function Enemies:updateBouncyEnemy(dt)
+    if enemyVisibility.Bouncy and self.bouncyEnemy == nil then
+        self.bouncyEnemy = Bouncy(GetPlayerPosition())  -- Ejemplo de posición inicial
+    end
+
+    if self.bouncyEnemy then
+        self.bouncyEnemy:update(dt, GetPlayerPosition())
+    end
+end
+
+function Enemies:drawBouncyEnemy()
     if self.bouncyEnemy then
         self.bouncyEnemy:draw()
     end
@@ -94,7 +93,6 @@ function Enemies:toggleEnemy(enemyName, value)
             DestroyEnemy(enemyName)
         end
     end
-    print(enemyName, value)
 end
 
 function Enemies:toggleEntity(entityName, isEnemy, value)
@@ -109,7 +107,6 @@ function Enemies:toggleEntity(entityName, isEnemy, value)
             DestroyEntity(entityName, entityList)
         end
     end
-    print(entityName, value)
 end
 
 function DestroyEntity(entityType, entityList)
@@ -128,4 +125,5 @@ function DestroyEnemy(enemyType)
         end
     end
 end
+
 return Enemies

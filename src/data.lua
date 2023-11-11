@@ -48,7 +48,7 @@ function Data:loadScore()
     _Score = 0
     CurrentDifficultyLevel = 1
 
-    ScoreToLevel2=15
+    ScoreToLevel2=5
     ScoreToLevel3=25
     ScoreToLevel4=35
     ScoreToLevel5=50

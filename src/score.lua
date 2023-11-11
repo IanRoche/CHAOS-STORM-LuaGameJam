@@ -5,25 +5,31 @@ local screenWidth = love.graphics.getWidth()
 local screenHeight = love.graphics.getHeight()
 
 function Score:new()
-    self.score = _Score  -- Inicializa la puntuación a cero
-    self.font = love.graphics.newFont(24)  -- Fuente para la puntuación
-    self.timeElapsed = 0  -- Lleva un seguimiento del tiempo transcurrido
-    self.pointsPerSecond = 1  -- Puntos por segundo
+    self.score = _Score
+    self.font = love.graphics.newFont(24)
+    self.timeElapsed = 0
+    self.pointsPerSecond = 1
     tutorialTime = true
 end
 
 function Score:update(dt)
-    self.timeElapsed = self.timeElapsed + dt  -- Actualiza el tiempo transcurrido
+    self:handleTimeElapsed(dt)
+    self:updateScoreToLevel2()
+end
 
-    -- Verifica si ha transcurrido al menos 1 segundo
+function Score:handleTimeElapsed(dt)
+    self.timeElapsed = self.timeElapsed + dt 
+
     if self.timeElapsed >= 1 then
-        self:increaseScore(self.pointsPerSecond)  -- Aumenta la puntuación
+        self:increaseScore(self.pointsPerSecond)  
         self.timeElapsed = self.timeElapsed - 1 
-        --print(_Score) -- Reinicia el tiempo transcurrido
     end
-    if  _Score >ScoreToLevel2 and tutorialTime==true then
-        tutorialTime=false
-        _Score=0
+end
+
+function Score:updateScoreToLevel2()
+    if _Score > ScoreToLevel2 and tutorialTime == true then
+        tutorialTime = false
+        _Score = 0
     end
 end
 
@@ -32,34 +38,37 @@ function Score:increaseScore(points)
 end
 
 function Score:draw()
-    -- Establece la fuente para la puntuación
     love.graphics.setFont(self.font)
 
-    
-
-    if  tutorialTime then
-
+    if tutorialTime then
         local text = "Tutorial"
         local textWidth = love.graphics.getFont():getWidth(text)
         
-        local x = (screenWidth - textWidth) / 2
-        local y = 10-- El 4 representa la mitad superior (puedes ajustar este valor)
+        local x, y = self:getCenteredPosition(textWidth, 10)
         
         love.graphics.setColor(1, 0.5, 0)
-        love.graphics.print(text, x, y,0,1.5,2)
-
-    else   
-        -- Dibuja la puntuación en la esquina superior izquierda
-        love.graphics.setColor(1, 1, 1)
-        
-        love.graphics.print("Puntuación: " .. _Score, 10, 10)
-        end
-
+        love.graphics.print(text, x, y, 0, 1.5, 2)
+    else
+        local scoreText = "Puntuación: " .. _Score
+        self:drawCentered(scoreText)
+    end
 end
-function Score:GetScore()
-    
-    return _Score
 
+function Score:GetScore()
+    return _Score
+end
+
+function Score:drawCentered(text)
+    local textWidth = love.graphics.getFont():getWidth(text)
+    local x, y = self:getCenteredPosition(textWidth, 10)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(text, x, y)
+end
+
+function Score:getCenteredPosition(textWidth, yOffset)
+    local x = (screenWidth - textWidth) / 2
+    local y = yOffset
+    return x, y
 end
 
 return Score

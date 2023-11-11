@@ -10,10 +10,10 @@ local CENTER_Y = love.graphics.getHeight() / 1.75
 local MENU_FONT_SIZE = 100
 
 function Scene:new()
-    self.buttons = {}
+    self.m_buttons = {}
     self:createButtons()
-    self.menuFont = love.graphics.newFont("src/Fonts/Storm Gust.ttf", MENU_FONT_SIZE)
-    self.backgroundImage = love.graphics.newImage("src/Textures/otroFondo.png")
+    self.m_menuFont = love.graphics.newFont("src/Fonts/Storm Gust.ttf", MENU_FONT_SIZE)
+    self.m_backgroundImage = love.graphics.newImage("src/Textures/otroFondo.png")
 end
 
 function Scene:draw()
@@ -36,34 +36,34 @@ function Scene:keypressed(key)
 end
 
 function Scene:drawBackground()
-    love.graphics.draw(self.backgroundImage, 0, 0, 0, love.graphics.getWidth() / self.backgroundImage:getWidth(), love.graphics.getHeight() / self.backgroundImage:getHeight())
+    love.graphics.draw(self.m_backgroundImage, 0, 0, 0, love.graphics.getWidth() / self.m_backgroundImage:getWidth(), love.graphics.getHeight() / self.m_backgroundImage:getHeight())
 end
 
 function Scene:drawTitle()
-    local title = "C H A O S   S T O R M"
-    local titleX = (love.graphics.getWidth() - self.menuFont:getWidth(title)) / 2
-    local titleY = 200
+    local l_title = "C H A O S   S T O R M"
+    local l_titleX = (love.graphics.getWidth() - self.m_menuFont:getWidth(l_title)) / 2
+    local l_titleY = TITLE_Y
 
-    love.graphics.setFont(self.menuFont)
+    love.graphics.setFont(self.m_menuFont)
     love.graphics.setColor(0, 0, 0)
-    love.graphics.print(title, titleX + 5, titleY + 5)
-    love.graphics.print(title, titleX - 5, titleY - 5)
+    love.graphics.print(l_title, l_titleX + 5, l_titleY + 5)
+    love.graphics.print(l_title, l_titleX - 5, l_titleY - 5)
     love.graphics.setColor(1, 0.1, 0.2)
-    love.graphics.print(title, titleX, titleY)
+    love.graphics.print(l_title, l_titleX, l_titleY)
     love.graphics.setFont(love.graphics.newFont())
 end
 
 function Scene:createButtons()
-    self.buttons.play = self:createButton("PLAY", 1)
-    self.buttons.quit = self:createButton("EXIT", 2)
+    self.m_buttons.play = self:createButton("PLAY", 1)
+    self.m_buttons.quit = self:createButton("EXIT", 2)
 end
 
 function Scene:createButton(text, index)
-    local position = self:calculateButtonPosition(index)
+    local l_position = self:calculateButtonPosition(index)
 
     return {
-        x = position.x,
-        y = position.y,
+        x = l_position.x,
+        y = l_position.y,
         width = BUTTON_WIDTH,
         height = BUTTON_HEIGHT,
         text = text,
@@ -80,87 +80,87 @@ function Scene:calculateButtonPosition(index)
 end
 
 function Scene:updateButtonStates()
-    for _, button in pairs(self.buttons) do
-        local mouseX, mouseY = love.mouse.getPosition()
-        button.isHovered = mouseX >= button.x and mouseX <= button.x + button.width and mouseY >= button.y and mouseY <= button.y + button.height
+    for _, l_button in pairs(self.m_buttons) do
+        local l_mouseX, l_mouseY = love.mouse.getPosition()
+        l_button.isHovered = l_mouseX >= l_button.x and l_mouseX <= l_button.x + l_button.width and l_mouseY >= l_button.y and l_mouseY <= l_button.y + l_button.height
     end
 end
 
 function Scene:checkButtonActions()
-    for _, button in pairs(self.buttons) do
-        if self:checkButtonClick(button) or (button.isSelected and love.keyboard.isDown("return")) then
-            self:handleButtonClick(button)
+    for _, l_button in pairs(self.m_buttons) do
+        if self:checkButtonClick(l_button) or (l_button.isSelected and love.keyboard.isDown("return")) then
+            self:handleButtonClick(l_button)
         end
     end
 end
 
-function Scene:checkButtonClick(button)
-    local mouseX, mouseY = love.mouse.getPosition()
-    return love.mouse.isDown(1) and mouseX >= button.x and mouseX <= button.x + button.width and mouseY >= button.y and mouseY <= button.y + button.height
+function Scene:checkButtonClick(l_button)
+    local l_mouseX, l_mouseY = love.mouse.getPosition()
+    return love.mouse.isDown(1) and l_mouseX >= l_button.x and l_mouseX <= l_button.x + l_button.width and l_mouseY >= l_button.y and l_mouseY <= l_button.y + l_button.height
 end
 
-function Scene:handleButtonClick(button)
-    if button.text == "PLAY" then
+function Scene:handleButtonClick(l_button)
+    if l_button.text == "PLAY" then
         ChangeScene("Game")
-    elseif button.text == "EXIT" then
+    elseif l_button.text == "EXIT" then
         love.event.quit()
     end
 end
 
 function Scene:drawButtons()
-    for _, button in pairs(self.buttons) do
-        self:drawButton(button)
+    for _, l_button in pairs(self.m_buttons) do
+        self:drawButton(l_button)
     end
 end
 
-function Scene:drawButton(button)
-    local baseColor = {0.5, 0.5, 0.5}
-    local hoverColor = {0.3, 0.3, 0.3}
+function Scene:drawButton(l_button)
+    local l_baseColor = {0.5, 0.5, 0.5}
+    local l_hoverColor = {0.3, 0.3, 0.3}
 
-    local buttonColor = button.isHovered and hoverColor or baseColor 
+    local l_buttonColor = l_button.isHovered and l_hoverColor or l_baseColor 
 
-    love.graphics.setColor(buttonColor)
-    love.graphics.rectangle("fill", button.x, button.y, button.width, button.height)
+    love.graphics.setColor(l_buttonColor)
+    love.graphics.rectangle("fill", l_button.x, l_button.y, l_button.width, l_button.height)
 
     love.graphics.setColor(0, 0, 0)
-    love.graphics.rectangle("line", button.x, button.y, button.width, button.height)
+    love.graphics.rectangle("line", l_button.x, l_button.y, l_button.width, l_button.height)
 
-    local textX = button.x + (button.width - love.graphics.getFont():getWidth(button.text)) / 2
-    local textY = button.y + (button.height - love.graphics.getFont():getHeight()) / 2
+    local l_textX = l_button.x + (l_button.width - love.graphics.getFont():getWidth(l_button.text)) / 2
+    local l_textY = l_button.y + (l_button.height - love.graphics.getFont():getHeight()) / 2
 
-    love.graphics.print(button.text, textX, textY)
+    love.graphics.print(l_button.text, l_textX, l_textY)
     love.graphics.setColor(1, 1, 1)
 end
 
 function Scene:handleEnterKey()
-    for _, button in pairs(self.buttons) do
-        if button.isHovered then
-            self:handleButtonClick(button)
+    for _, l_button in pairs(self.m_buttons) do
+        if l_button.isHovered then
+            self:handleButtonClick(l_button)
             return
         end
     end
 end
 
 function Scene:handleArrowKeys(direction)
-    local currentIndex = self:getSelectedButtonIndex()
+    local l_currentIndex = self:getSelectedButtonIndex()
 
     if direction == "up" then
-        currentIndex = currentIndex - 1
+        l_currentIndex = l_currentIndex - 1
     elseif direction == "down" then
-        currentIndex = currentIndex + 1
+        l_currentIndex = l_currentIndex + 1
     end
 
-    currentIndex = self:wrapIndex(currentIndex)
+    l_currentIndex = self:wrapIndex(l_currentIndex)
 
-    self:selectButtonByIndex(currentIndex)
+    self:selectButtonByIndex(l_currentIndex)
 end
 
 function Scene:wrapIndex(index)
-    local buttonCount = #self.buttons
+    local l_buttonCount = #self.m_buttons
 
     if index < 1 then
-        return buttonCount
-    elseif index > buttonCount then
+        return l_buttonCount
+    elseif index > l_buttonCount then
         return 1
     end
 
@@ -168,14 +168,14 @@ function Scene:wrapIndex(index)
 end
 
 function Scene:selectButtonByIndex(index)
-    for i, button in pairs(self.buttons) do
-        button.isHovered = (i == index)
+    for i, l_button in pairs(self.m_buttons) do
+        l_button.isHovered = (i == index)
     end
 end
 
 function Scene:getSelectedButtonIndex()
-    for i, button in pairs(self.buttons) do
-        if button.isHovered then
+    for i, l_button in pairs(self.m_buttons) do
+        if l_button.isHovered then
             return i
         end
     end

@@ -10,7 +10,7 @@ local Background =Background or require "src.Background"
 local m_Enemies
 local m_Player
 local m_Score
-local currentDifficultyLevel = 0
+local m_currentDifficultyLevel = 0
 local m_CirclesRow
 local m_PowerUps
 local m_Background
@@ -43,6 +43,7 @@ function Scene:update(dt)
     self:updateLevel(dt)
     m_PowerUps:update(dt)
 end
+
 function Scene:draw()
     m_Background:draw()
     m_Player:draw()
@@ -51,82 +52,84 @@ function Scene:draw()
     m_Enemies:draw()
     m_PowerUps:draw()
     
-    if currentDifficultyLevel == 1 then
+    if m_currentDifficultyLevel == 1 then
         self:drawBlinkingCircle()
     end
 end
 
 function Scene:drawBlinkingCircle()
-    local radius = 40
-    local blinkFrequency = 5
+    local l_radius = 40
+    local l_blinkFrequency = 5
 
-    local visibility = math.sin(love.timer.getTime() * blinkFrequency)
-    visibility = (visibility + 1) / 2
+    local l_visibility = math.sin(love.timer.getTime() * l_blinkFrequency)
+    l_visibility = (l_visibility + 1) / 2
 
-    local color = {1, 0, 0, visibility}
-    local lineWidth = 5
+    local l_color = {1, 0, 0, l_visibility}
+    local l_lineWidth = 5
 
-    self:drawCircle(m_Player.x, m_Player.y, radius, "line", color, lineWidth)
+    self:drawCircle(m_Player.x, m_Player.y, l_radius, "line", l_color, l_lineWidth)
 end
 
-function Scene:drawCircle(x, y, radius, mode, color, lineWidth)
+function Scene:drawCircle(l_x, l_y, l_radius, l_mode, l_color, l_lineWidth)
     local r, g, b, a = love.graphics.getColor()
     local lw = love.graphics.getLineWidth()
 
-    love.graphics.setColor(color)
-    love.graphics.setLineWidth(lineWidth)
-    love.graphics.circle(mode, x, y, radius)
+    love.graphics.setColor(l_color)
+    love.graphics.setLineWidth(l_lineWidth)
+    love.graphics.circle(l_mode, l_x, l_y, l_radius)
 
     love.graphics.setColor(r, g, b, a)
     love.graphics.setLineWidth(lw)
 end
+
 function Scene:clearAllColliders()
     Collider.clear()
 end
 
 function Scene:getNewDifficultyLevel()
-    local newDifficultyLevel
+    local l_newDifficultyLevel
     if _Score >= ScoreToLevel5 then
-        newDifficultyLevel = 5
+        l_newDifficultyLevel = 5
     elseif _Score >= ScoreToLevel4 then
-        newDifficultyLevel = 4
+        l_newDifficultyLevel = 4
     elseif _Score >= ScoreToLevel3 then
-        newDifficultyLevel = 3
+        l_newDifficultyLevel = 3
     elseif _Score >= ScoreToLevel2 then
-        newDifficultyLevel = 2
+        l_newDifficultyLevel = 2
     else    
-        newDifficultyLevel = 1
+        l_newDifficultyLevel = 1
     end
-    return newDifficultyLevel
+    return l_newDifficultyLevel
 end
 
-function Scene:ToggleEntities(EnemyFollow, Allahakbar, Bouncy, PowerUpSpeed)
-    self:CheckToggleEntity(EnemyFollow, "EnemyFollow",true,true)
-    self:CheckToggleEntity(Allahakbar, "Allahakbar",true,true)
-    self:CheckToggleEntity(Bouncy, "Bouncy",true,true)
-    self:CheckToggleEntity(PowerUpSpeed, "PowerUpSpeed", false, true)
+function Scene:ToggleEntities(l_EnemyFollow, l_Allahakbar, l_Bouncy, l_PowerUpSpeed)
+    self:CheckToggleEntity(l_EnemyFollow, "EnemyFollow", true, true)
+    self:CheckToggleEntity(l_Allahakbar, "Allahakbar", true, true)
+    self:CheckToggleEntity(l_Bouncy, "Bouncy", true, true)
+    self:CheckToggleEntity(l_PowerUpSpeed, "PowerUpSpeed", false, true)
 end
 
-function Scene:CheckToggleEntity(shouldToggle, entityName, ...)
-    if shouldToggle then
-        m_Enemies:toggleEntity(entityName, ...)
+function Scene:CheckToggleEntity(l_shouldToggle, l_entityName, ...)
+    if l_shouldToggle then
+        m_Enemies:toggleEntity(l_entityName, ...)
     end
 end
 
-function Scene:ChangeSpawnIntervals(_AllahAkbar, _EnemyFollow, _Bouncy)
-    AllahAkbarSpawnInterval = _AllahAkbar  -- Intervalo en segundos entre la aparición de Allahakbar
-    EnemySpawnInterval = _EnemyFollow
-    BouncySpawnInterval = _Bouncy
+function Scene:ChangeSpawnIntervals(l_AllahAkbar, l_EnemyFollow, l_Bouncy)
+    AllahAkbarSpawnInterval = l_AllahAkbar  -- Intervalo en segundos entre la aparición de Allahakbar
+    EnemySpawnInterval = l_EnemyFollow
+    BouncySpawnInterval = l_Bouncy
 end
 
-function Scene:UpdateEnemiesStats(akbarVelocity, followVelocity, bouncyVelocity, maxWallHits)
-    AllahAkbarVelocity = akbarVelocity
-    EnemyFollowVelocity = followVelocity
-    BouncyVelocity = bouncyVelocity
-    BouncyMaxWallHits = maxWallHits
+function Scene:UpdateEnemiesStats(l_akbarVelocity, l_followVelocity, l_bouncyVelocity, l_maxWallHits)
+    AllahAkbarVelocity = l_akbarVelocity
+    EnemyFollowVelocity = l_followVelocity
+    BouncyVelocity = l_bouncyVelocity
+    BouncyMaxWallHits = l_maxWallHits
 end
-function Scene:applyDifficultyLevel(level)
-    if level == 1 then
+
+function Scene:applyDifficultyLevel(l_level)
+    if l_level == 1 then
         --Enemigos activos
         self:ToggleEntities(true, true, true, true)
         
@@ -135,7 +138,7 @@ function Scene:applyDifficultyLevel(level)
         
         --Modificaciones Enemigos
         self:UpdateEnemiesStats(60, 60, 60, 2)
-    elseif level == 2 then
+    elseif l_level == 2 then
         --Enemigos activos
         self:ToggleEntities(true, false, false, true)
         
@@ -145,7 +148,7 @@ function Scene:applyDifficultyLevel(level)
         --Modificaciones Enemigos
         self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
         self:UpdateEnemiesStats(80, 100, 90, 4)
-    elseif level == 3 then
+    elseif l_level == 3 then
         --Enemigos activos
         self:ToggleEntities(true, true, false, true)
         
@@ -155,7 +158,7 @@ function Scene:applyDifficultyLevel(level)
         --Modificaciones Enemigos
         self:changeCirclesRowValues(1.3, 30, 150, 5, 2)
         self:UpdateEnemiesStats(100, 150, 100, 5)
-    elseif level == 4 then
+    elseif l_level == 4 then
         --Enemigos activos
         self:ToggleEntities(true, true, true, true)
         
@@ -165,7 +168,7 @@ function Scene:applyDifficultyLevel(level)
         --Modificaciones Enemigos
         self:changeCirclesRowValues(1.6, 50, 100, 5, 2)
         self:UpdateEnemiesStats(150, 200, 100, 7)
-    elseif level == 5 then
+    elseif l_level == 5 then
         --Enemigos activos
         self:ToggleEntities(true, true, true, true)
         
@@ -178,26 +181,25 @@ function Scene:applyDifficultyLevel(level)
     end
 end
 
-
 function Scene:updateLevel(dt)
-    if currentDifficultyLevel == 1 then
+    if m_currentDifficultyLevel == 1 then
         self:updateLevel1(dt)
-    elseif currentDifficultyLevel == 2 then
+    elseif m_currentDifficultyLevel == 2 then
         self:updateLevel2(dt)
-    elseif currentDifficultyLevel == 3 then
+    elseif m_currentDifficultyLevel == 3 then
         self:updateLevel3(dt)
-    elseif currentDifficultyLevel == 4 then
+    elseif m_currentDifficultyLevel == 4 then
         self:updateLevel4(dt)
-    elseif currentDifficultyLevel == 5 then
+    elseif m_currentDifficultyLevel == 5 then
         self:updateLevel5(dt)
     end
 end
 
 function Scene:checkNewLevel()
-    local newDifficultyLevel = self:getNewDifficultyLevel()
-    if newDifficultyLevel > currentDifficultyLevel then
-        currentDifficultyLevel = newDifficultyLevel
-        self:applyDifficultyLevel(currentDifficultyLevel)
+    local l_newDifficultyLevel = self:getNewDifficultyLevel()
+    if l_newDifficultyLevel > m_currentDifficultyLevel then
+        m_currentDifficultyLevel = l_newDifficultyLevel
+        self:applyDifficultyLevel(m_currentDifficultyLevel)
     end
 end
 
@@ -243,7 +245,6 @@ function Scene:updateBarColorLinear(colorTable, rate)
 end
 
 function Scene:updateBarColorPattern(colorTable, colorDark, colorLight, speed)
-    local time = love.timer.getTime()
     local r, g, b, a = CalculateColorFromPattern(colorDark, colorLight, speed)
     colorTable[1], colorTable[2], colorTable[3], colorTable[4] = r, g, b, a
 end
@@ -259,7 +260,6 @@ function Scene:updateBarColorRainbow(colorTable, time)
     local blue = CalculateSinusoidalColorComponent(4 * math.pi / 3, 1, 1, time, 1)
     colorTable[1], colorTable[2], colorTable[3] = red, green, blue
 end
-
 -- UTILITY
 function ChangeBackgroundColorLinear(colorTable, rate)
     for i, component in ipairs(colorTable) do

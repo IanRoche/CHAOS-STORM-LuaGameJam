@@ -1,22 +1,18 @@
 local Object = Object or require "lib.classic"
 local Scene = Object:extend()
-local Score = require "src.Score"
 
-local m_Score
 
 function Scene:new()
-    m_Score = Score()
-    self.finalScore = m_Score.score
-    self.gameOverFont = love.graphics.newFont(GameOverFontSize)
-    self.menuFont = love.graphics.newFont(MenuFontSize)
-    self.gameoverEscFont = love.graphics.newFont(GameoverEscFontSize)
+    self.m_gameOverFont = love.graphics.newFont(GameOverFontSize)
+    self.m_menuFont = love.graphics.newFont(MenuFontSize)
+    self.m_gameoverEscFont = love.graphics.newFont(GameoverEscFontSize)
 end
 
 function Scene:update(dt)
     if love.keyboard.isDown(ExitKey) then
         love.event.quit('restart')
     end
-    for i, rgb in ipairs(BackGroundColor) do
+    for i, l_rgb in ipairs(BackGroundColor) do
         BackGroundColor[i] = BackGroundColor[i] - 0.001
     end
 end
@@ -28,30 +24,29 @@ function Scene:draw()
 end
 
 function Scene:drawElements()
-
-    if self.finalScore >= ScoreToLevel5 then
-        self:drawImage("ener")
-
-    elseif self.finalScore >= ScoreToLevel4 then
-        self:drawImage("kid")
-
-    elseif self.finalScore >= ScoreToLevel3 then
-        self:drawImage("tecnocampus")
-
-    elseif self.finalScore >= ScoreToLevel2 then
-        self:drawImage("krater")
-
-    else    
-        self:drawImage("JaumeTeEstimu")
-    end
-
+    self:AssignMeme()
     -- Dibujar elementos
     love.graphics.setColor(GameOverColor)
-    self:drawText("GAME OVER", self.gameOverFont, -GameOverFontSize)
-    self:drawText("Puntuación: " .. self.finalScore, self.menuFont, 0)
-    self:drawText("¡Si superas el TUTORIAL, votanos!", self.menuFont, love.graphics.getHeight() / 5)
-    self:drawText("Press ESC to restart", self.gameoverEscFont, love.graphics.getHeight() / 3 * 2 + GameoverEscFontSize)
+    self:drawText("GAME OVER", self.m_gameOverFont, -GameOverFontSize)
+    self:drawText("Puntuación: " .. _Score, self.m_menuFont, 0)
+    self:drawText("¡Si superas el TUTORIAL, votanos!", self.m_menuFont, love.graphics.getHeight() / 5)
+    self:drawText("Press ESC to restart", self.m_gameoverEscFont, love.graphics.getHeight() / 3 * 2 + GameoverEscFontSize)
     love.graphics.setColor(1, 1, 1)
+end
+
+function Scene:AssignMeme()
+    
+    if _Score >= ScoreToLevel5 then
+        self:drawImage("ener")
+    elseif _Score >= ScoreToLevel4 then
+        self:drawImage("kid")
+    elseif _Score >= ScoreToLevel3 then
+        self:drawImage("tecnocampus")
+    elseif _Score >= ScoreToLevel2 then
+        self:drawImage("krater")
+    else
+        self:drawImage("JaumeTeEstimu")
+    end
 end
 
 function Scene:drawText(text, font, yOffset)

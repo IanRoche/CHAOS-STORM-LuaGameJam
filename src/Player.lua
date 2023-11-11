@@ -2,7 +2,6 @@ local Object = Object or require "lib.classic"
 local ICanBeDestroyedInterface = require "src.ICabBeDestroyed"
 local Player = Object:extend()
 
-
 Player:implement(ICanBeDestroyedInterface)
 
 local m_PlayerTrigger
@@ -26,7 +25,6 @@ function Player:new(x, y, radius, speed, isDestroyable)
         -- Define la función onTriggerEnter para el objeto m_PlayerTrigger
         m_PlayerTrigger.onTriggerEnter = function(other)
             if other.tag == 'Circle' and other.isPowerUp then
-                --other:applyEffect(self)
                 other:destroy()
             elseif other.tag == 'Circle' then
                 Player:destroy()
@@ -38,12 +36,12 @@ function Player:new(x, y, radius, speed, isDestroyable)
 end
 
 function Player:update(dt)
-    self:MovePlayer(dt)
-    self:CheckWindowCollisions()
+    self:movePlayer(dt)
+    self:checkWindowCollisions()
     if #Collider.colliders > 1 or #Collider.circleIDs > 1 then
         self:updateCollider()
     end
-    self:UpdatePlayerPosition(self.x, self.y)
+    self:updatePlayerPosition(self.x, self.y)
 
     -- Verificar colisiones con power-ups
     for _, powerUp in ipairs(PowerUpsList) do
@@ -56,8 +54,8 @@ function Player:update(dt)
     -- Verificar colisiones con enemigos
     for _, enemy in ipairs(EnemyList) do
         if self:checkCollisionWithEnemy(enemy) then
-            if not IsInPowerUpsList(enemy) then
-                self:destroy()  -- El jugador choca con un enemigo que no está en PowerUpsList, se activa el "Game Over"
+            if not isInPowerUpsList(enemy) then
+                self:destroy()
             end
         end
     end
@@ -65,16 +63,13 @@ end
 
 function Player:checkCollisionWithPowerUp(powerUp)
     local distance = math.sqrt((self.x - powerUp.x) ^ 2 + (self.y - powerUp.y) ^ 2)
-    local minDistance = (math.max(self.radius, powerUp.width+6) + powerUp.height+6) / 2
+    local minDistance = (math.max(self.radius, powerUp.width + 6) + powerUp.height + 6) / 2
     return distance <= minDistance
 end
 
-
-
 function Player:draw()
     love.graphics.setColor(1, 0, 1, 1)
-    --love.graphics.circle("fill", self.x, self.y, self.radius)
-    love.graphics.draw(self.image,self.x-self.image.getWidth(self.image)/2,self.y-self.image.getHeight(self.image)/2,0,self.escale,self.escale)
+    love.graphics.draw(self.image, self.x - self.image.getWidth(self.image) / 2, self.y - self.image.getHeight(self.image) / 2, 0, self.escale, self.escale)
 end
 
 function Player:updateCollider()
@@ -83,7 +78,7 @@ function Player:updateCollider()
     m_PlayerTrigger.angle = math.pi / 2
 end
 
-function Player:MovePlayer(dt)
+function Player:movePlayer(dt)
     local l_SpeedX = 0
     local l_SpeedY = 0
 
@@ -113,7 +108,7 @@ function Player:MovePlayer(dt)
     self.y = self.y + l_SpeedY * PlayerSpeed * dt
 end
 
-function Player:CheckWindowCollisions()
+function Player:checkWindowCollisions()
     local l_radius = self.radius
     local l_NewX = self.x
     local l_NewY = self.y
@@ -137,14 +132,14 @@ end
 function Player:checkCollisionWithEnemy(enemy)
     for _, e in ipairs(EnemyList) do
         if e:checkCollisionWithPlayer(self) then
-            if not IsInPowerUpsList(e) then
-                self:destroy()  -- El jugador choca con un enemigo que no está en PowerUpsList, se activa el "Game Over"
+            if not isInPowerUpsList(e) then
+                self:destroy()
             end
         end
     end
 end
 
-function IsInPowerUpsList(enemy)
+function isInPowerUpsList(enemy)
     for _, powerUp in ipairs(PowerUpsList) do
         if enemy == powerUp then
             return true
@@ -153,20 +148,14 @@ function IsInPowerUpsList(enemy)
     return false
 end
 
--- Implementar el método destroy para la clase Player
 function Player:destroy()
-    -- Implementa la destrucción del jugador aquí
     self.isDestroyed = true
-    -- Elimina el objeto de la lista DestroyableObjects si es destruible
     for i, obj in ipairs(DestroyableObjects) do
         if obj == self then
             table.remove(DestroyableObjects, i)
             break
         end
     end
-
-    --print("Destroy")
-
     ChangeScene("GameOver")
 end
 
@@ -174,7 +163,7 @@ function Player:getPosition()
     return self.x, self.y
 end
 
-function Player:UpdatePlayerPosition(x, y)
+function Player:updatePlayerPosition(x, y)
     PlayerPosition.x = x
     PlayerPosition.y = y
 end

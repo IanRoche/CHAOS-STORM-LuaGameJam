@@ -5,29 +5,28 @@ local SmallCircle = Object:extend()
 function SmallCircle:new(x, y, radius)
     self.x = x
     self.y = y
-    self.radius = radius / 3  -- Tamaño más pequeño que el del enemigo original
+    self.radius = radius / 3
     self.image = love.graphics.newImage("src/Textures/explosion2.png")
-    self.escala = self.radius * 2 / self.image:getWidth()
+    self.scale = self.radius * 2 / self.image:getWidth()
 
-    self.speed = 20  -- Velocidad de movimiento de las fracciones
-    self.angle = love.math.random() * (2 * math.pi)  -- Ángulo de movimiento aleatorio
-    table.insert(EnemyList,self)
+    self.speed = 20
+    self.angle = love.math.random() * (2 * math.pi)
+
+    table.insert(EnemyList, self)
 end
 
 function SmallCircle:update(dt)
-    -- Mueve las fracciones en la dirección del ángulo
+    self:updatePosition(dt)
+end
+
+function SmallCircle:updatePosition(dt)
     self.x = self.x + self.speed * math.cos(self.angle) * dt
     self.y = self.y + self.speed * math.sin(self.angle) * dt
 end
 
 function SmallCircle:draw()
-    -- Dibuja las fracciones pequeñas
-    --love.graphics.setColor(1, 0, 0)  -- Color rojo (ajusta el color según tus preferencias)
-    --love.graphics.circle("fill", self.x, self.y, self.radius)
-    
-    love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
-    self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
-
+    love.graphics.draw(self.image, self.x - self.image:getWidth() * self.scale / 2,
+        self.y - self.image:getHeight() * self.scale / 2, 0, self.scale, self.scale)
 end
 
 function SmallCircle:checkCollisionWithPlayer(player)

@@ -4,7 +4,7 @@ local SpawnerPowerUps = require "src.PowerUps.SpawnerPowerUps"
 
 PowerUpsList = {}
 PowerUpsVisibility = {
-    PowerUpSpeed = false,  -- Por defecto, no aparece
+    PowerUpSpeed = false,
 }
 
 function PowerUps:new()

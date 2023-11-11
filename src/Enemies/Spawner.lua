@@ -7,10 +7,10 @@ local Bouncy = Bouncy or require "src.Enemies.Bouncy"
 local Spawner = Object:extend()
 
 function Spawner:new()
-    self.EnemySpawnTime = 2
-    self.EnemyTime = 0
-    self.EnemySpawnInterval = EnemySpawnInterval  -- Intervalo en segundos entre cada aparición de ENEMY
-    self.EnemySpawnTimer = 0
+    self.m_EnemySpawnTime = 2
+    self.m_EnemyTime = 0
+    self.m_EnemySpawnInterval = EnemySpawnInterval  -- Intervalo en segundos entre cada aparición de ENEMY
+    self.m_EnemySpawnTimer = 0
 
     self.AllahAkbarSpawnTime = 1
     self.AllahAkbarTime = 0
@@ -27,8 +27,8 @@ function Spawner:new()
 end
 
 function Spawner:update(dt)
-    self.EnemyTime = self.EnemyTime + dt
-    self.EnemySpawnTimer = self.EnemySpawnTimer + dt
+    self.m_EnemyTime = self.m_EnemyTime + dt
+    self.m_EnemySpawnTimer = self.m_EnemySpawnTimer + dt
 
     self.AllahAkbarTime = self.AllahAkbarTime + dt
     self.AllahAkbarSpawnTimer = self.AllahAkbarSpawnTimer + dt
@@ -43,8 +43,7 @@ function Spawner:update(dt)
             if self.AllahAkbarSpawnTimer >= AllahAkbarSpawnInterval then
                 local e = Allahakbar()
                 table.insert(EnemyList, e)
-                --print("in if - AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
-                self.AllahAkbarSpawnTimer = 0  -- Reiniciar el temporizador de aparición
+                self.AllahAkbarSpawnTimer = 0
             end
             self.AllahAkbarTime = 0
         end
@@ -52,14 +51,13 @@ function Spawner:update(dt)
 
     --ENEMY
     if enemyVisibility.EnemyFollow == true then
-        if self.EnemyTime > self.EnemySpawnTime then
-            if self.EnemySpawnTimer >= EnemySpawnInterval then
+        if self.m_EnemyTime > self.m_EnemySpawnTime then
+            if self.m_EnemySpawnTimer >= EnemySpawnInterval then
                 local ef = EnemyFollow()
                 table.insert(EnemyList, ef)
-                --print("BASIC ENEMY")
-                self.EnemySpawnTimer = 0  -- Reiniciar el temporizador de aparición
+                self.m_EnemySpawnTimer = 0
             end
-            self.EnemyTime = 0
+            self.m_EnemyTime = 0
         end
     end
 
@@ -69,8 +67,7 @@ function Spawner:update(dt)
             if self.BouncySpawnTimer >= BouncySpawnInterval then
                 local b = Bouncy()
                 table.insert(EnemyList, b)
-                --print("new BOUNCY")
-                self.BouncySpawnTimer = 0  -- Reiniciar el temporizador de aparición
+                self.BouncySpawnTimer = 0
             end
             self.BouncyTime = 0
         end
@@ -80,15 +77,10 @@ end
 
 function Spawner:updateValue(newInterval)
     self.AllahAkbarSpawnInterval = newInterval
-    --print("Updated AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
 
-    self.EnemySpawnInterval = newInterval
-    --print("Updated EnemySpawnInterval: " .. self.EnemySpawnInterval)
+    self.m_EnemySpawnInterval = newInterval
 
     self.BouncySpawnInterval = newInterval
-    --print("Updated BouncySpawnInterval: " .. self.BouncySpawnInterval)
-    
-    
 end
 
 function Spawner:draw()

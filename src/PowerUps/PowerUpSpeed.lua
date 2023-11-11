@@ -22,13 +22,8 @@ function PowerUpSpeed:update(dt)
 end
 
 function PowerUpSpeed:applyEffect()
-    -- Aquí puedes implementar la lógica para aplicar el efecto del power-up al jugador
-    -- Por ejemplo, aumentar temporalmente la velocidad del jugador.
-    --print("Apply effect--------------")
-
-    _Score=_Score+3
+    _Score=_Score+1.5
     CirclesRowRotationSpeed = CirclesRowRotationSpeed - 0.1
-
 end
 
 function PowerUpSpeed:draw()
@@ -49,7 +44,6 @@ end
 function PowerUpSpeed:checkCollisionWithPlayer(player)
     local distance = math.sqrt((self.x - player.x) ^ 2 + (self.y - player.y) ^ 2)
     local minDistance = (math.max(self.width, self.height) + player.radius) / 2
-    print ("me e choquiado ")
     if   distance <= minDistance then
         self.exploded=true
         
