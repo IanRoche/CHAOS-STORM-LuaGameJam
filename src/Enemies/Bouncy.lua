@@ -43,9 +43,6 @@ function Bouncy:new()
     self.deadColor = {1, 0, 1, 0}
     self.color = self.aliveColor
 
-    self.image = love.graphics.newImage("src/Textures/bouncy2.png")
-    self.escala = self.radius * 2.5  / self.image:getWidth()
-
     table.insert(EnemyList, self)
     table.insert(allBouncysList, self)
 end
@@ -99,18 +96,16 @@ end
 
 -- Método para dibujar el enemigo
 function Bouncy:draw()
-    --love.graphics.setColor(self.color)  -- Establece el color a azul (RGB: 0, 0, 1)
-    --love.graphics.circle("fill", self.x, self.y, self.radius)
-    love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
-    self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
-    --love.graphics.reset(love.graphics.setColor(self.color))
+    love.graphics.setColor(self.color)  -- Establece el color a azul (RGB: 0, 0, 1)
+    love.graphics.circle("fill", self.x, self.y, self.radius)
+    love.graphics.reset(love.graphics.setColor(self.color))
 end
 
 -- Método para destruir el enemigo
 function Bouncy:destroy()
     for i, enemy in ipairs(EnemyList) do
         if enemy == self then
-            --self.exploded = true
+            self.exploded = true
             table.remove(EnemyList, i)
             break
         end
