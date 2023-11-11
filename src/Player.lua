@@ -8,6 +8,8 @@ Player:implement(ICanBeDestroyedInterface)
 
 local m_PlayerTrigger
 
+
+
 function Player:new(x, y, radius, speed, isDestroyable)
     if x and y and radius then
         self.image = love.graphics.newImage("src/Textures/player1.png")
@@ -31,11 +33,11 @@ function Player:new(x, y, radius, speed, isDestroyable)
                 other:destroy()
             elseif other.tag == 'Circle' then
                 Player:destroy()
-                print("destroyed by bar")
+                
             end
         end
     else
-        print("Valores de x, y o radius no válidos")
+        
     end
 end
 
