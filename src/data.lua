@@ -48,7 +48,7 @@ _Score=0
 CurrentDifficultyLevel =1
 
 --SPAWNER ENEMIES
-AllahakbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
+AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
 EnemySpawnInterval = 1
 BouncySpawnInterval = 1
 
@@ -56,7 +56,10 @@ BouncySpawnInterval = 1
 --ENEMIES
 ----ALLAHAKBAR
 AllahAkbarVelocity =100
-
+----ENEMY FOLLOW
+EnemyFollowVelocity =100
+--BOUNCY
+BouncyVelocity =100
 
 --BACKGROUND
 BackGroundColor={0.1,0.1,0.1}

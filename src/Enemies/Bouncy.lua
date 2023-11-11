@@ -2,7 +2,7 @@ local Object = Object or require "lib.classic"
 local Bouncy = Object:extend()
 
 -- Variables de clase para la velocidad compartida y el número máximo de rebotes
-Bouncy.speed = 100  -- Velocidad compartida
+Bouncy.speed = BouncyVelocity  -- Velocidad compartida
 Bouncy.maxWallHits = 4  -- Número máximo de rebotes compartido
 
 local allBouncysList = {}
@@ -36,7 +36,7 @@ function Bouncy:new()
     self.radius = 10
     self.escala = self.radius * 2  / self.image:getWidth()
     self.exploded = false
-    self.speed = Bouncy.speed
+    self.speed = BouncyVelocity
     self.wallHits = 0
     self.maxWallHits = Bouncy.maxWallHits
     self.aliveColor = {0, 0, 1}
@@ -49,8 +49,8 @@ end
 
 function Bouncy:update(dt)
     for _, bouncy in ipairs(allBouncysList) do
-        local dx = math.cos(bouncy.angle) * bouncy.speed * dt
-        local dy = math.sin(bouncy.angle) * bouncy.speed * dt
+        local dx = math.cos(bouncy.angle) * BouncyVelocity * dt
+        local dy = math.sin(bouncy.angle) * BouncyVelocity * dt
 
         bouncy.x = bouncy.x + dx
         bouncy.y = bouncy.y + dy

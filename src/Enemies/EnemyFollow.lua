@@ -7,7 +7,7 @@ function EnemyFollow:new()
     self.image = love.graphics.newImage("src/Textures/green_fireball.png")
     self.radius = 25  -- Radio del enemigo
     self.escala = self.radius * 2  / self.image:getWidth()
-    self.speed = 100  -- Velocidad de movimiento
+    self.speed = EnemyFollowVelocity  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.dead = false  -- Bandera para rastrear si ha explotado
     

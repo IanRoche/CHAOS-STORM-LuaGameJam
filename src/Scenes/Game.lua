@@ -81,31 +81,51 @@ end
 
 function Scene:applyDifficultyLevel(level)
     if level == 1 then
-        m_Enemies:toggleEntity("EnemyFollow", false, false)
+        --Enemigos activos
+        m_Enemies:toggleEntity("EnemyFollow", true, true)
         m_Enemies:toggleEntity("Allahakbar", true, true)
         m_Enemies:toggleEntity("Bouncy", true, true)
         m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        --Modificaciones Spawn Enemigos
+        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
+        EnemySpawnInterval = 1
+        BouncySpawnInterval = 1
+        --Modificaciones Enemigos
     elseif level == 2 then
-        m_Enemies:toggleEntity("EnemyFollow", false, false)
+        --Enemigos activos
+        m_Enemies:toggleEntity("EnemyFollow", true, true)
+        m_Enemies:toggleEntity("Allahakbar", false, false)
+        m_Enemies:toggleEntity("Bouncy", false, false)
+        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        
+        --Modificaciones Spawn Enemigos
+        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
+        EnemySpawnInterval = 1
+        BouncySpawnInterval = 1
+        
+        --Modificaciones Enemigos
+        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
+        AllahAkbarVelocity = 100
+    elseif level == 3 then
+        --Enemigos activos
+        m_Enemies:toggleEntity("EnemyFollow", true, true)
         m_Enemies:toggleEntity("Allahakbar", true, true)
         m_Enemies:toggleEntity("Bouncy", false, false)
         m_Enemies:toggleEntity("PowerUpSpeed", false, true)
-        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
-        ChangeBackgroundColor(0.5, 0.2, 0.5, 1)
-        AllahAkbarVelocity = 100
-    elseif level == 3 then
-        m_Enemies:toggleEntity("EnemyFollow", true, false)
-        m_Enemies:toggleEntity("Allahakbar", true, false)
-        m_Enemies:toggleEntity("Bouncy", true, false)
-        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
-        ChangeBackgroundColor(0, 0.4, 0.3, 1)
+        
+        
+        
     elseif level == 4  then
+        --Enemigos activos
         m_Enemies:toggleEntity("EnemyFollow", true, true)
         m_Enemies:toggleEntity("Allahakbar", true, true)
         m_Enemies:toggleEntity("Bouncy", true, false)
         m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        
+        --Modificaciones Enemigos
         AllahAkbarVelocity = 200
     elseif level == 5 then
+        --Enemigos activos
         m_Enemies:toggleEntity("EnemyFollow", true, true)
         m_Enemies:toggleEntity("Allahakbar", true, true)
         m_Enemies:toggleEntity("Bouncy", true, true)
@@ -121,9 +141,9 @@ function Scene:updateLevel(dt)
     elseif currentDifficultyLevel == 3 then
         self:updateLevel3(dt)
     elseif currentDifficultyLevel == 4 then
-        self:updateLevel3(dt)
+        self:updateLevel4(dt)
     elseif currentDifficultyLevel == 5 then
-        self:updateLevel3(dt)
+        self:updateLevel5(dt)
     end
 end
 
@@ -136,44 +156,55 @@ function Scene:checkNewLevel()
 end
 
 function Scene:updateLevel1(dt)
-    for i, rgb in ipairs(BackGroundColor) do
-        BackGroundColor[i] = BackGroundColor[i] + 0.001
-    end
+    ChangeBackgroundColorLinear(BackGroundColor, 0.001)
 end
 
 function Scene:updateLevel2(dt)
-    -- Patrón de cambio de color del fondo en tonos púrpuras
-    local purpleDark = {0.4, 0, 0.4, 1}  -- Púrpura oscuro
-    local purpleLight = {0.6, 0, 0.6, 1}  -- Púrpura claro
-
-    -- Velocidad de cambio de color (ajusta según tus preferencias)
+    local purpleDark = {0.4, 0, 0.4, 1}
+    local purpleLight = {0.6, 0, 0.6, 1}
     local colorChangeSpeed = 1
-
-    -- Cálculo de valores RGB en función del tiempo
-    local time = love.timer.getTime()
-    local r = (purpleDark[1] + purpleLight[1]) / 2 + 0.2 * math.sin(colorChangeSpeed * time)
-    local g = (purpleDark[2] + purpleLight[2]) / 2
-    local b = (purpleDark[3] + purpleLight[3]) / 2 + 0.2 * math.cos(colorChangeSpeed * time)
-    local a = (purpleDark[4] + purpleLight[4]) / 2
-
-    -- Cambia el color de fondo
+    local r, g, b, a = CalculateColorFromPattern(purpleDark, purpleLight, colorChangeSpeed)
     ChangeBackgroundColor(r, g, b, a)
-
 end
 
 function Scene:updateLevel3(dt)
-    local time = love.timer.getTime()
+    local green = CalculateSinusoidalColorComponent(0, 1, 1, love.timer.getTime(), 1)
+    ChangeBackgroundColor(0, green, 0, 1)
+end
 
-    -- Cambia el color del fondo con un patrón de arcoíris
-    local frequency = 1
-    local red = math.sin(frequency * time) * 0.5 + 0.5
-    local green = math.sin(frequency * time + (2 * math.pi / 3)) * 0.5 + 0.5
-    local blue = math.sin(frequency * time + (4 * math.pi / 3)) * 0.5 + 0.5
+function Scene:updateLevel4(dt)
+    local yellow = CalculateSinusoidalColorComponent(0, 1, 1, love.timer.getTime(), 1)
+    local orange = CalculateSinusoidalColorComponent(math.pi, 1, 1, love.timer.getTime(), 1)
+    ChangeBackgroundColor(yellow, orange, 0, 1)
+end
 
-    -- Asigna los valores al color de fondo
+function Scene:updateLevel5(dt)
+    local red = CalculateSinusoidalColorComponent(0, 1, 1, love.timer.getTime(), 1)
+    local green = CalculateSinusoidalColorComponent(2 * math.pi / 3, 1, 1, love.timer.getTime(), 1)
+    local blue = CalculateSinusoidalColorComponent(4 * math.pi / 3, 1, 1, love.timer.getTime(), 1)
     ChangeBackgroundColor(red, green, blue, 1)
 end
 
+-- Funciones de utilidad
+
+function ChangeBackgroundColorLinear(colorTable, rate)
+    for i, component in ipairs(colorTable) do
+        colorTable[i] = component + rate
+    end
+end
+
+function CalculateColorFromPattern(colorDark, colorLight, speed)
+    local time = love.timer.getTime()
+    local r = (colorDark[1] + colorLight[1]) / 2 + 0.2 * math.sin(speed * time)
+    local g = (colorDark[2] + colorLight[2]) / 2
+    local b = (colorDark[3] + colorLight[3]) / 2 + 0.2 * math.cos(speed * time)
+    local a = (colorDark[4] + colorLight[4]) / 2
+    return r, g, b, a
+end
+
+function CalculateSinusoidalColorComponent(phaseShift, amplitude, offset, time, frequency)
+    return amplitude * math.sin(frequency * time + phaseShift) + offset
+end
 
 function Scene:changeCirclesRowValues(rotationSpeed, minCircleSpacing, maxCircleSpacing, changeFrequency, changeSpeed)
     CirclesRowRotationSpeed = rotationSpeed

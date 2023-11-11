@@ -14,7 +14,7 @@ function Spawner:new()
 
     self.AllahAkbarSpawnTime = 1
     self.AllahAkbarTime = 0
-    self.AllahAkbarSpawnInterval = AllahakbarSpawnInterval  -- Intervalo en segundos entre cada aparición de Allahakbar
+    self.AllahAkbarSpawnInterval = AllahAkbarSpawnInterval 
     self.AllahAkbarSpawnTimer = 0
 
     self.BouncySpawnTime = 1
@@ -40,7 +40,7 @@ function Spawner:update(dt)
     --ALLAHAKBAR
     if enemyVisibility.Allahakbar == true then
         if self.AllahAkbarTime > self.AllahAkbarSpawnTime  then
-            if self.AllahAkbarSpawnTimer >= self.AllahAkbarSpawnInterval then
+            if self.AllahAkbarSpawnTimer >= AllahAkbarSpawnInterval then
                 local e = Allahakbar()
                 table.insert(EnemyList, e)
                 --print("in if - AllahakbarSpawnInterval: " .. self.AllahAkbarSpawnInterval)
@@ -53,7 +53,7 @@ function Spawner:update(dt)
     --ENEMY
     if enemyVisibility.EnemyFollow == true then
         if self.EnemyTime > self.EnemySpawnTime then
-            if self.EnemySpawnTimer >= self.EnemySpawnInterval then
+            if self.EnemySpawnTimer >= EnemySpawnInterval then
                 local ef = EnemyFollow()
                 table.insert(EnemyList, ef)
                 --print("BASIC ENEMY")
@@ -66,7 +66,7 @@ function Spawner:update(dt)
     --BOUNCY
     if enemyVisibility.Bouncy == true then
         if self.BouncyTime > self.BouncySpawnTime then
-            if self.BouncySpawnTimer >= self.BouncySpawnInterval then
+            if self.BouncySpawnTimer >= BouncySpawnInterval then
                 local b = Bouncy()
                 table.insert(EnemyList, b)
                 --print("new BOUNCY")
