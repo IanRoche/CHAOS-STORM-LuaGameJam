@@ -1,78 +1,88 @@
 local Object = Object or require "lib.classic"
 local Data = Object:extend()
 
-Data = {}
-
 function Data:load()
-    -- MAP
-Width, Height = love.graphics.getDimensions()
-CenterRadius = 80
-OriginX, OriginY = 0,0
-MapCenterX, MapCenterY= Width/2, Height/2
---Miscelanius
-DestroyableObjects={}
---PLAYER
-PlayerStartPosX, PlayerStartPosY =MapCenterX-MapCenterX/2,MapCenterY+MapCenterY/2
-PlayerSpeed=400
-PlayerRadius=20
-PlayerPosition={x=PlayerStartPosX, y=PlayerStartPosY}
---BAR
-BarWidth, BarHeight=20,1000
-BarStartRotation =math.pi/2
-BarRotSpeed=1
-BarColor={0.0,1.0,1.0,1.0}
-BarStartPosX, BarStartPosY =MapCenterX-BarWidth/2,MapCenterY-BarHeight/2
--- MENU
-IsPlaying = false
-ButtonList = {}
-ButtonWidth = Width/3
-ButtonHeight = 50
-ButtonOffset = 10
-MenuFontSize = 30
-ExitKey = "escape"
--- GAME OVER
-GameOverColor = {1,0,0,1}
-LoseColor = {1, 0, 0, 1}
-GameOverText = ""
-GameOverFontSize = 70
-GameoverEscFontSize = 20
-
--- COLORS
-BallColor = {1.0, 1.0, 1.0, 1.0}
-PaddleColor = {0.5, 1.0, 1.0, 1.0}
-MapScoreColor = {0.5, 0.5, 1.0, 1.0}
+    self:loadMap()
+    self:loadPlayer()
+    self:loadMenu()
+    self:loadGameOver()
+    self:loadScore()
+    self:loadSpawnerEnemies()
+    self:loadEnemySettings()
+    self:loadBackground()
+    self:loadCircleRow()
+    self:loadMiscellaneous()
 end
 
--- SCORE
-_Score=0
-CurrentDifficultyLevel =1
+function Data:loadMap()
+    Width, Height = love.graphics.getDimensions()
+    MapCenterX, MapCenterY = Width / 2, Height / 2
+end
 
---SPAWNER ENEMIES
-AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
-EnemySpawnInterval = 1
-BouncySpawnInterval = 1
+function Data:loadPlayer()
+    PlayerStartPosX, PlayerStartPosY = MapCenterX - MapCenterX / 2, MapCenterY + MapCenterY / 2
+    PlayerSpeed = 400
+    PlayerRadius = 20
+    PlayerPosition = {x = PlayerStartPosX, y = PlayerStartPosY}
+end
 
+function Data:loadMenu()
+    IsPlaying = false
+    ButtonList = {}
+    ButtonWidth = Width / 3
+    ButtonHeight = 50
+    ButtonOffset = 10
+    MenuFontSize = 30
+    ExitKey = "escape"
+end
 
---ENEMIES
-----ALLAHAKBAR
-AllahAkbarVelocity =100
-----ENEMY FOLLOW
-EnemyFollowVelocity =100
---BOUNCY
-BouncyVelocity =100
-BouncyMaxWallHits=4
+function Data:loadGameOver()
+    GameOverColor = {1, 0, 0, 1}
+    LoseColor = {1, 0, 0, 1}
+    GameOverText = ""
+    GameOverFontSize = 70
+    GameoverEscFontSize = 20
+end
 
+function Data:loadScore()
+    _Score = 0
+    CurrentDifficultyLevel = 1
 
---BACKGROUND
-BackGroundColor={0.1,0.1,0.1}
+    ScoreToLevel2=15
+    ScoreToLevel3=25
+    ScoreToLevel4=35
+    ScoreToLevel5=50
 
---CIRCLE ROW
-CirclesRowRotationSpeed=1
-CirclesRowMinCirclesSpacing=50
-CirclesRowMaxCircleSpacing=100
-CirclesRowChangeFrequency=1.2
-CirclesRowChangeSpeed=0.7
+end
 
+function Data:loadSpawnerEnemies()
+    AllahAkbarSpawnInterval = 2
+    EnemySpawnInterval = 1
+    BouncySpawnInterval = 1
+end
 
+function Data:loadEnemySettings()
+    AllahAkbarVelocity = 100
+    EnemyFollowVelocity = 100
+    BouncyVelocity = 100
+    BouncyMaxWallHits = 4
+end
+
+function Data:loadBackground()
+    BackGroundColor = {0.1, 0.1, 0.1}
+end
+
+function Data:loadCircleRow()
+    BarColor = {0.0, 1.0, 1.0, 1.0}
+    CirclesRowRotationSpeed = 1
+    CirclesRowMinCirclesSpacing = 50
+    CirclesRowMaxCircleSpacing = 100
+    CirclesRowChangeFrequency = 1.2
+    CirclesRowChangeSpeed = 0.7
+end
+
+function Data:loadMiscellaneous()
+    DestroyableObjects = {}
+end
 
 return Data

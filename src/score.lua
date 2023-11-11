@@ -21,7 +21,7 @@ function Score:update(dt)
         self.timeElapsed = self.timeElapsed - 1 
         --print(_Score) -- Reinicia el tiempo transcurrido
     end
-    if  _Score >5 and tutorialTime==true then
+    if  _Score >ScoreToLevel2 and tutorialTime==true then
         tutorialTime=false
         _Score=0
     end

@@ -2,7 +2,6 @@ local Object = Object or require "lib.classic"
 local ICanBeDestroyedInterface = require "src.ICabBeDestroyed"
 local Player = Object:extend()
 
-local Transform= require "lib.ColliderMaster.transform"
 
 Player:implement(ICanBeDestroyedInterface)
 
@@ -31,7 +30,6 @@ function Player:new(x, y, radius, speed, isDestroyable)
                 other:destroy()
             elseif other.tag == 'Circle' then
                 Player:destroy()
-                print("destroyed by bar")
             end
         end
     else

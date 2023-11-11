@@ -1,23 +1,21 @@
 local Object = Object or require "lib.classic"
 local Scene = Object:extend()
-local Enemies = require "src.Enemies.Enemies"
+local Enemies =Enemies or require "src.Enemies.Enemies"
 local Player = Player or require "src.Player"
-local Score = require "src.score"  
+local Score =Score or require "src.score"  
 local CirclesRow = CirclesRow or require "src.CirclesRow"
-local Spawner = require "src.Enemies.Spawner"
-local PowerUps = require "src.PowerUps.PowerUps"
-local SpawnerPowerUps = require "src.PowerUps.SpawnerPowerUps"
-local Background = require "src.Background"
+local PowerUps =PowerUps or require "src.PowerUps.PowerUps"
+local Background =Background or require "src.Background"
 
 local m_Enemies
 local m_Player
 local m_Score
 local currentDifficultyLevel = 0
 local m_CirclesRow
-local m_Spawner
 local m_PowerUps
-local m_SpawnerPowerUps
 local m_Background
+local m_TriangleVertices
+
 
 function Scene:new()
     print("Game")
@@ -28,11 +26,9 @@ function Scene:new()
     m_Score = Score() 
     m_CirclesRow = CirclesRow(MapCenterX, MapCenterY, 10, 15, CirclesRowRotationSpeed, 40, math.pi)
     m_Enemies = Enemies()
-    m_Spawner = Spawner()
     m_PowerUps = PowerUps()
-    m_SpawnerPowerUps = SpawnerPowerUps()
     m_Background = Background()
-    m_Background.scrollSpeed = 50 
+    m_Background.scrollSpeed = 50
 end
 
 function Scene:update(dt)
@@ -44,12 +40,11 @@ function Scene:update(dt)
     self:checkNewLevel()
     Collider.update()
     if love.keyboard.isDown(ExitKey) then
-        ChangeScene("GameOver")
+        ChangeScene("Menu")
     end
     self:updateLevel(dt)
     m_PowerUps:update(dt)
 end
-
 function Scene:draw()
     m_Background:draw()
     m_Player:draw()
@@ -57,21 +52,49 @@ function Scene:draw()
     m_CirclesRow:draw()
     m_Enemies:draw()
     m_PowerUps:draw()
+    
+    if currentDifficultyLevel == 1 then
+        self:drawBlinkingCircle()
+    end
 end
 
+function Scene:drawBlinkingCircle()
+    local radius = 40
+    local blinkFrequency = 5
+
+    local visibility = math.sin(love.timer.getTime() * blinkFrequency)
+    visibility = (visibility + 1) / 2
+
+    local color = {1, 0, 0, visibility}
+    local lineWidth = 5
+
+    self:drawCircle(m_Player.x, m_Player.y, radius, "line", color, lineWidth)
+end
+
+function Scene:drawCircle(x, y, radius, mode, color, lineWidth)
+    local r, g, b, a = love.graphics.getColor()
+    local lw = love.graphics.getLineWidth()
+
+    love.graphics.setColor(color)
+    love.graphics.setLineWidth(lineWidth)
+    love.graphics.circle(mode, x, y, radius)
+
+    love.graphics.setColor(r, g, b, a)
+    love.graphics.setLineWidth(lw)
+end
 function Scene:clearAllColliders()
     Collider.clear()
 end
 
 function Scene:getNewDifficultyLevel()
     local newDifficultyLevel
-    if _Score >= 23 then
+    if _Score >= ScoreToLevel5 then
         newDifficultyLevel = 5
-    elseif _Score >= 15 then
+    elseif _Score >= ScoreToLevel4 then
         newDifficultyLevel = 4
-    elseif _Score >= 10 then
+    elseif _Score >= ScoreToLevel3 then
         newDifficultyLevel = 3
-    elseif _Score >= 5 then
+    elseif _Score >= ScoreToLevel2 then
         newDifficultyLevel = 2
     else    
         newDifficultyLevel = 1
@@ -98,81 +121,65 @@ function Scene:ChangeSpawnIntervals(_AllahAkbar, _EnemyFollow, _Bouncy)
     BouncySpawnInterval = _Bouncy
 end
 
+function Scene:UpdateEnemiesStats(akbarVelocity, followVelocity, bouncyVelocity, maxWallHits)
+    AllahAkbarVelocity = akbarVelocity
+    EnemyFollowVelocity = followVelocity
+    BouncyVelocity = bouncyVelocity
+    BouncyMaxWallHits = maxWallHits
+end
 function Scene:applyDifficultyLevel(level)
     if level == 1 then
         --Enemigos activos
         self:ToggleEntities(true, true, true, true)
-
+        
         --Modificaciones Spawn Enemigos
-
-        self:ChangeSpawnIntervals(2,1,1)
+        self:ChangeSpawnIntervals(2, 2, 2)
         
         --Modificaciones Enemigos
-        AllahAkbarVelocity = 100
-        EnemyFollowVelocity = 100 
-        BouncyVelocity=100
-        BouncyMaxWallHits = 4
+        self:UpdateEnemiesStats(60, 60, 60, 2)
     elseif level == 2 then
         --Enemigos activos
-        self:ToggleEntities(true,false,false,true)
+        self:ToggleEntities(true, false, false, true)
+        
         --Modificaciones Spawn Enemigos
-        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
-        EnemySpawnInterval = 1
-        BouncySpawnInterval = 1
+        self:ChangeSpawnIntervals(2, 1, 2)
         
         --Modificaciones Enemigos
         self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
-        AllahAkbarVelocity = 100
-        EnemyFollowVelocity = 100 
-        BouncyVelocity=100
-        BouncyMaxWallHits = 4
+        self:UpdateEnemiesStats(80, 100, 90, 4)
     elseif level == 3 then
         --Enemigos activos
-        self:ToggleEntities(true,true,false,true)
+        self:ToggleEntities(true, true, false, true)
+        
         --Modificaciones Spawn Enemigos
-        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
-        EnemySpawnInterval = 1
-        BouncySpawnInterval = 1
+        self:ChangeSpawnIntervals(2, 1, 2)
         
         --Modificaciones Enemigos
-        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
-        AllahAkbarVelocity = 100
-        EnemyFollowVelocity = 100 
-        BouncyVelocity=100
-        BouncyMaxWallHits = 4
-        
-    elseif level == 4  then
+        self:changeCirclesRowValues(1.3, 30, 150, 5, 2)
+        self:UpdateEnemiesStats(100, 150, 100, 5)
+    elseif level == 4 then
         --Enemigos activos
-        self:ToggleEntities(true,true,true,true)
-
+        self:ToggleEntities(true, true, true, true)
+        
         --Modificaciones Spawn Enemigos
-        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
-        EnemySpawnInterval = 1
-        BouncySpawnInterval = 1
+        self:ChangeSpawnIntervals(1, 1, 2)
         
         --Modificaciones Enemigos
-        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
-        AllahAkbarVelocity = 100
-        EnemyFollowVelocity = 100 
-        BouncyVelocity=100
-        BouncyMaxWallHits = 4
+        self:changeCirclesRowValues(1.6, 50, 100, 5, 2)
+        self:UpdateEnemiesStats(150, 200, 100, 7)
     elseif level == 5 then
         --Enemigos activos
-        self:ToggleEntities(true,true,true,true)
-
+        self:ToggleEntities(true, true, true, true)
+        
         --Modificaciones Spawn Enemigos
-        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
-        EnemySpawnInterval = 1
-        BouncySpawnInterval = 1
+        self:ChangeSpawnIntervals(0.1, 0.1, 0.1)
         
         --Modificaciones Enemigos
-        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
-        AllahAkbarVelocity = 100
-        EnemyFollowVelocity = 100 
-        BouncyVelocity=100
-        BouncyMaxWallHits = 4
+        self:changeCirclesRowValues(2, 70, 200, 5, 0.4)
+        self:UpdateEnemiesStats(170, 200, 100, 10)
     end
 end
+
 
 function Scene:updateLevel(dt)
     if currentDifficultyLevel == 1 then
@@ -198,6 +205,7 @@ end
 
 function Scene:updateLevel1(dt)
     ChangeBackgroundColorLinear(BackGroundColor, 0.001)
+    self:updateBarColorLinear(BarColor, 0.001)
 end
 
 function Scene:updateLevel2(dt)
@@ -206,17 +214,20 @@ function Scene:updateLevel2(dt)
     local colorChangeSpeed = 1
     local r, g, b, a = CalculateColorFromPattern(purpleDark, purpleLight, colorChangeSpeed)
     ChangeBackgroundColor(r, g, b, a)
+    self:updateBarColorPattern(BarColor, purpleDark, purpleLight, colorChangeSpeed)
 end
 
 function Scene:updateLevel3(dt)
     local green = CalculateSinusoidalColorComponent(0, 1, 1, love.timer.getTime(), 1)
     ChangeBackgroundColor(0, green, 0, 1)
+    self:updateBarColorSinusoidal(BarColor, 0, 1, 1, love.timer.getTime(), 1)
 end
 
 function Scene:updateLevel4(dt)
     local yellow = CalculateSinusoidalColorComponent(0, 1, 1, love.timer.getTime(), 1)
     local orange = CalculateSinusoidalColorComponent(math.pi, 1, 1, love.timer.getTime(), 1)
     ChangeBackgroundColor(yellow, orange, 0, 1)
+    self:updateBarColorSinusoidal(BarColor, 0, 1, 1, love.timer.getTime(), 1)
 end
 
 function Scene:updateLevel5(dt)
@@ -224,10 +235,34 @@ function Scene:updateLevel5(dt)
     local green = CalculateSinusoidalColorComponent(2 * math.pi / 3, 1, 1, love.timer.getTime(), 1)
     local blue = CalculateSinusoidalColorComponent(4 * math.pi / 3, 1, 1, love.timer.getTime(), 1)
     ChangeBackgroundColor(red, green, blue, 1)
+    self:updateBarColorRainbow(BarColor, love.timer.getTime())
 end
 
--- Funciones de utilidad
+function Scene:updateBarColorLinear(colorTable, rate)
+    for i, component in ipairs(colorTable) do
+        colorTable[i] = component + rate
+    end
+end
 
+function Scene:updateBarColorPattern(colorTable, colorDark, colorLight, speed)
+    local time = love.timer.getTime()
+    local r, g, b, a = CalculateColorFromPattern(colorDark, colorLight, speed)
+    colorTable[1], colorTable[2], colorTable[3], colorTable[4] = r, g, b, a
+end
+
+function Scene:updateBarColorSinusoidal(colorTable, phaseShift, amplitude, offset, time, frequency)
+    local value = CalculateSinusoidalColorComponent(phaseShift, amplitude, offset, time, frequency)
+    colorTable[2] = value
+end
+
+function Scene:updateBarColorRainbow(colorTable, time)
+    local red = CalculateSinusoidalColorComponent(0, 1, 1, time, 1)
+    local green = CalculateSinusoidalColorComponent(2 * math.pi / 3, 1, 1, time, 1)
+    local blue = CalculateSinusoidalColorComponent(4 * math.pi / 3, 1, 1, time, 1)
+    colorTable[1], colorTable[2], colorTable[3] = red, green, blue
+end
+
+-- UTILITY
 function ChangeBackgroundColorLinear(colorTable, rate)
     for i, component in ipairs(colorTable) do
         colorTable[i] = component + rate

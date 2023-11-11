@@ -3,8 +3,8 @@ local Background = Object:extend()
 
 function Background:new()
     self.bgImage = love.graphics.newImage("src/Textures/FondoParticular.png")
-    self.scrollSpeed = 50  -- velocidad de desplazamiento
-    self.y = 0  -- Posición inicial en el eje Y
+    self.scrollSpeed = 50
+    self.y = 0
 end
 
 function Background:update(dt)
@@ -15,11 +15,10 @@ function Background:update(dt)
     end
 end
 
-function Background:draw()--TOCAD LOQUE QUERAIS (el background que mas os guste!!!)
-    love.graphics.setBackgroundColor(BackGroundColor)--Color actual Gris oscuro   -- Gris medio (0.5, 0.5, 0.5)
+function Background:draw()
+    love.graphics.setBackgroundColor(BackGroundColor)
     love.graphics.draw(self.bgImage, 0, self.y)
     love.graphics.draw(self.bgImage, 0, self.y - self.bgImage:getHeight())
-    --love.graphics.reset(love.graphics.setBackgroundColor(BackGroundColor))
 end
 
 
