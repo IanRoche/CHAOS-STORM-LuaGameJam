@@ -60,6 +60,8 @@ AllahAkbarVelocity =100
 EnemyFollowVelocity =100
 --BOUNCY
 BouncyVelocity =100
+BouncyMaxWallHits=4
+
 
 --BACKGROUND
 BackGroundColor={0.1,0.1,0.1}

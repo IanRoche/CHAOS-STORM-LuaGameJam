@@ -79,25 +79,36 @@ function Scene:getNewDifficultyLevel()
     return newDifficultyLevel
 end
 
+function Scene:ToggleEntities(EnemyFollow, Allahakbar, Bouncy, PowerUpSpeed)
+    self:CheckToggleEntity(EnemyFollow, "EnemyFollow",true,true)
+    self:CheckToggleEntity(Allahakbar, "Allahakbar",true,true)
+    self:CheckToggleEntity(Bouncy, "Bouncy",true,true)
+    self:CheckToggleEntity(PowerUpSpeed, "PowerUpSpeed", false, true)
+end
+
+function Scene:CheckToggleEntity(shouldToggle, entityName, ...)
+    if shouldToggle then
+        m_Enemies:toggleEntity(entityName, ...)
+    end
+end
+
 function Scene:applyDifficultyLevel(level)
     if level == 1 then
         --Enemigos activos
-        m_Enemies:toggleEntity("EnemyFollow", true, true)
-        m_Enemies:toggleEntity("Allahakbar", true, true)
-        m_Enemies:toggleEntity("Bouncy", true, true)
-        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        self:ToggleEntities(true, true, true, false)
+
         --Modificaciones Spawn Enemigos
         AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
         EnemySpawnInterval = 1
         BouncySpawnInterval = 1
         --Modificaciones Enemigos
+        AllahAkbarVelocity = 100
+        EnemyFollowVelocity = 100 
+        BouncyVelocity=100
+        BouncyMaxWallHits = 4
     elseif level == 2 then
         --Enemigos activos
-        m_Enemies:toggleEntity("EnemyFollow", true, true)
-        m_Enemies:toggleEntity("Allahakbar", false, false)
-        m_Enemies:toggleEntity("Bouncy", false, false)
-        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
-        
+        self:ToggleEntities(true,false,false,true)
         --Modificaciones Spawn Enemigos
         AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
         EnemySpawnInterval = 1
@@ -106,30 +117,54 @@ function Scene:applyDifficultyLevel(level)
         --Modificaciones Enemigos
         self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
         AllahAkbarVelocity = 100
+        EnemyFollowVelocity = 100 
+        BouncyVelocity=100
+        BouncyMaxWallHits = 4
     elseif level == 3 then
         --Enemigos activos
-        m_Enemies:toggleEntity("EnemyFollow", true, true)
-        m_Enemies:toggleEntity("Allahakbar", true, true)
-        m_Enemies:toggleEntity("Bouncy", false, false)
-        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        self:ToggleEntities(true,true,false,true)
+        --Modificaciones Spawn Enemigos
+        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
+        EnemySpawnInterval = 1
+        BouncySpawnInterval = 1
         
-        
+        --Modificaciones Enemigos
+        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
+        AllahAkbarVelocity = 100
+        EnemyFollowVelocity = 100 
+        BouncyVelocity=100
+        BouncyMaxWallHits = 4
         
     elseif level == 4  then
         --Enemigos activos
-        m_Enemies:toggleEntity("EnemyFollow", true, true)
-        m_Enemies:toggleEntity("Allahakbar", true, true)
-        m_Enemies:toggleEntity("Bouncy", true, false)
-        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        self:ToggleEntities(true,true,true,true)
+
+        --Modificaciones Spawn Enemigos
+        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
+        EnemySpawnInterval = 1
+        BouncySpawnInterval = 1
         
         --Modificaciones Enemigos
-        AllahAkbarVelocity = 200
+        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
+        AllahAkbarVelocity = 100
+        EnemyFollowVelocity = 100 
+        BouncyVelocity=100
+        BouncyMaxWallHits = 4
     elseif level == 5 then
         --Enemigos activos
-        m_Enemies:toggleEntity("EnemyFollow", true, true)
-        m_Enemies:toggleEntity("Allahakbar", true, true)
-        m_Enemies:toggleEntity("Bouncy", true, true)
-        m_Enemies:toggleEntity("PowerUpSpeed", false, true)
+        self:ToggleEntities(true,true,true,true)
+
+        --Modificaciones Spawn Enemigos
+        AllahAkbarSpawnInterval = 2  -- Intervalo en segundos entre la aparición de Allahakbar
+        EnemySpawnInterval = 1
+        BouncySpawnInterval = 1
+        
+        --Modificaciones Enemigos
+        self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
+        AllahAkbarVelocity = 100
+        EnemyFollowVelocity = 100 
+        BouncyVelocity=100
+        BouncyMaxWallHits = 4
     end
 end
 

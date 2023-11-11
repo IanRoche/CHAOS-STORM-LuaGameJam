@@ -3,7 +3,7 @@ local Bouncy = Object:extend()
 
 -- Variables de clase para la velocidad compartida y el número máximo de rebotes
 Bouncy.speed = BouncyVelocity  -- Velocidad compartida
-Bouncy.maxWallHits = 4  -- Número máximo de rebotes compartido
+Bouncy.maxWallHits = BouncyMaxWallHits  -- Número máximo de rebotes compartido
 
 local allBouncysList = {}
 
@@ -38,7 +38,6 @@ function Bouncy:new()
     self.exploded = false
     self.speed = BouncyVelocity
     self.wallHits = 0
-    self.maxWallHits = Bouncy.maxWallHits
     self.aliveColor = {0, 0, 1}
     self.deadColor = {1, 0, 1, 0}
     self.color = self.aliveColor
@@ -60,7 +59,7 @@ function Bouncy:update(dt)
             bouncy:checkWallCollisions()
 
             -- Si ha tocado las paredes el número máximo de veces, cambia de color
-            if bouncy.wallHits >= bouncy.maxWallHits then
+            if bouncy.wallHits >= BouncyMaxWallHits then
                 bouncy.color = bouncy.deadColor
                 bouncy:destroy()
             end
