@@ -8,7 +8,10 @@ function Scene:new()
     m_Score = Score()
     print("GameOver")
     self.finalScore = m_Score.score  -- Variable para almacenar la puntuación final
+    
+   
 end
+
 
 function Scene:update(dt)
     if love.keyboard.isDown(ExitKey) then
@@ -20,12 +23,56 @@ function Scene:update(dt)
 end
 
 function Scene:draw()
+    -- Establecer el color de fondo negro
+    love.graphics.setBackgroundColor(0, 0, 0)
+    if self.finalScore >= 20 then
+        -- Lógica para puntuaciones mayores o iguales a 23
+        self.goImage = love.graphics.newImage("src/Textures/ener.png")
+        love.graphics.draw(self.goImage, love.graphics.getWidth()/2-self.goImage.getWidth(self.goImage)/2,love.graphics.getHeight()/2-self.goImage.getHeight(self.goImage)/2)
+        
+        
+
+    elseif self.finalScore >= 15 then
+        -- Lógica para puntuaciones mayores o iguales a 23
+        self.goImage = love.graphics.newImage("src/Textures/kid.png")
+        love.graphics.draw(self.goImage, love.graphics.getWidth()/2-self.goImage.getWidth(self.goImage)/2,love.graphics.getHeight()/2-self.goImage.getHeight(self.goImage)/2)
+
+        
+    elseif self.finalScore >= 10 then
+        -- Lógica para puntuaciones mayores o iguales a 10
+        self.goImage = love.graphics.newImage("src/Textures/tecnocampus.png")
+        love.graphics.draw(self.goImage, love.graphics.getWidth()/2-self.goImage.getWidth(self.goImage)/2,love.graphics.getHeight()/2-self.goImage.getHeight(self.goImage)/2)
+
+        
+    elseif self.finalScore >= 5 then
+        -- Lógica para puntuaciones mayores o iguales a 5
+        self.goImage = love.graphics.newImage("src/Textures/krater.png")
+        love.graphics.draw(self.goImage, love.graphics.getWidth()/2-self.goImage.getWidth(self.goImage)/2,love.graphics.getHeight()/2-self.goImage.getHeight(self.goImage)/2)
+
+        
+    else    
+        -- Lógica para puntuaciones menores a 5
+        self.goImage = love.graphics.newImage("src/Textures/JaumeTeEstimu.png")
+        love.graphics.draw(self.goImage, love.graphics.getWidth()/2-self.goImage.getWidth(self.goImage)/2,love.graphics.getHeight()/2-self.goImage.getHeight(self.goImage)/2)
+
+    end
+   
+
+    -- Dibujar elementos
     love.graphics.setColor(GameOverColor)
+    self:new()
     self:drawGameOverText()
     self:drawScoreText()
     self:drawRestartText()
+    self:drawScoreMotivationText()
     love.graphics.setColor(1, 1, 1)
+
+
+    
+
+    -- Restaurar el color de fondo predeterminado
 end
+
 
 function Scene:drawGameOverText()
     love.graphics.setFont(love.graphics.newFont(GameOverFontSize))
@@ -47,11 +94,11 @@ end
 
 function Scene:drawScoreMotivationText()
     love.graphics.setFont(love.graphics.newFont(MenuFontSize))
-    local motivationText = "Dev record: 26, si superas el record, VOTANOS"
+    local motivationText = "Si superas el TUTORIAL, votanos!"
     local motivationWidth = love.graphics.getFont():getWidth(motivationText)
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
-    love.graphics.print(motivationText, (screenWidth - motivationWidth) / 2, screenHeight / 3 )
+    love.graphics.print(motivationText, (screenWidth - motivationWidth) / 2, screenHeight / 5 )
 end
 
 function Scene:drawRestartText()
