@@ -91,14 +91,14 @@ function Scene:applyDifficultyLevel(level)
         m_Enemies:toggleEntity("Bouncy", false, false)
         m_Enemies:toggleEntity("PowerUpSpeed", false, true)
         self:changeCirclesRowValues(1, 50, 100, 5, 0.7)
-        changeBackgroundColor(0.5, 0.2, 0.5, 1)
+        ChangeBackgroundColor(0.5, 0.2, 0.5, 1)
         AllahAkbarVelocity = 100
     elseif level == 3 then
         m_Enemies:toggleEntity("EnemyFollow", true, false)
         m_Enemies:toggleEntity("Allahakbar", true, false)
         m_Enemies:toggleEntity("Bouncy", true, false)
         m_Enemies:toggleEntity("PowerUpSpeed", false, true)
-        changeBackgroundColor(0, 0.4, 0.3, 1)
+        ChangeBackgroundColor(0, 0.4, 0.3, 1)
     elseif level == 4  then
         m_Enemies:toggleEntity("EnemyFollow", true, true)
         m_Enemies:toggleEntity("Allahakbar", true, true)
@@ -120,6 +120,10 @@ function Scene:updateLevel(dt)
         self:updateLevel2(dt)
     elseif currentDifficultyLevel == 3 then
         self:updateLevel3(dt)
+    elseif currentDifficultyLevel == 4 then
+        self:updateLevel3(dt)
+    elseif currentDifficultyLevel == 5 then
+        self:updateLevel3(dt)
     end
 end
 
@@ -139,11 +143,38 @@ end
 
 function Scene:updateLevel2(dt)
     -- Level 2 update logic
+     -- Patrón de cambio de color del fondo en tonos morados
+     local purpleDark = {0.2, 0, 0.2, 1}  -- Morado oscuro
+     local purpleLight = {0.7, 0, 0.7, 1}  -- Morado claro
+ 
+     -- Velocidad de cambio de color (ajusta según tus preferencias)
+     local colorChangeSpeed = 1
+ 
+     -- Cálculo de valores RGB en función del tiempo
+     local time = love.timer.getTime()
+     local r = 0.5 + 0.5 * math.sin(colorChangeSpeed * time)
+     local g = 0
+     local b = 0.5 + 0.5 * math.cos(colorChangeSpeed * time)
+     local a = 1
+ 
+     -- Cambia el color de fondo
+     ChangeBackgroundColor(r, g, b, a)
+
 end
 
 function Scene:updateLevel3(dt)
-    -- Level 3 update logic
+    local time = love.timer.getTime()
+
+    -- Cambia el color del fondo con un patrón de arcoíris
+    local frequency = 1
+    local red = math.sin(frequency * time) * 0.5 + 0.5
+    local green = math.sin(frequency * time + (2 * math.pi / 3)) * 0.5 + 0.5
+    local blue = math.sin(frequency * time + (4 * math.pi / 3)) * 0.5 + 0.5
+
+    -- Asigna los valores al color de fondo
+    ChangeBackgroundColor(red, green, blue, 1)
 end
+
 
 function Scene:changeCirclesRowValues(rotationSpeed, minCircleSpacing, maxCircleSpacing, changeFrequency, changeSpeed)
     CirclesRowRotationSpeed = rotationSpeed
@@ -153,11 +184,8 @@ function Scene:changeCirclesRowValues(rotationSpeed, minCircleSpacing, maxCircle
     CirclesRowChangeSpeed = changeSpeed
 end
 
-function changeBackgroundColor(r, g, b, a)
-    BackGroundColor[1] = r
-    BackGroundColor[2] = g
-    BackGroundColor[3] = b
-    BackGroundColor[4] = a
+function ChangeBackgroundColor(r, g, b, a)
+    love.graphics.setBackgroundColor(r, g, b, a)
 end
 
 return Scene
