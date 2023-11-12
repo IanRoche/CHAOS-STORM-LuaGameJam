@@ -22,7 +22,7 @@ function PowerUpSpeed:update(dt)
 end
 
 function PowerUpSpeed:applyEffect()
-    _Score=_Score+1.5
+    _Score=_Score+2
     CirclesRowRotationSpeed = CirclesRowRotationSpeed - 0.1
 end
 
