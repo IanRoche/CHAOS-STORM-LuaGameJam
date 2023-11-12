@@ -14,7 +14,7 @@ function Spawner:new()
 
     self.AllahAkbarSpawnTime = 1
     self.AllahAkbarTime = 0
-    self.AllahAkbarSpawnInterval = AllahAkbarSpawnInterval 
+    self.AllahAkbarSpawnInterval = AllahAkbarSpawnInterval -- Intervalo en segundos entre cada aparición de ALLAHAKBAR
     self.AllahAkbarSpawnTimer = 0
 
     self.BouncySpawnTime = 1
@@ -27,6 +27,8 @@ function Spawner:new()
 end
 
 function Spawner:update(dt)
+
+    --actualizar tiempo
     self.m_EnemyTime = self.m_EnemyTime + dt
     self.m_EnemySpawnTimer = self.m_EnemySpawnTimer + dt
 
