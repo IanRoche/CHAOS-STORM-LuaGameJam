@@ -3,7 +3,7 @@ local Scene = Object:extend()
 local Enemies =Enemies or require "src.Enemies.Enemies"
 local Player = Player or require "src.Player"
 local Score =Score or require "src.score"  
-local CirclesRow = CirclesRow or require "src.CirclesRow"
+local CirclesRow = CirclesRow or require "src.Enemies.CirclesRow"
 local PowerUps =PowerUps or require "src.PowerUps.PowerUps"
 local Background =Background or require "src.Background"
 
@@ -59,7 +59,7 @@ end
 
 function Scene:drawBlinkingCircle()
     local l_radius = 40
-    local l_blinkFrequency = 5
+    local l_blinkFrequency = 10
 
     local l_visibility = math.sin(love.timer.getTime() * l_blinkFrequency)
     l_visibility = (l_visibility + 1) / 2
