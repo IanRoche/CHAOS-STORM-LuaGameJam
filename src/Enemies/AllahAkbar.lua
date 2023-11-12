@@ -6,16 +6,18 @@ local SmallCircle = require "src.Enemies.SmallCircle"
 local smalCircleAmount = 6
 
 function Enemy_AllahAkbar:new()
-    self.radius = 20
+    self.radius = 20  -- Radio del enemigo
     self.image = love.graphics.newImage("src/Textures/Enemies/Allahakbar/bomb.png")
     self.escala = self.radius * 2 / self.image:getWidth()
-    self.speed = AllahAkbarVelocity
-    self.timeAlive = 0 
-    self.exploded = false
-    self.smallCircles = {}
+    self.speed = AllahAkbarVelocity  -- Velocidad de movimiento
+    self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
+    self.exploded = false  -- Bandera para rastrear si ha explotado
+    self.smallCircles = {}  -- Tabla para las fracciones pequeñas
 
+    -- Asegúrate de inicializar self.rotation en el constructor (new)
     self.rotation = 0
 
+    -- Determina el lado de aparición aleatorio
     self:spawnRandomSide()
 
     table.insert(EnemyList, self)

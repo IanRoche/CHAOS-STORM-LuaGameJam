@@ -22,6 +22,7 @@ function Player:new(x, y, radius, speed, isDestroyable)
         m_PlayerTrigger = Collider.newCircle(self.x, self.y, self.radius, 'Player', false)
         m_PlayerTrigger.debugColor = {1,0,1,1}
 
+        -- Define la función onTriggerEnter para el objeto m_PlayerTrigger
         m_PlayerTrigger.onTriggerEnter = function(other)
             if other.tag == 'Circle' and other.isPowerUp then
                 other:destroy()

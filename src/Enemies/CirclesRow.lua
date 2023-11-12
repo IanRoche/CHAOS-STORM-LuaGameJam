@@ -2,9 +2,9 @@ local Object = Object or require "lib.classic"
 
 local CircleRow = Object:extend()
 
-local m_Circles = {}
-local m_RotationIncrement = math.pi / 180
-local angle = 0
+local m_Circles = {}  -- Almacena los colliders para los círculos
+local m_RotationIncrement = math.pi / 180  -- Incremento de rotación en radianes
+local angle = 0--angulo de rotación del sprite de cada círculo
 
 function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpacing, startRotation)
     self.x = x
@@ -25,7 +25,7 @@ end
 
 function CircleRow:createCircles(startRotation)
     for i = 1, self.circleCount do
-        local angle = (i - 1) * m_RotationIncrement + startRotation
+        local angle = (i - 1) * m_RotationIncrement + startRotation  -- Distribuye los círculos en una hélice y aplica el ángulo de inicio
         local radiusIncrement = self.circleSpacing * i  -- Controla la distancia entre los círculos
         local circleX = self.x + radiusIncrement * math.cos(angle)
         local circleY = self.y + radiusIncrement * math.sin(angle)
