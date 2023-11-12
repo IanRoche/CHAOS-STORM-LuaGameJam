@@ -3,13 +3,10 @@ local Enemy_AllahAkbar = Object:extend()
 local Player=require "src.Player"
 local SmallCircle=require "src.Enemies.SmallCircle"
 
-
-
-
 local smalCircleAmount=6
 
 function Enemy_AllahAkbar:new()
-    
+
     self.radius = 20  -- Radio del enemigo
 
     self.image = love.graphics.newImage("src/Textures/Enemies/Allahakbar/bomb.png")
@@ -20,7 +17,7 @@ function Enemy_AllahAkbar:new()
     self.exploded = false  -- Bandera para rastrear si ha explotado
     self.smallCircles = {}  -- Tabla para las fracciones pequeñas
     
-    local side = math.random(1, 4)  -- Genera un número aleatorio para determinar el lado de aparición
+    local side = math.random(1, 4)  -- número aleatorio para determinar el lado de aparición
 
     if side == 1 then
         -- Aparecer arriba de la pantalla
@@ -76,10 +73,8 @@ end
 function Enemy_AllahAkbar:draw()
     if not self.exploded then
         -- Dibuja el enemigo
-        --love.graphics.setColor(1, 0, 0)  -- Color rojo
         love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
         self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
-        --love.graphics.circle("fill", self.x, self.y, self.radius)
     else
         -- Dibuja las fracciones pequeñas
         for i, smallCircle in ipairs(self.smallCircles) do
