@@ -35,7 +35,6 @@ function Scene:drawElements()
 end
 
 function Scene:AssignMeme()
-    
     if _Score >= ScoreToLevel5 then
         self:drawImage("ener")
         self:drawImageEasterEgg("pepe", 0.05)

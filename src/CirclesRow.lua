@@ -15,16 +15,10 @@ function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpa
     self.circleSpacing = circleSpacing
     self.image = love.graphics.newImage("src/Textures/shuriken.png")
     self.escala = self.circleRadius * 4  / self.image:getWidth()
-    
-    
-
-
-
     -- Verifica si ya existen círculos creados
     if #m_Circles == 0 then
         self:createCircles(startRotation)
-    else
-        
+    else 
         self:updateCircles()
     end
 end
@@ -53,8 +47,7 @@ function CircleRow:updateCircles()
 end
 
 function CircleRow:update(dt)
-    self:modifyVariableBasedOnSine(dt, CirclesRowMinCirclesSpacing, CirclesRowMaxCircleSpacing,CirclesRowChangeFrequency,CirclesRowChangeSpeed)  -- Ejemplo con amplitud 10 y frecuencia 2
-    self:rotateCircles(dt)
+    self:modifyVariableBasedOnSine(dt, CirclesRowMinCirclesSpacing, CirclesRowMaxCircleSpacing,CirclesRowChangeFrequency,CirclesRowChangeSpeed)
     angle = angle +2 *math.pi *dt -- rotación individual de cada cículo
     
 end
