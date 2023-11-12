@@ -2,7 +2,7 @@ local Object = Object or require "lib.classic"
 local Background = Object:extend()
 
 function Background:new()
-    self.bgImage = love.graphics.newImage("src/Textures/FondoParticular.png")
+    self.bgImage = love.graphics.newImage("src/Textures/Background/FondoParticular.png")
     self.scrollSpeed = 50
     self.y = 0
 end

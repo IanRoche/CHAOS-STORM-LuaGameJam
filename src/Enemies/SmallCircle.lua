@@ -6,7 +6,7 @@ function SmallCircle:new(x, y, radius)
     self.x = x
     self.y = y
     self.radius = radius / 3
-    self.image = love.graphics.newImage("src/Textures/explosion2.png")
+    self.image = love.graphics.newImage("src/Textures/Enemies/Allahakbar/explosion2.png")
     self.scale = self.radius * 2 / self.image:getWidth()
 
     self.speed = 20

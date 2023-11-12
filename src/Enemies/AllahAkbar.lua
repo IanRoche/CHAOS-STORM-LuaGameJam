@@ -12,7 +12,7 @@ function Enemy_AllahAkbar:new()
     
     self.radius = 20  -- Radio del enemigo
 
-    self.image = love.graphics.newImage("src/Textures/bomb.png")
+    self.image = love.graphics.newImage("src/Textures/Enemies/Allahakbar/bomb.png")
     self.escala = self.radius * 2  / self.image:getWidth()
 
     self.speed = AllahAkbarVelocity  -- Velocidad de movimiento

@@ -62,14 +62,14 @@ function Scene:drawText(text, font, yOffset)
 end
 
 function Scene:drawImage(imagePath)
-    local image = love.graphics.newImage("src/Textures/" .. imagePath .. ".png")
+    local image = love.graphics.newImage("src/Textures/BigMemes/" .. imagePath .. ".png")
     local x = love.graphics.getWidth() / 2 - image:getWidth() / 2
     local y = love.graphics.getHeight() / 2 - image:getHeight() / 2
     love.graphics.draw(image, x, y)
 end
 
 function Scene:drawImageEasterEgg(imagePath, scale)
-    local image = love.graphics.newImage("src/Textures/" .. imagePath .. ".jpg")
+    local image = love.graphics.newImage("src/Textures/LitMemes/" .. imagePath .. ".jpg")
     local x = 0
     local y = 0
     local escala = scale or 0.5

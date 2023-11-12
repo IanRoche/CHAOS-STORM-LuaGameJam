@@ -4,6 +4,7 @@ local Bouncy = Object:extend()
 Bouncy.speed = BouncyVelocity
 Bouncy.maxWallHits = BouncyMaxWallHits
 local allBouncysList = {}
+local texture="src/Textures/Enemies/bouncy2.png"
 
 function Bouncy:new()
     self:initPosition()
@@ -29,7 +30,7 @@ end
 
 function Bouncy:initProperties()
     self.angle = math.atan2(GetPlayerPosition() - self.y, GetPlayerPosition() - self.x)
-    self.image = love.graphics.newImage("src/Textures/bouncy2.png")
+    self.image = love.graphics.newImage(texture)
     self.radius = 10
     self.escala = self.radius * 2  / self.image:getWidth()
     self.exploded = false

@@ -13,7 +13,7 @@ function CircleRow:new(x, y, circleRadius, circleCount, rotationSpeed, circleSpa
     self.circleCount = circleCount
     self.rotationSpeed = CirclesRowRotationSpeed
     self.circleSpacing = circleSpacing
-    self.image = love.graphics.newImage("src/Textures/shuriken.png")
+    self.image = love.graphics.newImage("src/Textures/Enemies/shuriken.png")
     self.escala = self.circleRadius * 4  / self.image:getWidth()
     
     

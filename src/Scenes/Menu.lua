@@ -13,7 +13,7 @@ function Scene:new()
     self.m_buttons = {}
     self:createButtons()
     self.m_menuFont = love.graphics.newFont("src/Fonts/Storm Gust.ttf", MENU_FONT_SIZE)
-    self.m_backgroundImage = love.graphics.newImage("src/Textures/otroFondo.png")
+    self.m_backgroundImage = love.graphics.newImage("src/Textures/Background/otroFondo.png")
 end
 
 function Scene:draw()
