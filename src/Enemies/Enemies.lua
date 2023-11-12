@@ -10,9 +10,9 @@ EnemyList = {}
 
 -- Tabla para llevar un seguimiento de qué enemigos deben aparecer
 enemyVisibility = {
-    Allahakbar = false,  -- Por defecto, aparece
-    EnemyFollow = false, 
-    Bouncy = false,     -- Por defecto, aparece
+    Allahakbar = false,
+    EnemyFollow = false,
+    Bouncy = false,
 }
 
 function Enemies:new()
@@ -69,7 +69,7 @@ end
 
 function Enemies:updateBouncyEnemy(dt)
     if enemyVisibility.Bouncy and self.bouncyEnemy == nil then
-        self.bouncyEnemy = Bouncy(GetPlayerPosition())  -- Ejemplo de posición inicial
+        self.bouncyEnemy = Bouncy(GetPlayerPosition())
     end
 
     if self.bouncyEnemy then

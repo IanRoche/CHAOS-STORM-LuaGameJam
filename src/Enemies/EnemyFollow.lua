@@ -3,7 +3,6 @@ local EnemyFollow = Object:extend()
 local Player = require "src.Player"
 
 function EnemyFollow:new()
-    -- Inicializa las propiedades del enemigo seguidor
     self.image = love.graphics.newImage("src/Textures/green_fireball.png")
     self.radius = 25
     self.scale = self.radius * 2 / self.image:getWidth()
@@ -11,7 +10,7 @@ function EnemyFollow:new()
     self.timeAlive = 0
     self.dead = false
 
-    -- Determina el lado de aparición aleatorio
+    -- Determina el lado de aparición aleatorio en la pantalla
     self:spawnRandomSide()
 
     table.insert(EnemyList, self)
@@ -87,6 +86,7 @@ function EnemyFollow:getDistanceToPlayer(player)
 end
 
 function EnemyFollow:checkCollisionWithEnemy(otherEnemy)
+    --si enemyFollow toca otro enemigo, se autodestruye
     local distance = math.sqrt((otherEnemy.x - self.x) ^ 2 + (otherEnemy.y - self.y) ^ 2)
     local minDistance = otherEnemy.radius + self.radius
 
