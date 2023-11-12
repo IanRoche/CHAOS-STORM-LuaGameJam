@@ -20,7 +20,6 @@ end
 function EnemyFollow:update(dt)
     if not self.dead then
         self:checkAndDestroyEnemiesCollision()
-        self:rotateTowardsPlayer()
         self:moveTowardsPlayer(dt)
     end
 end
@@ -65,12 +64,6 @@ function EnemyFollow:moveTowardsPlayer(dt)
     self.y = self.y + velY * dt
 end
 
-function EnemyFollow:rotateTowardsPlayer()
-    local playerX, playerY = GetPlayerPosition()
-    local angle = math.atan2(playerY - self.y, playerX - self.x)
-    self.rotation = angle
-end
-
 function EnemyFollow:spawnRandomSide()
     local side = math.random(1, 4)
 
@@ -101,7 +94,8 @@ function EnemyFollow:checkCollisionWithEnemy(otherEnemy)
 end
 
 function EnemyFollow:drawImage()
-    love.graphics.draw(self.image, self.x, self.y, self.rotation, self.scale, self.scale, self.image:getWidth() / 2, self.image:getHeight() / 2)
+    love.graphics.draw(self.image, self.x - self.image:getWidth() * self.scale / 2,
+        self.y - self.image:getHeight() * self.scale / 2, 0, self.scale, self.scale)
 end
 
 function EnemyFollow:destroy()
