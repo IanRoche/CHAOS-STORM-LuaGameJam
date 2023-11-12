@@ -1,32 +1,50 @@
 local Object = Object or require "lib.classic"
 local Enemy_AllahAkbar = Object:extend()
-local Player = require "src.Player"
-local SmallCircle = require "src.Enemies.SmallCircle"
+local Player=require "src.Player"
+local SmallCircle=require "src.Enemies.SmallCircle"
 
-local smalCircleAmount = 6
+local smalCircleAmount=6
 
 function Enemy_AllahAkbar:new()
+
     self.radius = 20  -- Radio del enemigo
+
     self.image = love.graphics.newImage("src/Textures/Enemies/Allahakbar/bomb.png")
-    self.escala = self.radius * 2 / self.image:getWidth()
+    self.escala = self.radius * 2  / self.image:getWidth()
+
     self.speed = AllahAkbarVelocity  -- Velocidad de movimiento
     self.timeAlive = 0  -- Tiempo que el enemigo ha estado cerca del jugador
     self.exploded = false  -- Bandera para rastrear si ha explotado
     self.smallCircles = {}  -- Tabla para las fracciones pequeñas
+    
+    local side = math.random(1, 4)  -- número aleatorio para determinar el lado de aparición
 
-    -- Asegúrate de inicializar self.rotation en el constructor (new)
-    self.rotation = 0
-
-    -- Determina el lado de aparición aleatorio
-    self:spawnRandomSide()
-
+    if side == 1 then
+        -- Aparecer arriba de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = -self.radius
+    elseif side == 2 then
+        -- Aparecer abajo de la pantalla
+        self.x = math.random(0, love.graphics.getWidth())
+        self.y = love.graphics.getHeight() + self.radius
+    elseif side == 3 then
+        -- Aparecer a la izquierda de la pantalla
+        self.x = -self.radius
+        self.y = math.random(0, love.graphics.getHeight())
+    else
+        -- Aparecer a la derecha de la pantalla
+        self.x = love.graphics.getWidth() + self.radius
+        self.y = math.random(0, love.graphics.getHeight())
+    end
     table.insert(EnemyList, self)
 end
 
-function Enemy_AllahAkbar:update(dt)
-    local playerX, playerY = GetPlayerPosition()
 
+function Enemy_AllahAkbar:update(dt)
+    
+    local playerX, playerY = GetPlayerPosition()
     if not self.exploded then
+
         -- Calcula la distancia entre el enemigo y el jugador
         local distance = math.sqrt((playerX - self.x) ^ 2 + (playerY - self.y) ^ 2)
 
@@ -36,26 +54,27 @@ function Enemy_AllahAkbar:update(dt)
             if self.timeAlive >= 1 then
                 -- Explota el enemigo
                 self:explode()
+            else
             end
         end
-
         -- Mueve hacia el jugador
-        self:rotateTowardsPlayer(playerX, playerY)
-        self.x = self.x + self.speed * math.cos(self.rotation) * dt
-        self.y = self.y + self.speed * math.sin(self.rotation) * dt
+        local angle = math.atan2(playerY - self.y, playerX - self.x)
+        self.x = self.x + AllahAkbarVelocity * math.cos(angle) * dt
+        self.y = self.y + AllahAkbarVelocity * math.sin(angle) * dt
     else
         -- Actualiza las fracciones pequeñas
         for i, smallCircle in ipairs(self.smallCircles) do
             smallCircle:update(dt)
         end
     end
+    
 end
 
 function Enemy_AllahAkbar:draw()
     if not self.exploded then
         -- Dibuja el enemigo
-        love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2,
-            self.y - self.image:getHeight() * self.escala / 2, self.rotation, self.escala, self.escala)
+        love.graphics.draw(self.image, self.x - self.image:getWidth() * self.escala / 2, 
+        self.y - self.image:getHeight() * self.escala / 2, 0, self.escala, self.escala)
     else
         -- Dibuja las fracciones pequeñas
         for i, smallCircle in ipairs(self.smallCircles) do
@@ -64,18 +83,16 @@ function Enemy_AllahAkbar:draw()
     end
 end
 
-function Enemy_AllahAkbar:rotateTowardsPlayer(playerX, playerY)
-    self.rotation = math.atan2(playerY - self.y, playerX - self.x)
-end
-
 function Enemy_AllahAkbar:explode()
     self.exploded = true
-
+    
     -- Crea fracciones pequeñas
     for i = 1, smalCircleAmount do
         local smallCircle = SmallCircle(self.x, self.y, self.radius)
         table.insert(self.smallCircles, smallCircle)
     end
+
+    
 end
 
 function Enemy_AllahAkbar:checkCollisionWithPlayer(player)
@@ -87,22 +104,6 @@ function Enemy_AllahAkbar:checkCollisionWithPlayer(player)
     return false
 end
 
-function Enemy_AllahAkbar:spawnRandomSide()
-    local side = math.random(1, 4)
 
-    if side == 1 then
-        self.x = math.random(0, love.graphics.getWidth())
-        self.y = -self.radius
-    elseif side == 2 then
-        self.x = math.random(0, love.graphics.getWidth())
-        self.y = love.graphics.getHeight() + self.radius
-    elseif side == 3 then
-        self.x = -self.radius
-        self.y = math.random(0, love.graphics.getHeight())
-    else
-        self.x = love.graphics.getWidth() + self.radius
-        self.y = math.random(0, love.graphics.getHeight())
-    end
-end
 
 return Enemy_AllahAkbar
