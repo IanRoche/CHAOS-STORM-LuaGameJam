@@ -48,6 +48,7 @@ end
 
 function CircleRow:update(dt)
     self:modifyVariableBasedOnSine(dt, CirclesRowMinCirclesSpacing, CirclesRowMaxCircleSpacing,CirclesRowChangeFrequency,CirclesRowChangeSpeed)
+    self:rotateCircles(dt)
     angle = angle +2 *math.pi *dt -- rotación individual de cada cículo
     
 end
