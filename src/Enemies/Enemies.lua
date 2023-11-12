@@ -88,7 +88,6 @@ function Enemies:toggleEnemy(enemyName, value)
     if enemyVisibility[enemyName] ~= nil then
         enemyVisibility[enemyName] = value
 
-        -- Si se establece el valor en falso, destruir todos los enemigos de ese tipo
         if not value then
             DestroyEnemy(enemyName)
         end
@@ -102,7 +101,6 @@ function Enemies:toggleEntity(entityName, isEnemy, value)
     if visibilityTable[entityName] ~= nil then
         visibilityTable[entityName] = value
 
-        -- Si se establece el valor en falso, destruir todos los enemigos o power-ups de ese tipo
         if not value then
             DestroyEntity(entityName, entityList)
         end

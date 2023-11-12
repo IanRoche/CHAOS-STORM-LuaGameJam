@@ -16,7 +16,7 @@ local m_PowerUps
 local m_Background
 
 function Scene:new()
-    love.mouse.setVisible(false)  -- Oculta el cursor del mouse al iniciar el juego
+    love.mouse.setVisible(false)
     m_Player = Player(PlayerStartPosX, PlayerStartPosY, PlayerRadius, PlayerSpeed, true)
     if #Collider.colliders > 1 then
         Collider:clearAllColliders()
@@ -116,7 +116,7 @@ function Scene:CheckToggleEntity(l_shouldToggle, l_entityName, ...)
 end
 
 function Scene:ChangeSpawnIntervals(l_AllahAkbar, l_EnemyFollow, l_Bouncy)
-    AllahAkbarSpawnInterval = l_AllahAkbar  -- Intervalo en segundos entre la aparición de Allahakbar
+    AllahAkbarSpawnInterval = l_AllahAkbar
     EnemySpawnInterval = l_EnemyFollow
     BouncySpawnInterval = l_Bouncy
 end

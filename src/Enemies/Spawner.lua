@@ -1,5 +1,5 @@
 local Object = Object or require "lib.classic"
-local Subject = require "src.Subject"  -- Ajusta la ruta de acceso al archivo Subject
+local Subject = require "src.Subject"
 local Allahakbar = Allahakbar or require "src.Enemies.AllahAkbar"
 local EnemyFollow = EnemyFollow or require "src.Enemies.EnemyFollow"
 local Bouncy = Bouncy or require "src.Enemies.Bouncy"
@@ -9,17 +9,17 @@ local Spawner = Object:extend()
 function Spawner:new()
     self.m_EnemySpawnTime = 2
     self.m_EnemyTime = 0
-    self.m_EnemySpawnInterval = EnemySpawnInterval  -- Intervalo en segundos entre cada aparición de ENEMY
+    self.m_EnemySpawnInterval = EnemySpawnInterval
     self.m_EnemySpawnTimer = 0
 
     self.AllahAkbarSpawnTime = 1
     self.AllahAkbarTime = 0
-    self.AllahAkbarSpawnInterval = AllahAkbarSpawnInterval -- Intervalo en segundos entre cada aparición de ALLAHAKBAR
+    self.AllahAkbarSpawnInterval = AllahAkbarSpawnInterval
     self.AllahAkbarSpawnTimer = 0
 
     self.BouncySpawnTime = 1
     self.BouncyTime = 0
-    self.BouncySpawnInterval = BouncySpawnInterval  -- Intervalo en segundos entre cada aparición de BOUNCY
+    self.BouncySpawnInterval = BouncySpawnInterval
     self.BouncySpawnTimer = 0
 
     self.subject = Subject:new()
