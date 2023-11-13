@@ -19,11 +19,9 @@ end
 
 function love.draw()
   scene:draw()
- -- Collider:draw()
 end
 
 function ChangeScene(nextScene)
   Scene = require("src/Scenes/"..nextScene)
   scene = Scene()
 end
-
